@@ -39,8 +39,7 @@ export default {
         // background: 'var(--background)',
         // foreground: 'var(--foreground)'
         palette: {
-					DEFAULT: "ffcc00",
-					
+          DEFAULT: "ffcc00",
         },
       },
       borderRadius: {
@@ -50,5 +49,26 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addUtilities }) {
+      addUtilities(
+        {
+          ".mask-circular-fade": {
+            "mask-image":
+              "radial-gradient(circle at center, black 0%, black 60%, transparent 68%)",
+            "-webkit-mask-image":
+              "radial-gradient(circle at center, black 0%, black 60%, transparent 68%)",
+            "mask-position": "center",
+            "-webkit-mask-position": "center",
+            "mask-size": "100% 100%",
+            "-webkit-mask-size": "100% 100%",
+            "mask-repeat": "no-repeat",
+            "-webkit-mask-repeat": "no-repeat",
+          },
+        },
+        ["responsive", "hover"]
+      );
+    },
+  ],
 };

@@ -13,7 +13,7 @@ const Header = () => {
         <Link href="/">
           <h1 className="text-4xl font-semibold group">
             Seif
-            <span className="text-accent group-hover:text-accent-hover transition-all">
+            <span className="text-accent group-hover:text-accent-hover transition-all duration:500">
               .
             </span>
           </h1>
@@ -28,7 +28,9 @@ const Header = () => {
         </div>
 
         {/* mobile nav */}
-        <div className="xl:hidden"><MobileNav/></div>
+        <div className="xl:hidden">
+          <MobileNav />
+        </div>
       </div>
     </header>
   );
