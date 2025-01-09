@@ -1,15 +1,22 @@
-import { JetBrains_Mono } from "next/font/google";
+// layout.js
+import { JetBrains_Mono, Borel } from "next/font/google";
 import "./globals.css";
 
 // Components
-import Header from './../components/Header';
+import Header from "./../components/Header";
 import PageTransition from "./../components/PageTransition";
-import StairTransition from './../components/StairTransition';
+import StairTransition from "./../components/StairTransition";
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrainsMono",
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+});
+
+const borel = Borel({
+  variable: "--font-borel",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata = {
@@ -20,7 +27,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${jetbrainsMono.variable} antialiased`}>
+      <body
+        className={`${jetbrainsMono.variable} ${borel.variable} antialiased`}
+      >
         <Header />
         <StairTransition />
         <PageTransition>{children}</PageTransition>

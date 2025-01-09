@@ -14,14 +14,14 @@ const Home = () => {
             <div className="group">
               <h1 className="h1">
                 Hello I'm <br />{" "}
-                <span className="text-accent group-hover:text-accent-hover transition-all duration:500">
+                <span className="font-cursive text-accent group-hover:text-accent-hover transition-all duration:500">
                   Seif Zakaria
                 </span>
               </h1>
             </div>
             <p className="max-w-[500px] mb-6 text-white/80">
-              I excel at crafting elegent digital experiences and I am
-              proficient in various programming languages and technologies.
+              I specialize in transforming designs into functional,
+              high-performing web applications. Let's discuss your next project.
             </p>
             {/* btn and socials */}
             <div className="flex flex-col xl:flex-row items-center xl:justify-center gap-8">
@@ -42,7 +42,9 @@ const Home = () => {
             </div>
           </div>
           {/* photo */}
-          <div className="order-1 xl:order-none mb-8 xl:mb-0 "><Photo /></div>
+          <div className="order-1 xl:order-none mb-8 xl:mb-0 ">
+            <Photo />
+          </div>
         </div>
       </div>
     </section>

@@ -49,7 +49,7 @@ const MobileNav = () => {
 
         <div>
           <Link href="/">
-            <h1 className="text-4xl font-semibold group">
+            <h1 className="font-cursive text-4xl font-semibold group pt-4">
               Seif
               <span className="text-accent group-hover:text-accent-hover transition-all">
                 .

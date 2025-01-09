@@ -19,6 +19,7 @@ export default {
     },
     fontFamily: {
       primary: "var(--font-jetbrainsMono)",
+      cursive: "var(--font-borel)",
     },
     extend: {
       colors: {
