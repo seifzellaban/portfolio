@@ -23,7 +23,7 @@ const Photo = () => {
           className="w-[298px] h-[298px] xl:w-[498px] xl:h-[498px] absolute mix-blend-lighten mask-circular-fade"
         >
           <Image
-            src="/assets/circular.png"
+            src="/assets/images/circular.png"
             priority
             quality={100}
             fill

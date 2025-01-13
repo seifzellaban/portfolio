@@ -1,5 +1,6 @@
 import Photo from "@/components/Photo";
 import Socials from "@/components/Socials";
+import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
 import { FiDownload } from "react-icons/fi";
 
@@ -21,7 +22,7 @@ const Home = () => {
             </div>
             <p className="max-w-[500px] mb-6 text-white/80">
               I specialize in transforming designs into functional,
-              high-performing web applications. Let's discuss your next project.
+              high-performing full-stack web applications. Let's discuss your next project.
             </p>
             {/* btn and socials */}
             <div className="flex flex-col xl:flex-row items-center xl:justify-center gap-8">
@@ -47,6 +48,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Stats />
     </section>
   );
 };

@@ -6,6 +6,7 @@ import "./globals.css";
 import Header from "./../components/Header";
 import PageTransition from "./../components/PageTransition";
 import StairTransition from "./../components/StairTransition";
+import grainImage from "./../../public/assets/images/grain.jpg";
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrainsMono",
@@ -28,8 +29,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${jetbrainsMono.variable} ${borel.variable} antialiased`}
+        className={`${jetbrainsMono.variable} ${borel.variable} antialiased min-h-screen relative`}
       >
+        {/* Grain texture overlay */}
+        <div
+          className="absolute inset-0 -z-30 opacity-5"
+          style={{
+            backgroundImage: `url(${grainImage.src})`,
+            backgroundBlendMode: "soft-light",
+            backgroundRepeat: "repeat",
+          }}
+        ></div>
+
+        {/* Main content */}
         <Header />
         <StairTransition />
         <PageTransition>{children}</PageTransition>
