@@ -12,9 +12,7 @@ const Home = () => {
         <div className="flex flex-col xl:flex-row items-center justify-between xl:pt-8 xl:pb-24">
           {/* hero text */}
           <div className="text-center order-2 xl:text-left xl:order-none">
-            <span className="flex gap-2">
-              Software Developer {"|"} <LocalTime />
-            </span>
+            <span>Software Developer</span>
             <div className="group">
               <h1 className="h1">
                 Hello I'm <br />{" "}
@@ -60,6 +58,9 @@ const Home = () => {
         </div>
       </div>
       <Stats />
+      <div className="container flex justify-center items-center absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 mt-8 md:mt-0">
+        <LocalTime />
+      </div>
     </section>
   );
 };
