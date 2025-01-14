@@ -22,7 +22,8 @@ const Home = () => {
             </div>
             <p className="max-w-[500px] mb-6 text-white/80">
               I specialize in transforming designs into functional,
-              high-performing full-stack web applications. Let's discuss your next project.
+              high-performing full-stack web applications. Let's discuss your
+              next project.
             </p>
             {/* btn and socials */}
             <div className="flex flex-col xl:flex-row items-center xl:justify-center gap-8">
@@ -31,8 +32,15 @@ const Home = () => {
                 size="lg"
                 className="uppercase flex items-center gap-2"
               >
-                <span>Download CV</span>
-                <FiDownload className="text-xl" />
+                <a
+                  href="/assets/resume/Seif Zakaria - Resume.pdf"
+                  download="Seif Zakaria - Fullstack Software Engineer.pdf"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <span>Download CV</span>
+                  <FiDownload className="text-xl" />
+                </a>
               </Button>
               <div className="mb-8 xl:mb-0">
                 <Socials

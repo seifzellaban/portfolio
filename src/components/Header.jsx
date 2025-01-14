@@ -7,11 +7,11 @@ import MobileNav from "./MobileNav";
 
 const Header = () => {
   return (
-    <header className="py-8 xl:py-12 text-white">
+    <header className="py-2 xl:py-6 text-white">
       <div className="container mx-auto flex justify-between items-center">
         {/* logo */}
         <Link href="/">
-          <h1 className="font-cursive text-4xl font-semibold group">
+          <h1 className="font-cursive text-4xl font-semibold group mt-6">
             Seif
             <span className="text-accent group-hover:text-accent-hover transition-all duration:500">
               .
