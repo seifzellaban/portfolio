@@ -3,6 +3,7 @@ import Socials from "@/components/Socials";
 import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
 import { FiDownload } from "react-icons/fi";
+import LocalTime from "./../components/LocalTime";
 
 const Home = () => {
   return (
@@ -57,6 +58,9 @@ const Home = () => {
         </div>
       </div>
       <Stats />
+      <div className="container flex justify-center items-center absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 mt-8 md:mt-0">
+        <LocalTime />
+      </div>
     </section>
   );
 };
