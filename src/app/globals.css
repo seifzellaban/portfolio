@@ -113,6 +113,7 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    cursor: none;
   }
   body {
     @apply bg-background text-foreground;
@@ -120,3 +121,75 @@
   }
 }
 
+/* View Transition Wave Effect */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  /* Ensure the outgoing view (old theme) is beneath */
+  z-index: 0;
+}
+::view-transition-new(root) {
+  /* Ensure the incoming view (new theme) is always on top */
+  z-index: 1;
+}
+@keyframes reveal {
+  from {
+    /* Use CSS variables for the origin, defaulting to center if not set */
+    clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
+    opacity: 0.7;
+  }
+  to {
+    /* Use CSS variables for the origin, defaulting to center if not set */
+    clip-path: circle(150% at var(--x, 50%) var(--y, 50%));
+    opacity: 1;
+  }
+}
+::view-transition-new(root) {
+  /* Apply the reveal animation */
+  animation: reveal 0.4s ease-in-out forwards;
+}
+
+/* Custom cursor styles */
+.cursor-dot {
+  position: fixed;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: white;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 50;
+  transition-property: transform;
+  transition-duration: 100ms;
+  transition-timing-function: ease-out;
+  mix-blend-mode: difference;
+}
+.cursor-outline {
+  position: fixed;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid white;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 50;
+  transition-property: all;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+  mix-blend-mode: difference;
+}
+
+.glassmorphic {
+  background-color: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.icons-glassmorphic {
+  background-color: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Space_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
-import { ConvexClientProvider } from "./ConvexClientProvider";
 import "./globals.css";
+import { ThemeProvider } from "@/lib/theme-provider";
+import Dock from "@/components/dock";
+import { CustomCursor } from "@/components/custom-cursor";
+import ScrollHandler from "@/components/scroll-handler";
 
 export const metadata: Metadata = {
   title: "Seif",
@@ -71,7 +74,12 @@ export default function RootLayout({
       <body
         className={`antialiased ${spaceMono.variable} ${ibmPlexSansArabic.variable}`}
       >
-        {<ConvexClientProvider>{children}</ConvexClientProvider>}
+        <ThemeProvider>
+          <CustomCursor />
+          {children}
+          <Dock />
+          <ScrollHandler />
+        </ThemeProvider>
       </body>
     </html>
   );
