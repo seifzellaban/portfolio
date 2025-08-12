@@ -19,13 +19,13 @@ export default function Placeholder() {
         className="text-center max-w-2xl space-y-4"
       >
         <Avatar className="mx-auto h-20 w-20">
-          <AvatarImage src="/me.jpg" alt="Your Avatar" />
+          <AvatarImage src="/seif.jpg" alt="Your Avatar" />
           <AvatarFallback>SE</AvatarFallback>
         </Avatar>
         <h1 className="text-4xl font-bold tracking-tight">
           Hey, I’m Seif Zakaria 👋
         </h1>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-muted-foreground text-xl">
           Full Stack Dev ⚙️ | React & NextJS 🧩 | Building magical interfaces
           with Tailwind & Shadcn
         </p>
@@ -51,15 +51,15 @@ export default function Placeholder() {
         viewport={{ once: true }}
         className="w-full max-w-4xl"
       >
-        <h2 className="text-2xl font-semibold mb-6 text-center">
+        <h2 className="text-3xl font-semibold mb-6 text-center">
           Selected Work
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[1, 2, 3, 4].map((_, i) => (
             <Card key={i} className="glassmorphic">
               <CardContent className="p-4 space-y-3">
-                <h3 className="text-lg font-medium">Project #{i + 1}</h3>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="text-xl font-medium">Project #{i + 1}</h3>
+                <p className="text-base text-muted-foreground">
                   A short description of a cool project that uses amazing
                   technologies.
                 </p>
@@ -86,7 +86,7 @@ export default function Placeholder() {
         viewport={{ once: true }}
         className="w-full max-w-3xl"
       >
-        <h2 className="text-2xl font-semibold mb-4 text-center">About Me</h2>
+        <h2 className="text-3xl font-semibold mb-4 text-center">About Me</h2>
         <Tabs defaultValue="skills" className="w-full">
           <TabsList className="justify-center">
             <TabsTrigger value="skills">Skills</TabsTrigger>
@@ -101,7 +101,7 @@ export default function Placeholder() {
             </ul>
           </TabsContent>
           <TabsContent value="stack">
-            <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
+            <div className="flex flex-wrap gap-2 text-base text-muted-foreground">
               <Badge variant="outline">TypeScript</Badge>
               <Badge variant="outline">Next.js</Badge>
               <Badge variant="outline">TailwindCSS</Badge>
@@ -122,7 +122,7 @@ export default function Placeholder() {
       </motion.section>
 
       {/* Footer */}
-      <footer className="text-center text-sm text-muted-foreground py-6">
+      <footer className="text-center text-base text-muted-foreground py-6">
         Built with <Terminal className="inline h-3 w-3 mx-1" /> and zero sleep —
         Seif Zakaria © 2025
       </footer>

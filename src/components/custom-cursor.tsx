@@ -59,7 +59,13 @@ export function CustomCursor() {
     };
 
     const handleLinkHoverEvents = () => {
-      document.querySelectorAll("a, button, input, textarea").forEach((el) => {
+      document
+        .querySelectorAll("a, button, input, textarea", "highlight")
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => setLinkHovered(true));
+          el.addEventListener("mouseleave", () => setLinkHovered(false));
+        });
+      Array.from(document.getElementsByClassName("highlight")).forEach((el) => {
         el.addEventListener("mouseenter", () => setLinkHovered(true));
         el.addEventListener("mouseleave", () => setLinkHovered(false));
       });
@@ -86,7 +92,7 @@ export function CustomCursor() {
         animate={{
           x: position.x - 4,
           y: position.y - 4,
-          scale: clicked ? 0.5 : linkHovered ? 2 : 1,
+          scale: clicked ? 0.8 : linkHovered ? 2.4 : 1.2,
           opacity: hidden ? 0 : 1,
         }}
         transition={{
@@ -101,7 +107,7 @@ export function CustomCursor() {
         animate={{
           x: position.x - 16,
           y: position.y - 16,
-          scale: clicked ? 0.5 : linkHovered ? 1.5 : 1,
+          scale: clicked ? 0.8 : linkHovered ? 2.4 : 1.2,
           opacity: hidden ? 0 : 1,
         }}
         transition={{
