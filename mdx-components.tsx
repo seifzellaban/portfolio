@@ -18,7 +18,7 @@ type TdProps = ComponentPropsWithoutRef<"td">;
 const components = {
   h1: (props: HeadingProps) => (
     <h1
-      className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-6xl pt-14 mb-6 text-foreground"
+      className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-6xl mb-6 text-foreground"
       {...props}
     />
   ),
