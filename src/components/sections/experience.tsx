@@ -12,7 +12,7 @@ export function ExperienceSection() {
           <h3 className="mb-2 text-2xl font-semibold">
             Attended Ain Shams University
           </h3>
-          <p className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
+          <div className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
             Began my B.Sc. in Computer Science & Statistics at{" "}
             <LinkPreview
               url="https://www.asu.edu.eg/"
@@ -20,7 +20,7 @@ export function ExperienceSection() {
             >
               Ain Shams University.
             </LinkPreview>
-          </p>
+          </div>
           <p className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
             Went beyond just coding; from shipping real projects to running
             events, mentoring, and experimenting with everything from software
@@ -39,7 +39,7 @@ export function ExperienceSection() {
       content: (
         <div>
           <h3 className="mb-2 text-2xl font-semibold">Founded Masons</h3>
-          <p className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
+          <div className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
             Launched{" "}
             <LinkPreview
               url="https://wearemasons.com"
@@ -49,10 +49,10 @@ export function ExperienceSection() {
             </LinkPreview>
             , my startup focused on building meaningful, impact-driven software
             for real-world problems.
-          </p>
+          </div>
           <div className="mb-4">
             <h4 className="mb-2 text-lg font-medium">Flagship Project:</h4>
-            <p className="text-base font-normal text-muted-foreground md:text-lg">
+            <div className="text-base font-normal text-muted-foreground md:text-lg">
               <LinkPreview
                 url="https://test-rafiqi.wearemasons.com"
                 className="font-bold text-muted-foreground"
@@ -60,7 +60,7 @@ export function ExperienceSection() {
                 Rafiqi
               </LinkPreview>{" "}
               — an AI-powered mental health platform tailored for Egyptians.
-            </p>
+            </div>
             <p className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
               Rafiqi combines culturally informed design with AI to provide
               mental health support that’s accessible and relevant to the people

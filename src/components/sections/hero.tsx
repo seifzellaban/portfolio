@@ -1,11 +1,13 @@
 "use client";
 
+import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
+  const { handleNav } = useSmoothScroll();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -121,6 +123,7 @@ export default function Hero() {
         {/* Minimal CTA */}
         <motion.div variants={itemVariants} className="text-center">
           <motion.button
+            onClick={() => handleNav("projects")}
             className="group relative inline-flex items-center gap-3 text-base font-medium text-muted-foreground/60 hover:text-foreground transition-all duration-500 tracking-wider uppercase"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
