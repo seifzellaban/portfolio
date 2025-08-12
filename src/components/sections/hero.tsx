@@ -1,7 +1,7 @@
 "use client";
 
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
-import { motion } from "motion/react";
+import { motion, Variants } from "motion/react";
 import { useEffect, useState } from "react";
 
 export default function Hero() {
@@ -20,7 +20,7 @@ export default function Hero() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -31,26 +31,26 @@ export default function Hero() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
       },
     },
   };
 
-  const textVariants = {
+  const textVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 1.2,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
       },
     },
   };
@@ -60,10 +60,8 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
     >
-      {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/[0.02] to-transparent" />
 
-      {/* Floating elements */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         animate={{
@@ -83,7 +81,6 @@ export default function Hero() {
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
       >
-        {/* Main heading */}
         <motion.div variants={itemVariants} className="text-center mb-8">
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-light tracking-[-0.02em] leading-[0.85] highlight">
             <motion.span
@@ -109,7 +106,6 @@ export default function Hero() {
           </h1>
         </motion.div>
 
-        {/* Subtitle */}
         <motion.div variants={itemVariants} className="text-center mb-16">
           <p className="text-xl md:text-2xl text-muted-foreground/70 font-light max-w-2xl mx-auto leading-relaxed tracking-wide">
             Crafting digital experiences that blend{" "}
@@ -120,7 +116,6 @@ export default function Hero() {
           </p>
         </motion.div>
 
-        {/* Minimal CTA */}
         <motion.div variants={itemVariants} className="text-center">
           <motion.button
             onClick={() => handleNav("projects")}
@@ -154,7 +149,6 @@ export default function Hero() {
           </motion.button>
         </motion.div>
 
-        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -169,7 +163,6 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Decorative line */}
       <motion.div
         className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
         initial={{ scaleX: 0 }}

@@ -1,5 +1,6 @@
 import { TechStackMarquee } from "@/components/marquee";
 import { About } from "@/components/sections/about";
+import { Contact } from "@/components/sections/contact";
 import { ExperienceSection } from "@/components/sections/experience";
 import { ProjectsSection } from "@/components/sections/projects";
 import Hero from "@/components/sections/hero";
@@ -10,9 +11,9 @@ export default function Page() {
       <Hero />
       <About />
       <ExperienceSection />
-      <ProjectsSection />
       <TechStackMarquee />
-      <div className="h-200"></div>
+      <ProjectsSection />
+      <Contact />
     </main>
   );
 }

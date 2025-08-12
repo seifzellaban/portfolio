@@ -23,7 +23,6 @@ const projects: Project[] = [
     name: "Orbit",
     description: "A real-time 3D solar system sim using NASA APIs",
     imageUrl: "/projects/orbit.png",
-    demoUrl: "#",
   },
 ];
 

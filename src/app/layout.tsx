@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/lib/theme-provider";
 import Dock from "@/components/dock";
 import { CustomCursor } from "@/components/custom-cursor";
 import ScrollHandler from "@/components/scroll-handler";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Seif",
@@ -49,6 +50,9 @@ export const metadata: Metadata = {
     "Arabic developer",
     "Middle East tech",
   ],
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 const spaceMono = Space_Mono({
@@ -76,9 +80,11 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <CustomCursor />
-          {children}
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           <Dock />
-          <ScrollHandler />
+          <Suspense fallback={null}>
+            <ScrollHandler />
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

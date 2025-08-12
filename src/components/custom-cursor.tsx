@@ -60,7 +60,7 @@ export function CustomCursor() {
 
     const handleLinkHoverEvents = () => {
       document
-        .querySelectorAll("a, button, input, textarea", "highlight")
+        .querySelectorAll("a, button, input, textarea, highlight")
         .forEach((el) => {
           el.addEventListener("mouseenter", () => setLinkHovered(true));
           el.addEventListener("mouseleave", () => setLinkHovered(false));
