@@ -4,6 +4,7 @@ import { Contact } from "@/components/sections/contact";
 import { ExperienceSection } from "@/components/sections/experience";
 import { ProjectsSection } from "@/components/sections/projects";
 import Hero from "@/components/sections/hero";
+import { Logs } from "@/components/sections/logs";
 
 export default function Page() {
   return (
@@ -13,6 +14,7 @@ export default function Page() {
       <ExperienceSection />
       <TechStackMarquee />
       <ProjectsSection />
+      <Logs />
       <Contact />
     </main>
   );

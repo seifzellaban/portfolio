@@ -30,49 +30,59 @@ export default function Dock() {
   const links = [
     {
       title: "Home",
-      icon: <IconHome className="h-full w-full text-muted-foreground" />,
+      icon: (
+        <IconHome className="h-full w-full text-muted-foreground dark:text-foreground/80" />
+      ),
       onClick: () => handleNav("home"),
     },
 
     {
       title: "Projects",
       icon: (
-        <IconDeviceDesktopCode className="h-full w-full text-muted-foreground" />
+        <IconDeviceDesktopCode className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       onClick: () => handleNav("projects"),
     },
     {
       title: "About",
-      icon: <IconUser className="h-full w-full text-muted-foreground" />,
+      icon: (
+        <IconUser className="h-full w-full text-muted-foreground dark:text-foreground/80" />
+      ),
       onClick: () => handleNav("about"),
     },
     {
       title: "Contact",
-      icon: <IconMail className="h-full w-full text-muted-foreground" />,
+      icon: (
+        <IconMail className="h-full w-full text-muted-foreground dark:text-foreground/80" />
+      ),
       href: "mailto:seifzellaban@gmail.com",
     },
     {
       title: "Masons",
       icon: (
-        <LogoSvg className="h-full w-full text-muted-foreground scale-150 fill-current" />
+        <LogoSvg className="h-full w-full text-muted-foreground dark:text-foreground/80 scale-150 fill-current" />
       ),
       href: "https://wearemasons.com",
     },
     {
       title: "LinkedIn",
       icon: (
-        <IconBrandLinkedin className="h-full w-full text-muted-foreground" />
+        <IconBrandLinkedin className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       href: "https://linkedin.com/in/seifzellaban",
     },
     {
       title: "X",
-      icon: <IconBrandX className="h-full w-full text-muted-foreground" />,
+      icon: (
+        <IconBrandX className="h-full w-full text-muted-foreground dark:text-foreground/80" />
+      ),
       href: "https://x.com/seifzellaban",
     },
     {
       title: "GitHub",
-      icon: <IconBrandGithub className="h-full w-full text-muted-foreground" />,
+      icon: (
+        <IconBrandGithub className="h-full w-full text-muted-foreground dark:text-foreground/80" />
+      ),
       href: "https://github.com/seifzellaban",
     },
     {
@@ -80,12 +90,12 @@ export default function Dock() {
       icon: (
         <div className="relative h-full w-full cursor-pointer">
           <IconSun
-            className={`h-full w-full text-muted-foreground transition-all duration-200 ${
+            className={`h-full w-full text-muted-foreground dark:text-foreground/80 transition-all duration-200 ${
               isDark ? "rotate-90 scale-0" : "rotate-0 scale-100"
             }`}
           />
           <IconMoon
-            className={`absolute inset-0 h-full w-full text-muted-foreground transition-all duration-200 ${
+            className={`absolute inset-0 h-full w-full text-muted-foreground dark:text-foreground/80 transition-all duration-200 ${
               isDark ? "rotate-0 scale-100" : "-rotate-90 scale-0"
             }`}
           />
