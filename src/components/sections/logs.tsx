@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
+import Link from "next/link";
 
 interface Post {
   id: string;
@@ -45,7 +46,7 @@ const Logs = ({
         "Becoming a head at OSC isn’t just about the title—it’s about leading with vision, structure, and resilience. This guide breaks down how to craft a Head Plan that actually works: from setting SMART goals and timelines to managing risks, budgets, and team dynamics. If you’re stepping up to lead, this is your roadmap.",
       label: "Leadership",
       author: "Seif Zakaria",
-      published: "25 Aug 2025",
+      published: "1 Sep 2025",
       url: "/logs/wbh",
       image:
         "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-2.svg",
@@ -81,13 +82,9 @@ const Logs = ({
                     </div>
                   </div>
                   <h3 className="text-xl font-semibold md:text-2xl lg:text-3xl">
-                    <a
-                      href={post.url}
-                      target="_blank"
-                      className="hover:underline"
-                    >
+                    <Link href={post.url} className="hover:underline">
                       {post.title}
-                    </a>
+                    </Link>
                   </h3>
                   <p className="mt-4 text-muted-foreground md:mt-5">
                     {post.summary}
@@ -100,18 +97,17 @@ const Logs = ({
                     </span>
                   </div>
                   <div className="mt-6 flex items-center space-x-2 md:mt-8">
-                    <a
+                    <Link
                       href={post.url}
-                      target="_blank"
                       className="inline-flex items-center font-semibold hover:underline md:text-base"
                     >
                       <span>Read more</span>
                       <ArrowRight className="ml-2 size-4 transition-transform" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="order-first sm:order-last sm:col-span-5">
-                  <a href={post.url} target="_blank" className="block">
+                  <Link href={post.url} className="block">
                     <div className="aspect-16/9 overflow-clip rounded-lg border border-border">
                       <img
                         src={post.image}
@@ -119,7 +115,7 @@ const Logs = ({
                         className="h-full w-full object-cover transition-opacity duration-200 fade-in hover:opacity-70"
                       />
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </Card>

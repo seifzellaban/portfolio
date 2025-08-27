@@ -200,7 +200,7 @@ function IconContainer({
       style={{ width, height }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex aspect-square items-center justify-center rounded-full icons-glassmorphic"
+      className="relative flex aspect-square items-center justify-center rounded-full glassmorphic"
     >
       <AnimatePresence>
         {hovered && (
@@ -208,7 +208,7 @@ function IconContainer({
             initial={{ opacity: 0, y: 10, x: "-50%" }}
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: 2, x: "-50%" }}
-            className="absolute -top-8 left-1/2 w-fit rounded-md border border-border bg-muted px-2 py-0.5 text-sm whitespace-pre text-secondary-foreground"
+            className="absolute -top-8 left-1/2 w-fit rounded-md border border-border bg-muted px-2 py-0.5 text-sm whitespace-pre text-foreground glassmorphic"
           >
             {title}
           </motion.div>
