@@ -124,8 +124,9 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto hidden h-16 items-end gap-4 rounded-2xl border border-border/30 bg-sidebar/50 px-4 pb-3 md:flex glassmorphic",
-        className,
+        // allow enlarged icons / tooltips to escape the dock container
+        "mx-auto hidden h-16 items-end gap-4 rounded-2xl border border-border/30 bg-sidebar/50 px-4 pb-3 md:flex glassmorphic overflow-visible",
+        className
       )}
     >
       {items.map((item) => (
@@ -200,7 +201,7 @@ function IconContainer({
       style={{ width, height }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex aspect-square items-center justify-center rounded-full glassmorphic"
+      className="relative flex aspect-square items-center justify-center rounded-full glassmorphic overflow-visible"
     >
       <AnimatePresence>
         {hovered && (
@@ -209,6 +210,7 @@ function IconContainer({
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: 2, x: "-50%" }}
             className="absolute -top-8 left-1/2 w-fit rounded-md border border-border bg-muted px-2 py-0.5 text-sm whitespace-pre text-foreground glassmorphic"
+            style={{ zIndex: 60 }}
           >
             {title}
           </motion.div>

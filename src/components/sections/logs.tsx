@@ -34,9 +34,20 @@ const Logs = ({
       author: "Seif Zakaria",
       published: "20 May 2025",
       url: "https://wearemasons.com/en/case-studies/rafiqi",
-      image:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-1.svg",
+      image: "/logthumb.webp",
       tags: ["Mental Health", "AI", "Culture", "Case Study"],
+    },
+    {
+      id: "post-3",
+      title: "How I Got Fired for Being Overproductive",
+      summary:
+        "A sarcastic deep-dive into the absurd story of how I lost my role not for slacking, but for caring too much, building too much, and working too hard. A reflection on toxic leadership, invisible rules, and why overproductivity can be the biggest sin of all.",
+      label: "Blog",
+      author: "Seif Zakaria",
+      published: "8 September 2025",
+      url: "/logs/i-got-fired",
+      image: "/logthumb.webp",
+      tags: ["Storytelling", "Work Culture", "Satire", "Overproductivity"],
     },
     {
       id: "post-2",
@@ -48,8 +59,7 @@ const Logs = ({
       author: "Seif Zakaria",
       published: "1 Sep 2025",
       url: "/logs/wbh",
-      image:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-dark-2.svg",
+      image: "/logthumb.webp",
       tags: ["Leadership", "OSC", "Planning", "Student Life"],
     },
   ],

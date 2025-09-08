@@ -50,6 +50,9 @@
   --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 20% / 0.38);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+    /* glassmorphism tuning: change these to reduce cost site-wide */
+    --glass-blur: 10px;
+    --icons-glass-blur: 8px;
 }
 
 .dark {
@@ -228,16 +231,47 @@
 
 .glassmorphic {
     background-color: rgba(255, 255, 255, 0.03);
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
+    /* use a variable so we can tune or disable blur globally */
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    backdrop-filter: blur(var(--glass-blur));
+    /* hint to the UA to avoid unnecessary repaints for other properties */
+    will-change: backdrop-filter, opacity;
+    contain: paint;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .icons-glassmorphic {
     background-color: rgba(255, 255, 255, 0.16);
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(var(--icons-glass-blur));
+        backdrop-filter: blur(var(--icons-glass-blur));
+        will-change: backdrop-filter, opacity;
+        contain: paint;
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Reduce expensive blur on small screens where performance is more important */
+@media (max-width: 768px) {
+    :root {
+        --glass-blur: 6px;
+        --icons-glass-blur: 4px;
+    }
+}
+
+/* Respect users who prefer reduced motion / less visual noise: remove heavy effects */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --glass-blur: 0px;
+        --icons-glass-blur: 0px;
+    }
+    .glassmorphic,
+    .icons-glassmorphic {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        /* keep a subtle translucent background as a low-cost fallback */
+        background-color: rgba(255, 255, 255, 0.04);
+        will-change: auto;
+        contain: none;
+    }
 }
 
 @font-face {
