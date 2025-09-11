@@ -124,14 +124,15 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        // allow enlarged icons / tooltips to escape the dock container
-        "mx-auto hidden h-16 items-end gap-4 rounded-2xl border border-border/30 bg-sidebar/50 px-4 pb-3 md:flex glassmorphic overflow-visible",
+        "mx-auto hidden h-16 items-end rounded-2xl border border-border/30 bg-sidebar/50 md:flex glassmorphic",
         className
       )}
     >
-      {items.map((item) => (
-        <IconContainer mouseX={mouseX} key={item.title} {...item} />
-      ))}
+      <div className="flex h-full items-end gap-4 px-4 pb-3">
+        {items.map((item) => (
+          <IconContainer mouseX={mouseX} key={item.title} {...item} />
+        ))}
+      </div>
     </motion.div>
   );
 };
@@ -163,12 +164,12 @@ function IconContainer({
   const widthTransformIcon = useTransform(
     distance,
     [-150, 0, 150],
-    [20, 40, 20],
+    [20, 40, 20]
   );
   const heightTransformIcon = useTransform(
     distance,
     [-150, 0, 150],
-    [20, 40, 20],
+    [20, 40, 20]
   );
 
   const width = useSpring(widthTransform, {
@@ -201,7 +202,7 @@ function IconContainer({
       style={{ width, height }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex aspect-square items-center justify-center rounded-full glassmorphic overflow-visible"
+      className="relative flex aspect-square items-center justify-center rounded-full glassmorphic"
     >
       <AnimatePresence>
         {hovered && (
@@ -209,8 +210,7 @@ function IconContainer({
             initial={{ opacity: 0, y: 10, x: "-50%" }}
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: 2, x: "-50%" }}
-            className="absolute -top-8 left-1/2 w-fit rounded-md border border-border bg-muted px-2 py-0.5 text-sm whitespace-pre text-foreground glassmorphic"
-            style={{ zIndex: 60 }}
+            className="absolute -top-8 left-1/2 w-fit rounded-md border border-border bg-muted px-2 py-0.5 text-sm whitespace-pre text-secondary-foreground"
           >
             {title}
           </motion.div>
@@ -226,7 +226,7 @@ function IconContainer({
   );
 
   return href ? (
-    <a href={href}>{content}</a>
+    <Link href={href}>{content}</Link>
   ) : (
     <button onClick={(e) => onClick?.(e)}>{content}</button>
   );

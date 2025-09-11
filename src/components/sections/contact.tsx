@@ -48,7 +48,7 @@ export function Contact() {
             <p className="text-base text-muted-foreground text-center">
               Local Time: {time}
             </p>
-            <div className="flex justify-center items-center space-x-8">
+            <div className="flex justify-center items-center space-x-6 sm:space-x-8">
               <a
                 href="https://linkedin.com/in/seifzellaban"
                 target="_blank"

@@ -39,15 +39,15 @@ const Logs = ({
     },
     {
       id: "post-3",
-      title: "How I Got Fired for Being Overproductive",
+      title: "How I Misread Productivity and Learned the Hard Way",
       summary:
-        "A sarcastic deep-dive into the absurd story of how I lost my role not for slacking, but for caring too much, building too much, and working too hard. A reflection on toxic leadership, invisible rules, and why overproductivity can be the biggest sin of all.",
+        "A reflective look at how I once thought doing more meant leading better. I share the mistakes that got me fired, how I misunderstood boundaries and alignment, and the lessons I now carry forward about leadership, teamwork, and growth.",
       label: "Blog",
       author: "Seif Zakaria",
       published: "8 September 2025",
-      url: "/logs/i-got-fired",
+      url: "/logs/misread-productivity",
       image: "/logthumb.webp",
-      tags: ["Storytelling", "Work Culture", "Satire", "Overproductivity"],
+      tags: ["Storytelling", "Work Culture", "Lessons Learned", "Growth"],
     },
     {
       id: "post-2",
@@ -68,10 +68,10 @@ const Logs = ({
     <section className="py-32">
       <div className="w-full max-w-screen-3xl mx-auto flex flex-col items-center gap-16 px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="mx-auto mb-6 text-3xl font-semibold text-pretty md:text-4xl lg:max-w-3xl">
+          <h2 className="mx-auto mb-6 text-4xl md:text-7xl font-semibold text-pretty lg:max-w-3xl">
             {heading}
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground md:text-lg">
+          <p className="mx-auto max-w-2xl text-muted-foreground text-base md:text-xl">
             {description}
           </p>
         </div>

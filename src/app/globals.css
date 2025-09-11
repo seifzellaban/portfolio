@@ -236,7 +236,6 @@
     backdrop-filter: blur(var(--glass-blur));
     /* hint to the UA to avoid unnecessary repaints for other properties */
     will-change: backdrop-filter, opacity;
-    contain: paint;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
