@@ -34,6 +34,7 @@ export default function Dock() {
         <IconHome className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       onClick: () => handleNav("home"),
+      mobile: true,
     },
 
     {
@@ -42,6 +43,7 @@ export default function Dock() {
         <IconDeviceDesktopCode className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       onClick: () => handleNav("projects"),
+      mobile: false,
     },
     {
       title: "About",
@@ -49,6 +51,7 @@ export default function Dock() {
         <IconUser className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       onClick: () => handleNav("about"),
+      mobile: false,
     },
     {
       title: "Contact",
@@ -56,6 +59,7 @@ export default function Dock() {
         <IconMail className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       href: "mailto:seifzellaban@gmail.com",
+      mobile: true,
     },
     {
       title: "Masons",
@@ -63,6 +67,7 @@ export default function Dock() {
         <LogoSvg className="h-full w-full text-muted-foreground dark:text-foreground/80 scale-150 fill-current" />
       ),
       href: "https://wearemasons.com",
+      mobile: true,
     },
     {
       title: "LinkedIn",
@@ -70,6 +75,7 @@ export default function Dock() {
         <IconBrandLinkedin className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       href: "https://linkedin.com/in/seifzellaban",
+      mobile: true,
     },
     {
       title: "X",
@@ -77,6 +83,7 @@ export default function Dock() {
         <IconBrandX className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       href: "https://x.com/seifzellaban",
+      mobile: false,
     },
     {
       title: "GitHub",
@@ -84,6 +91,7 @@ export default function Dock() {
         <IconBrandGithub className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       href: "https://github.com/seifzellaban",
+      mobile: true,
     },
     {
       title: "Toggle theme",
@@ -102,6 +110,7 @@ export default function Dock() {
         </div>
       ),
       onClick: handleThemeToggle,
+      mobile: true,
     },
   ];
   return (

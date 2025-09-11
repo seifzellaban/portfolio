@@ -16,7 +16,7 @@ export function ExperienceSection() {
             Began my B.Sc. in Computer Science & Statistics at{" "}
             <LinkPreview
               url="https://www.asu.edu.eg/"
-              className="font-bold text-muted-foreground"
+              className="font-bold underline text-muted-foreground"
             >
               Ain Shams University.
             </LinkPreview>
@@ -26,7 +26,7 @@ export function ExperienceSection() {
             events, mentoring, and experimenting with everything from software
             dev to data analysis and machine learning. All while stirring things
             up in the{" "}
-            <Link href="/osc" className="underline">
+            <Link href="/osc" className="font-bold underline">
               Open Source Community (OSC)
             </Link>
             .
@@ -43,7 +43,7 @@ export function ExperienceSection() {
             Launched{" "}
             <LinkPreview
               url="https://wearemasons.com"
-              className="font-bold text-muted-foreground"
+              className="font-bold underline text-muted-foreground"
             >
               Masons
             </LinkPreview>
@@ -55,7 +55,7 @@ export function ExperienceSection() {
             <div className="text-base font-normal text-muted-foreground md:text-lg">
               <LinkPreview
                 url="https://test-rafiqi.wearemasons.com"
-                className="font-bold text-muted-foreground"
+                className="font-bold underline text-muted-foreground"
               >
                 Rafiqi
               </LinkPreview>{" "}

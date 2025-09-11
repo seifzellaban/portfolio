@@ -24,6 +24,7 @@ export const FloatingDock = ({
     icon: React.ReactNode;
     href?: string;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    mobile?: boolean;
   }[];
   desktopClassName?: string;
   mobileClassName?: string;
@@ -45,10 +46,12 @@ const FloatingDockMobile = ({
     icon: React.ReactNode;
     href?: string;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    mobile?: boolean;
   }[];
   className?: string;
 }) => {
   const [open, setOpen] = useState(false);
+  const mobileItems = items.filter((item) => item.mobile).reverse();
   return (
     <div className={cn("relative block md:hidden", className)}>
       <AnimatePresence>
@@ -57,7 +60,7 @@ const FloatingDockMobile = ({
             layoutId="nav"
             className="absolute inset-x-0 bottom-full mb-2 flex flex-col gap-2"
           >
-            {items.map((item, idx) => (
+            {mobileItems.map((item, idx) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 10 }}
@@ -72,7 +75,7 @@ const FloatingDockMobile = ({
                     delay: idx * 0.05,
                   },
                 }}
-                transition={{ delay: (items.length - 1 - idx) * 0.05 }}
+                transition={{ delay: (mobileItems.length - 1 - idx) * 0.05 }}
               >
                 {item.href ? (
                   <Link
@@ -115,6 +118,7 @@ const FloatingDockDesktop = ({
     icon: React.ReactNode;
     href?: string;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    mobile?: boolean;
   }[];
   className?: string;
 }) => {

@@ -18,11 +18,20 @@ const projects: Project[] = [
       "The landing page for my startup focused on building meaningful, impact-driven software for real-world problems.",
     imageUrl: "/projects/masons.png",
     demoUrl: "https://wearemasons.com",
+    sourceUrl: "https://github.com/wearemasons/website",
   },
   {
     name: "Orbit",
     description: "A real-time 3D solar system sim using NASA APIs",
     imageUrl: "/projects/orbit.png",
+    sourceUrl: "https://github.com/wearemasons/orbit",
+  },
+  {
+    name: "repAI",
+    description:
+      "An AI Powered Recycling App with Rewards and Cashback for building a Sustainable Future, Built for AI Finance Hackathon 2025 by GDG Cairo",
+    imageUrl: "/projects/repai.png",
+    sourceUrl: "https://github.com/wearemasons/repAI",
   },
 ];
 
@@ -45,12 +54,12 @@ function ProjectCard({ project }: { project: Project }) {
       <div className="flex gap-4 mt-auto">
         {project.demoUrl && (
           <Link href={project.demoUrl} passHref>
-            <Button variant="outline">View Demo</Button>
+            <Button variant="outline">Visit Demo</Button>
           </Link>
         )}
         {project.sourceUrl && (
           <Link href={project.sourceUrl} passHref>
-            <Button variant="outline">View Source</Button>
+            <Button variant="outline">View Source Code</Button>
           </Link>
         )}
       </div>
