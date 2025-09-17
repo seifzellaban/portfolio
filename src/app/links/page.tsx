@@ -56,7 +56,7 @@ const links = [
 
 export default function Linktree() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 mb-14">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 mt-4 mb-14">
       {/* Profile Section */}
       <Card className="w-full max-w-sm border-border text-center">
         <CardContent className="flex flex-col items-center gap-4">
