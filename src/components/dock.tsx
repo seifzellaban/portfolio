@@ -5,11 +5,11 @@ import {
   IconBrandX,
   IconHome,
   IconDeviceDesktopCode,
-  IconMail,
   IconUser,
   IconSun,
   IconMoon,
   IconBrandLinkedin,
+  IconLink,
 } from "@tabler/icons-react";
 import { useTheme } from "@/lib/theme-provider";
 import { LogoSvg } from "@/components/logo";
@@ -54,11 +54,11 @@ export default function Dock() {
       mobile: false,
     },
     {
-      title: "Contact",
+      title: "Links",
       icon: (
-        <IconMail className="h-full w-full text-muted-foreground dark:text-foreground/80" />
+        <IconLink className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
-      href: "mailto:seifzellaban@gmail.com",
+      href: "/links",
       mobile: true,
     },
     {
@@ -75,7 +75,7 @@ export default function Dock() {
         <IconBrandLinkedin className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       href: "https://linkedin.com/in/seifzellaban",
-      mobile: true,
+      mobile: false,
     },
     {
       title: "X",
@@ -91,7 +91,7 @@ export default function Dock() {
         <IconBrandGithub className="h-full w-full text-muted-foreground dark:text-foreground/80" />
       ),
       href: "https://github.com/seifzellaban",
-      mobile: true,
+      mobile: false,
     },
     {
       title: "Toggle theme",

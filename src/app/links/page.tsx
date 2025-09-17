@@ -12,12 +12,20 @@ import {
   IconBrandX,
   IconBrandInstagram,
 } from "@tabler/icons-react";
+import { LogoSvg } from "@/components/logo";
 
 const links = [
   {
     title: "Website",
     url: "https://seifzellaban.work",
     icon: <IconWorldWww className="w-5 h-5" />,
+  },
+  {
+    title: "My Startup",
+    url: "https://wearemasons.com",
+    icon: (
+      <LogoSvg className="h-5 w-5 text-muted-foreground dark:text-foreground/80 scale-150 fill-current" />
+    ),
   },
   {
     title: "X",
