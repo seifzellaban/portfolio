@@ -1,0 +1,94 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconWorldWww,
+  IconMail,
+  IconBrandX,
+  IconBrandInstagram,
+} from "@tabler/icons-react";
+
+const links = [
+  {
+    title: "Website",
+    url: "https://seifzellaban.work",
+    icon: <IconWorldWww className="w-5 h-5" />,
+  },
+  {
+    title: "X",
+    url: "https://twitter.com/seifzellaban",
+    icon: <IconBrandX className="w-5 h-5" />,
+  },
+  {
+    title: "Instagram",
+    url: "https://instagram.com/seifzellaban",
+    icon: <IconBrandInstagram className="w-5 h-5" />,
+  },
+  {
+    title: "GitHub",
+    url: "https://github.com/seifzellaban",
+    icon: <IconBrandGithub className="w-5 h-5" />,
+  },
+  {
+    title: "LinkedIn",
+    url: "https://linkedin.com/in/seifzellaban",
+    icon: <IconBrandLinkedin className="w-5 h-5" />,
+  },
+  {
+    title: "Email",
+    url: "mailto:example@email.com",
+    icon: <IconMail className="w-5 h-5" />,
+  },
+];
+
+export default function Linktree() {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
+      {/* Profile Section */}
+      <Card className="w-full max-w-sm border-border text-center">
+        <CardContent className="flex flex-col items-center gap-4 py-6">
+          <Image
+            src="/seifalt.jpg"
+            alt="avatar"
+            width={150}
+            height={150}
+            className="w-36 h-36 rounded-full border border-border"
+          />
+          <div>
+            <h1 className="text-xl font-bold text-foreground">
+              Seif Zakaria Ellaban
+            </h1>
+            <p className="text-sm text-muted-foreground">Software Engineer</p>
+            <p className="mt-3 text-sm leading-relaxed text-foreground max-w-xs italic">
+              building way too many side projects ✦ full-time linux enjoyer 🐧 ✦
+              probably playing valorant ✦ caffeine is a feature, not a bug ☕ ✦
+              chronically online ✦
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Links */}
+      <div className="w-full max-w-sm mt-6 flex flex-col gap-3">
+        {links.map((link, i) => (
+          <Button
+            key={i}
+            variant="outline"
+            className="w-full justify-start gap-3 border-border text-foreground"
+            asChild
+          >
+            <Link href={link.url} target="_blank">
+              {link.icon}
+              {link.title}
+            </Link>
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+}
