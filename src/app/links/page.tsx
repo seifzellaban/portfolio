@@ -74,8 +74,7 @@ export default function Linktree() {
             <p className="text-sm text-muted-foreground">Software Engineer</p>
             <p className="mt-3 text-sm leading-relaxed text-foreground max-w-xs italic">
               building way too many side projects ✦ full-time linux enjoyer 🐧 ✦
-              probably playing valorant ✦ caffeine is a feature, not a bug ☕ ✦
-              chronically online ✦
+              probably playing valorant ✦ chronically online
             </p>
           </div>
         </CardContent>
