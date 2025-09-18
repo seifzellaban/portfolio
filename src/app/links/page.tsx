@@ -29,7 +29,7 @@ const links = [
   },
   {
     title: "X",
-    url: "https://twitter.com/seifzellaban",
+    url: "https://x.com/seifzellaban",
     icon: <IconBrandX className="w-5 h-5" />,
   },
   {
@@ -49,7 +49,7 @@ const links = [
   },
   {
     title: "Email",
-    url: "mailto:example@email.com",
+    url: "mailto:seifzellaban@gmail.com",
     icon: <IconMail className="w-5 h-5" />,
   },
 ];
