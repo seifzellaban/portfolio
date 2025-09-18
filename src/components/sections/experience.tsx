@@ -159,6 +159,7 @@ export function ExperienceSection() {
       ),
     },
   ];
+
   return (
     <div className="relative w-full overflow-clip">
       <Timeline data={data} />

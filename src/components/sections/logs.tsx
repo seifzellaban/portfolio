@@ -106,7 +106,7 @@ const Logs = ({
                       {post.published}
                     </span>
                   </div>
-                  <div className="mt-6 flex items-center space-x-2 md:mt-8">
+                  {/*<div className="mt-6 flex items-center space-x-2 md:mt-8">
                     <Link
                       href={post.url}
                       className="inline-flex items-center font-semibold hover:underline md:text-base"
@@ -114,7 +114,7 @@ const Logs = ({
                       <span>Read more</span>
                       <ArrowRight className="ml-2 size-4 transition-transform" />
                     </Link>
-                  </div>
+                  </div>*/}
                 </div>
                 <div className="order-first sm:order-last sm:col-span-5">
                   <Link href={post.url} className="block">

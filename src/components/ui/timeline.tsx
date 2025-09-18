@@ -1,10 +1,7 @@
 "use client";
-import {
-  useScroll,
-  useTransform,
-  motion,
-} from "motion/react";
+import { useScroll, useTransform, motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
+import { DownloadResumeButton } from "@/components/download-resume";
 
 interface TimelineEntry {
   title: string;
@@ -84,6 +81,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
           />
         </div>
       </div>
+      <DownloadResumeButton />
     </div>
   );
 };
