@@ -1,5 +1,3 @@
-import { ArrowRight } from "lucide-react";
-
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
 
