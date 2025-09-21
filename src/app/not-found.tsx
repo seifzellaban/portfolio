@@ -9,13 +9,9 @@ export default function NotFoundPage() {
     <main className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-6">
       <div className="max-w-md text-center space-y-6">
         <h1 className="text-6xl font-bold tracking-tight">404</h1>
-        <p className="text-xl text-muted-foreground">
-          Oops. This page doesn&apos;t exist. Maybe it&apos;s hiding with the
-          secrets of the universe.
-        </p>
         <p className="text-muted-foreground">
-          Or maybe you just took a wrong turn. No shame in that. Happens to the
-          best of us.
+          Maybe you took a wrong turn. No shame in that. Happens to the best of
+          us.
         </p>
         <Button asChild variant="outline" className="mt-4">
           <Link href="/" className="flex items-center gap-2">
