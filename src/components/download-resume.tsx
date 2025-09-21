@@ -3,15 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 
-interface DownloadResumeButtonProps {
-  fileUrl: string;
-  fileName?: string;
-}
-
-export function DownloadResumeButton({
-  fileUrl = "/files/Seif Zakaria - Fullstack Software Engineer.pdf",
-  fileName = "Seif Zakaria - Fullstack Software Engineer.pdf",
-}: DownloadResumeButtonProps) {
+export function DownloadResumeButton() {
+  const fileUrl = "/files/Seif Zakaria - Fullstack Software Engineer.pdf";
+  const fileName = "Seif Zakaria - Fullstack Software Engineer.pdf";
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = fileUrl;
