@@ -3,7 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 
-export function DownloadResumeButton() {
+type DownloadResumeButtonProps = {
+  variant: "default" | "outline" | "ghost" | "link";
+  size: "sm" | "lg" | "icon";
+};
+
+export function DownloadResumeButton({
+  variant,
+  size,
+}: DownloadResumeButtonProps) {
   const fileUrl = "/files/Seif Zakaria - Fullstack Software Engineer.pdf";
   const fileName = "Seif Zakaria - Fullstack Software Engineer.pdf";
   const handleDownload = () => {
@@ -15,9 +23,9 @@ export function DownloadResumeButton() {
 
   return (
     <Button
-      variant="default"
-      size="lg"
-      className="mt-4 text-lg mx-auto flex"
+      variant={variant}
+      size={size}
+      className={`mt-4 text-${size} mx-auto flex`}
       onClick={handleDownload}
     >
       <Download className="h-8 w-8" />

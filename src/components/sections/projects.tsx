@@ -1,7 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
+import GitHubCalendar from "react-github-calendar";
 
 interface Project {
   name: string;
@@ -79,6 +81,18 @@ export function ProjectsSection() {
             <ProjectCard key={project.name} project={project} />
           ))}
         </div>
+      </div>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-8">
+        <Card className="w-full max-w-3xl mx-auto">
+          <CardHeader>
+            <CardTitle className="text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              My Github Contributions
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center justify-center space-y-8">
+            <GitHubCalendar username="seifzellaban" />
+          </CardContent>
+        </Card>
       </div>
     </section>
   );

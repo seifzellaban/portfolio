@@ -81,7 +81,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
           />
         </div>
       </div>
-      <DownloadResumeButton />
+      <DownloadResumeButton variant="default" size="lg" />
     </div>
   );
 };

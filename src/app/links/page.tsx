@@ -13,6 +13,7 @@ import {
   IconBrandInstagram,
 } from "@tabler/icons-react";
 import { LogoSvg } from "@/components/logo";
+import { DownloadResumeButton } from "@/components/download-resume";
 
 const links = [
   {
@@ -95,6 +96,7 @@ export default function Linktree() {
             </Link>
           </Button>
         ))}
+        <DownloadResumeButton variant="outline" size="sm" />
       </div>
     </div>
   );
