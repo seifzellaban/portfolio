@@ -1,6 +1,13 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import GitHubCalendar from "react-github-calendar";
@@ -37,35 +44,42 @@ const projects: Project[] = [
   },
 ];
 
-function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({ project }: { project: Project }) {
   return (
-    <div className="bg-card p-6 rounded-lg shadow-md flex flex-col">
-      <div className="relative w-full mb-4 aspect-[4/3] sm:aspect-video lg:aspect-[5/4] xl:aspect-video">
-        <Image
-          src={project.imageUrl}
-          alt={project.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="rounded-lg object-cover"
-        />
-      </div>
-      <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
-      <p className="text-muted-foreground mb-4 flex-grow">
-        {project.description}
-      </p>
-      <div className="flex gap-4 mt-auto">
-        {project.demoUrl && (
-          <Link href={project.demoUrl} passHref>
-            <Button variant="outline">Visit Demo</Button>
-          </Link>
-        )}
-        {project.sourceUrl && (
-          <Link href={project.sourceUrl} passHref>
-            <Button variant="outline">View Source Code</Button>
-          </Link>
-        )}
-      </div>
-    </div>
+    <Card className="flex flex-col bg-card rounded-lg shadow-md">
+      <CardContent className="flex flex-col flex-grow">
+        <div className="relative w-full mb-4 aspect-[4/3] sm:aspect-video lg:aspect-[5/4] xl:aspect-video">
+          <Image
+            src={project.imageUrl}
+            alt={project.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="rounded-lg object-cover"
+          />
+        </div>
+
+        <CardTitle className="text-2xl font-semibold mb-2">
+          {project.name}
+        </CardTitle>
+
+        <CardDescription className="text-muted-foreground text-lg mb-4 flex-grow">
+          {project.description}
+        </CardDescription>
+
+        <CardFooter className="flex gap-4 mt-auto p-0">
+          {project.demoUrl && (
+            <Link href={project.demoUrl} passHref>
+              <Button variant="outline">Visit Demo</Button>
+            </Link>
+          )}
+          {project.sourceUrl && (
+            <Link href={project.sourceUrl} passHref>
+              <Button variant="outline">View Source Code</Button>
+            </Link>
+          )}
+        </CardFooter>
+      </CardContent>
+    </Card>
   );
 }
 
