@@ -160,7 +160,7 @@ const components = {
     />
   ),
   table: (props: TableProps) => (
-    <div className="overflow-x-auto my-6">
+    <div className="overflow-x-auto my-6 mx-auto max-w-4xl">
       <table
         className="w-full border-collapse text-base text-left rounded-lg overflow-hidden border border-border"
         {...props}
