@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +13,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import GitHubCalendar from "react-github-calendar";
+import { useTheme } from "@/lib/theme-provider";
 
 interface Project {
   name: string;
@@ -21,6 +24,14 @@ interface Project {
 }
 
 const projects: Project[] = [
+  // {
+  //   name: "umbra",
+  //   description:
+  //     "Built for the 2025 NASA Space Apps Challenge, Umbra empowers researchers, mission planners, and citizen scientists to explore, filter, and visualize NASA’s vast library of space biology experiments. Designed to fuel the next era of human space exploration.",
+  //   imageUrl: "/projects/umbra.png",
+  //   demoUrl: "https://umbra.wearemasons.com",
+  //   sourceUrl: "https://github.com/wearemasons/umbra",
+  // },
   {
     name: "Masons Landing Page",
     description:
@@ -84,6 +95,30 @@ export function ProjectCard({ project }: { project: Project }) {
 }
 
 export function ProjectsSection() {
+  const { theme } = useTheme();
+
+  interface Activity {
+    date: string;
+    count: number;
+    level: 0 | 1 | 2 | 3 | 4;
+  }
+
+  const selectMonths = (contributions: Activity[]): Activity[] => {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    const shownMonths = 9;
+
+    return contributions.filter((activity: Activity) => {
+      const date = new Date(activity.date);
+      const monthOfDay = date.getMonth();
+
+      return (
+        date.getFullYear() === currentYear &&
+        monthOfDay > currentMonth - shownMonths &&
+        monthOfDay <= currentMonth
+      );
+    });
+  };
   return (
     <section id="projects" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -104,7 +139,14 @@ export function ProjectsSection() {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center space-y-8">
-            <GitHubCalendar username="seifzellaban" />
+            <GitHubCalendar
+              username="seifzellaban"
+              transformData={selectMonths}
+              colorScheme={theme}
+              labels={{
+                totalCount: "{{count}} contributions in the last 3 quarters",
+              }}
+            />
           </CardContent>
         </Card>
       </div>
