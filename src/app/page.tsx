@@ -5,10 +5,12 @@ import { ExperienceSection } from "@/components/sections/experience";
 import { ProjectsSection } from "@/components/sections/projects";
 import Hero from "@/components/sections/hero";
 import { Logs } from "@/components/sections/logs";
+import { CustomCursor } from "@/components/custom-cursor";
 
 export default function Page() {
   return (
     <main>
+      <CustomCursor />
       <Hero />
       <About />
       <ExperienceSection />

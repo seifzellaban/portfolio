@@ -3,7 +3,6 @@ import { Space_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-provider";
 import Dock from "@/components/dock";
-import { CustomCursor } from "@/components/custom-cursor";
 import ScrollHandler from "@/components/scroll-handler";
 import { Suspense } from "react";
 
@@ -79,7 +78,6 @@ export default function RootLayout({
         className={`antialiased ${spaceMono.variable} ${ibmPlexSansArabic.variable}`}
       >
         <ThemeProvider>
-          <CustomCursor />
           <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           <Dock />
           <Suspense fallback={null}>

@@ -295,6 +295,30 @@
     }
 }
 
+/* Override cursor: none for MDX pages to show system cursor */
+[data-mdx-page] *,
+[data-mdx-page],
+body.mdx-page .fixed,
+body.mdx-page .fixed * {
+    cursor: auto !important;
+}
+
+[data-mdx-page] a,
+[data-mdx-page] button,
+[data-mdx-page] input,
+[data-mdx-page] textarea,
+body.mdx-page .fixed a,
+body.mdx-page .fixed button {
+    cursor: pointer !important;
+}
+
+[data-mdx-page] input[type="text"],
+[data-mdx-page] input[type="email"],
+[data-mdx-page] input[type="password"],
+[data-mdx-page] textarea {
+    cursor: text !important;
+}
+
 @font-face {
     font-family: "Barnebok";
     src: url("/fonts/BarnebokLight.eot"); /* IE9 Compat Modes */

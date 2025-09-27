@@ -39,12 +39,7 @@ export function CustomCursor() {
     };
 
     const onMouseMove = (e: MouseEvent) => {
-      // Use pageX/pageY to account for scroll, but for fixed positioning we want clientX/clientY
-      // Try a small offset adjustment to align with actual click position
-      setPosition({
-        x: e.clientX,
-        y: e.clientY - 2, // Small adjustment to account for potential offset
-      });
+      setPosition({ x: e.clientX, y: e.clientY });
     };
 
     const onMouseEnter = () => {
@@ -90,26 +85,14 @@ export function CustomCursor() {
 
   if (isMobile) return null;
 
-  // Calculate scale values
-  const dotScale = clicked ? 0.8 : linkHovered ? 2.4 : 1.2;
-  const outlineScale = clicked ? 0.8 : linkHovered ? 2.4 : 1.2;
-
-  // Base sizes (assuming 8px dot and 32px outline)
-  const dotSize = 8;
-  const outlineSize = 32;
-
-  // Calculate actual sizes with scaling
-  const actualDotSize = dotSize * dotScale;
-  const actualOutlineSize = outlineSize * outlineScale;
-
   return (
     <>
       <motion.div
         className="cursor-dot"
         animate={{
-          x: position.x - actualDotSize / 2,
-          y: position.y - actualDotSize / 2,
-          scale: dotScale,
+          x: position.x - 4,
+          y: position.y - 4,
+          scale: clicked ? 0.8 : linkHovered ? 2.4 : 1.2,
           opacity: hidden ? 0 : 1,
         }}
         transition={{
@@ -122,9 +105,9 @@ export function CustomCursor() {
       <motion.div
         className="cursor-outline"
         animate={{
-          x: position.x - actualOutlineSize / 2,
-          y: position.y - actualOutlineSize / 2,
-          scale: outlineScale,
+          x: position.x - 16,
+          y: position.y - 16,
+          scale: clicked ? 0.8 : linkHovered ? 2.4 : 1.2,
           opacity: hidden ? 0 : 1,
         }}
         transition={{
