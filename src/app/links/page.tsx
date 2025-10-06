@@ -14,6 +14,7 @@ import {
 } from "@tabler/icons-react";
 import { LogoSvg } from "@/components/logo";
 import { DownloadResumeButton } from "@/components/download-resume";
+import { CustomCursor } from "../../components/custom-cursor";
 
 const links = [
   {

@@ -24,14 +24,14 @@ interface Project {
 }
 
 const projects: Project[] = [
-  // {
-  //   name: "umbra",
-  //   description:
-  //     "Built for the 2025 NASA Space Apps Challenge, Umbra empowers researchers, mission planners, and citizen scientists to explore, filter, and visualize NASA’s vast library of space biology experiments. Designed to fuel the next era of human space exploration.",
-  //   imageUrl: "/projects/umbra.png",
-  //   demoUrl: "https://umbra.wearemasons.com",
-  //   sourceUrl: "https://github.com/wearemasons/umbra",
-  // },
+   {
+     name: "umbra",
+     description:
+       "Built for the 2025 NASA Space Apps Challenge, Umbra empowers researchers, mission planners, and citizen scientists to explore, filter, and visualize NASA’s vast library of space biology experiments. Designed to fuel the next era of human space exploration.",
+     imageUrl: "/projects/umbra.png",
+     demoUrl: "https://umbra.wearemasons.com",
+     sourceUrl: "https://github.com/wearemasons/umbra",
+  },
   {
     name: "Masons Landing Page",
     description:

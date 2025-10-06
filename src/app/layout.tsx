@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/lib/theme-provider";
 import Dock from "@/components/dock";
 import ScrollHandler from "@/components/scroll-handler";
 import { Suspense } from "react";
+import { CustomCursor } from "@/components/custom-cursor";
 
 export const metadata: Metadata = {
   title: "Seif",
@@ -78,6 +79,7 @@ export default function RootLayout({
         className={`antialiased ${spaceMono.variable} ${ibmPlexSansArabic.variable}`}
       >
         <ThemeProvider>
+          <CustomCursor />
           <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           <Dock />
           <Suspense fallback={null}>
