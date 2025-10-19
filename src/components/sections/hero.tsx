@@ -56,17 +56,13 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         <LiquidEther
           colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-          mouseForce={20}
-          cursorSize={100}
-          isViscous={false}
-          viscous={30}
           iterationsViscous={16}
           iterationsPoisson={16}
-          resolution={0.5}
+          resolution={0.3}
           isBounce={true}
           autoDemo={true}
           autoSpeed={0.5}
-          autoIntensity={2.2}
+          autoIntensity={1.7}
           takeoverDuration={0.25}
           autoResumeDelay={3000}
           autoRampDuration={0.6}
