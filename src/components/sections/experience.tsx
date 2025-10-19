@@ -101,6 +101,19 @@ export function ExperienceSection() {
                   cashback
                 </div>
               </div>
+              <div className="mb-2">
+                <p className="text-base font-medium text-muted-foreground md:text-lg">
+                  <strong>Oct 2025 — NASA Space Apps Challenge</strong>
+                </p>
+                <div className="ml-4 mt-1">
+                  <div className="flex items-center gap-2 text-base text-muted-foreground/80 md:text-lg">
+                    🪐 Umbra: Interactive platform to explore, filter, and
+                    visualize NASA’s space biology experiments; empowering
+                    researchers and citizen scientists to fuel the next era of
+                    human space exploration
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

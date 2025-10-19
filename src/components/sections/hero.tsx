@@ -64,8 +64,6 @@ export default function Hero() {
           autoDemo={true}
           autoSpeed={0.5}
           autoIntensity={1.7}
-          takeoverDuration={0.25}
-          autoResumeDelay={3000}
           autoRampDuration={0.6}
         />
       </div>
