@@ -3,21 +3,14 @@
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
 import { motion, Variants } from "motion/react";
 import { useEffect, useState } from "react";
+import LiquidEther from "@/components/ui/LiquidEther";
 
 export default function Hero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
   const { handleNav } = useSmoothScroll();
 
   useEffect(() => {
     setIsLoaded(true);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   const containerVariants: Variants = {
@@ -60,21 +53,25 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/[0.02] to-transparent" />
-
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        animate={{
-          x: mousePosition.x * 0.01,
-          y: mousePosition.y * 0.01,
-        }}
-        transition={{ type: "spring", stiffness: 50, damping: 30 }}
-      >
-        <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-primary/20 rounded-full" />
-        <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-primary/30 rounded-full" />
-        <div className="absolute bottom-1/4 left-1/2 w-1 h-1 bg-primary/10 rounded-full" />
-      </motion.div>
-
+      <div className="absolute inset-0 z-0">
+        <LiquidEther
+          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+          mouseForce={20}
+          cursorSize={100}
+          isViscous={false}
+          viscous={30}
+          iterationsViscous={32}
+          iterationsPoisson={32}
+          resolution={0.5}
+          isBounce={false}
+          autoDemo={true}
+          autoSpeed={0.5}
+          autoIntensity={2.2}
+          takeoverDuration={0.25}
+          autoResumeDelay={3000}
+          autoRampDuration={0.6}
+        />
+      </div>
       <motion.div
         className="relative z-10 max-w-5xl px-6 md:px-8"
         variants={containerVariants}
