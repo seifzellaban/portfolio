@@ -4,6 +4,7 @@ import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
 import { motion, Variants } from "motion/react";
 import { useEffect, useState } from "react";
 import LiquidEther from "@/components/ui/LiquidEther";
+import ShinyText from "../ShinyText";
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -59,7 +60,7 @@ export default function Hero() {
           iterationsViscous={16}
           iterationsPoisson={16}
           resolution={0.3}
-          isBounce={true}
+          isBounce={false}
           autoDemo={true}
           autoSpeed={0.5}
           autoIntensity={1.7}
@@ -116,7 +117,11 @@ export default function Hero() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span>Explore my work</span>
+            <ShinyText
+              text="EXPLORE MY WORK"
+              speed={3}
+              className="animate-shine"
+            />
             <motion.svg
               width="14"
               height="14"
