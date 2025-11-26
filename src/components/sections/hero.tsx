@@ -3,7 +3,6 @@
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
 import { motion, Variants } from "motion/react";
 import { useEffect, useState } from "react";
-import LiquidEther from "@/components/ui/LiquidEther";
 import ShinyText from "../ShinyText";
 
 export default function Hero() {
@@ -54,19 +53,6 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
     >
-      <div className="absolute inset-0 z-0">
-        <LiquidEther
-          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-          iterationsViscous={16}
-          iterationsPoisson={16}
-          resolution={0.3}
-          isBounce={false}
-          autoDemo={true}
-          autoSpeed={0.5}
-          autoIntensity={1.7}
-          autoRampDuration={0.6}
-        />
-      </div>
       <motion.div
         className="relative z-10 max-w-5xl px-6 md:px-8"
         variants={containerVariants}
@@ -118,7 +104,7 @@ export default function Hero() {
             <ShinyText
               text="EXPLORE MY WORK"
               speed={3}
-              className="animate-shine"
+              className="animate-shine font-mono"
             />
             <motion.svg
               width="14"

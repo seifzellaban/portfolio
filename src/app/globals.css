@@ -16,7 +16,7 @@
     --secondary-foreground: oklch(0.3211 0 0);
     --muted: oklch(0.8853 0 0);
     --muted-foreground: oklch(0.5103 0 0);
-    --accent: oklch(0.8078 0 0);
+    --accent: oklch(0.8499 0.17 89.82);
     --accent-foreground: oklch(0.3211 0 0);
     --destructive: oklch(0.5594 0.19 25.8625);
     --destructive-foreground: oklch(1 0 0);
@@ -36,9 +36,9 @@
     --sidebar-accent-foreground: oklch(0.3211 0 0);
     --sidebar-border: oklch(0.8576 0 0);
     --sidebar-ring: oklch(0.4891 0 0);
-    --font-sans: Montserrat, sans-serif;
-    --font-serif: Georgia, serif;
-    --font-mono: Fira Code, monospace;
+    --font-sans: "Barnebok", sans-serif;
+    --font-serif: "Chubbo", serif;
+    --font-mono: IBM Plex Mono, monospace;
     --radius: 0.35rem;
     --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
     --shadow-xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
@@ -60,7 +60,6 @@
     --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 20% / 0.38);
     --tracking-normal: 0em;
     --spacing: 0.25rem;
-    /* glassmorphism tuning: change these to reduce cost site-wide */
     --glass-blur: 10px;
     --icons-glass-blur: 8px;
 }
@@ -78,8 +77,8 @@
     --secondary-foreground: oklch(0.8853 0 0);
     --muted: oklch(0.285 0 0);
     --muted-foreground: oklch(0.5999 0 0);
-    --accent: oklch(0.3715 0 0);
-    --accent-foreground: oklch(0.8853 0 0);
+    --accent: oklch(0.8499 0.17 89.82);
+    --accent-foreground: oklch(0.2178 0 0);
     --destructive: oklch(0.6591 0.153 22.1703);
     --destructive-foreground: oklch(1 0 0);
     --border: oklch(0.329 0 0);
@@ -98,9 +97,9 @@
     --sidebar-accent-foreground: oklch(0.8853 0 0);
     --sidebar-border: oklch(0.329 0 0);
     --sidebar-ring: oklch(0.7058 0 0);
-    --font-sans: Inter, sans-serif;
-    --font-serif: Georgia, serif;
-    --font-mono: Fira Code, monospace;
+    --font-sans: "Barnebok", sans-serif;
+    --font-serif: "Chubbo", serif;
+    --font-mono: IBM Plex Mono, monospace;
     --radius: 0.35rem;
     --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
     --shadow-xs: 0px 2px 0px 0px hsl(0 0% 20% / 0.07);
@@ -195,14 +194,13 @@
         scroll-behavior: smooth;
     }
     body {
-        @apply bg-background text-foreground text-xl scroll-smooth;
-        font-family: "Barnebok", sans-serif;
+        @apply bg-background text-foreground text-xl scroll-smooth font-sans;
     }
     a[href^="#fnref"] {
         @apply text-primary underline-offset-2;
     }
-    .font-inter {
-        font-family: var(--font-inter), system-ui, sans-serif;
+    .font-allison {
+        font-family: "Allison", sans-serif;
     }
 }
 
@@ -310,10 +308,8 @@
 }
 
 /* Override cursor: none for MDX pages to show system cursor */
-[data-mdx-page] *,
-[data-mdx-page],
-body.mdx-page .fixed,
-body.mdx-page .fixed * {
+body.mdx-page,
+body.mdx-page * {
     cursor: auto !important;
 }
 
@@ -333,24 +329,33 @@ body.mdx-page .fixed button {
     cursor: text !important;
 }
 
+@media (max-width: 768px) {
+    * {
+        cursor: auto !important;
+    }
+}
+
 @font-face {
     font-family: "Barnebok";
-    src: url("/fonts/BarnebokLight.eot"); /* IE9 Compat Modes */
+    src: url("/fonts/barnebok/BarnebokLight.eot"); /* IE9 Compat Modes */
     src:
-        url("/fonts/BarnebokLight.eot?#iefix") format("embedded-opentype"),
-        /* IE6-IE8 */ url("/fonts/BarnebokLight.woff") format("woff"),
-        /* Modern Browsers */ url("/fonts/BarnebokLight.ttf") format("truetype"); /* Safari, Android, iOS */
+        url("/fonts/barnebok/BarnebokLight.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-IE8 */ url("/fonts/barnebok/BarnebokLight.woff") format("woff"),
+        /* Modern Browsers */ url("/fonts/barnebok/BarnebokLight.ttf")
+            format("truetype"); /* Safari, Android, iOS */
     font-style: normal;
     font-weight: 300;
     text-rendering: optimizeLegibility;
 }
 @font-face {
     font-family: "Barnebok";
-    src: url("/fonts/BarnebokRegular.eot"); /* IE9 Compat Modes */
+    src: url("/fonts/barnebok/BarnebokRegular.eot"); /* IE9 Compat Modes */
     src:
-        url("/fonts/BarnebokRegular.eot?#iefix") format("embedded-opentype"),
-        /* IE6-IE8 */ url("/fonts/BarnebokRegular.woff") format("woff"),
-        /* Modern Browsers */ url("/fonts/BarnebokRegular.ttf")
+        url("/fonts/barnebok/BarnebokRegular.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-IE8 */ url("/fonts/barnebok/BarnebokRegular.woff") format("woff"),
+        /* Modern Browsers */ url("/fonts/barnebok/BarnebokRegular.ttf")
             format("truetype"); /* Safari, Android, iOS */
     font-style: normal;
     font-weight: 400;
@@ -358,11 +363,12 @@ body.mdx-page .fixed button {
 }
 @font-face {
     font-family: "Barnebok";
-    src: url("/fonts/BarnebokMedium.eot"); /* IE9 Compat Modes */
+    src: url("/fonts/barnebok/BarnebokMedium.eot"); /* IE9 Compat Modes */
     src:
-        url("/fonts/BarnebokMedium.eot?#iefix") format("embedded-opentype"),
-        /* IE6-IE8 */ url("/fonts/BarnebokMedium.woff") format("woff"),
-        /* Modern Browsers */ url("/fonts/BarnebokMedium.ttf")
+        url("/fonts/barnebok/BarnebokMedium.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-IE8 */ url("/fonts/barnebok/BarnebokMedium.woff") format("woff"),
+        /* Modern Browsers */ url("/fonts/barnebok/BarnebokMedium.ttf")
             format("truetype"); /* Safari, Android, iOS */
     font-style: normal;
     font-weight: 500;
@@ -370,22 +376,26 @@ body.mdx-page .fixed button {
 }
 @font-face {
     font-family: "Barnebok";
-    src: url("/fonts/BarnebokBold.eot"); /* IE9 Compat Modes */
+    src: url("/fonts/barnebok/BarnebokBold.eot"); /* IE9 Compat Modes */
     src:
-        url("/fonts/BarnebokBold.eot?#iefix") format("embedded-opentype"),
-        /* IE6-IE8 */ url("/fonts/BarnebokBold.woff") format("woff"),
-        /* Modern Browsers */ url("/fonts/BarnebokBold.ttf") format("truetype"); /* Safari, Android, iOS */
+        url("/fonts/barnebok/BarnebokBold.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-IE8 */ url("/fonts/barnebok/BarnebokBold.woff") format("woff"),
+        /* Modern Browsers */ url("/fonts/barnebok/BarnebokBold.ttf")
+            format("truetype"); /* Safari, Android, iOS */
     font-style: normal;
     font-weight: 700;
     text-rendering: optimizeLegibility;
 }
 @font-face {
     font-family: "Barnebok";
-    src: url("/fonts/BarnebokBlack.eot"); /* IE9 Compat Modes */
+    src: url("/fonts/barnebok/BarnebokBlack.eot"); /* IE9 Compat Modes */
     src:
-        url("/fonts/BarnebokBlack.eot?#iefix") format("embedded-opentype"),
-        /* IE6-IE8 */ url("/fonts/BarnebokBlack.woff") format("woff"),
-        /* Modern Browsers */ url("/fonts/BarnebokBlack.ttf") format("truetype"); /* Safari, Android, iOS */
+        url("/fonts/barnebok/BarnebokBlack.eot?#iefix")
+            format("embedded-opentype"),
+        /* IE6-IE8 */ url("/fonts/barnebok/BarnebokBlack.woff") format("woff"),
+        /* Modern Browsers */ url("/fonts/barnebok/BarnebokBlack.ttf")
+            format("truetype"); /* Safari, Android, iOS */
     font-style: normal;
     font-weight: 900;
     text-rendering: optimizeLegibility;
@@ -526,4 +536,26 @@ body.mdx-page .fixed button {
     font-weight: 200 700;
     font-display: swap;
     font-style: italic;
+}
+
+@font-face {
+    font-family: "Allison";
+    src: url("/fonts/allison_script/Allison_Script.otf") format("opentype");
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "n27";
+    src: url("/fonts/n27/n27-regular-webfont.eot");
+    src:
+        url("/fonts/n27/n27-regular-webfont.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/n27/n27-regular-webfont.woff2") format("woff2"),
+        url("/fonts/n27/n27-regular-webfont.woff") format("woff"),
+        url("/fonts/n27/n27-regular-webfont.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }

@@ -1,5 +1,6 @@
 import { MdxLayout } from "@/components/mdx-layout";
 import { Contact } from "@/components/sections/contact";
+import Signature from "@/components/signature";
 
 export default function BlogLayout({
   children,
@@ -7,9 +8,10 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <MdxLayout>
-      {children}
+    <>
+      <MdxLayout>{children}</MdxLayout>
       <Contact />
-    </MdxLayout>
+      <Signature />
+    </>
   );
 }

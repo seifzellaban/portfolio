@@ -1,0 +1,119 @@
+"use client";
+
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+    CardFooter,
+} from "@/components/ui/card";
+import {
+    IconCode,
+    IconRocket,
+    IconPalette,
+    IconDeviceMobile,
+    IconBrandFigma,
+    IconChartBar,
+    IconArrowRight
+} from "@tabler/icons-react";
+import { motion } from "motion/react";
+
+const services = [
+    {
+        title: "Web Development",
+        description:
+            "Building scalable, performant, and secure web applications using modern technologies like Next.js, React, and Node.js.",
+        icon: <IconCode size={32} className="text-primary" />,
+    },
+    {
+        title: "Mobile App Development",
+        description:
+            "Creating native and cross-platform mobile applications that provide seamless user experiences on iOS and Android devices.",
+        icon: <IconDeviceMobile size={32} className="text-primary" />,
+    },
+    {
+        title: "UI/UX Design",
+        description:
+            "Designing intuitive and beautiful user interfaces that prioritize user experience, accessibility, and engagement.",
+        icon: <IconPalette size={32} className="text-primary" />,
+    },
+    {
+        title: "Brand Identity",
+        description:
+            "Crafting unique and memorable brand identities, including logos, typography, and color palettes that resonate with your audience.",
+        icon: <IconBrandFigma size={32} className="text-primary" />,
+    },
+    {
+        title: "Consulting & Strategy",
+        description:
+            "Providing expert advice on digital strategy, technology stack selection, and product roadmap to ensure your project's success.",
+        icon: <IconRocket size={32} className="text-primary" />,
+    },
+    {
+        title: "SEO & Digital Marketing",
+        description:
+            "Optimizing your digital presence to improve visibility, drive organic traffic, and convert visitors into loyal customers.",
+        icon: <IconChartBar size={32} className="text-primary" />,
+    },
+];
+
+export function Services() {
+    return (
+        <section id="services" className="py-24 sm:py-32 bg-muted/30">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <div className="mx-auto max-w-2xl text-center mb-16">
+                    <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                        Services
+                    </h2>
+                    <p className="mt-4 text-lg leading-8 text-muted-foreground">
+                        Comprehensive solutions to help you build and grow your digital presence.
+                    </p>
+                </div>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    {services.map((service, index) => (
+                        <motion.div
+                            key={service.title}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            viewport={{ once: true }}
+                            className="flex"
+                        >
+                            <Card className="flex flex-col w-full hover:shadow-lg transition-all duration-300 border-muted hover:-translate-y-1">
+                                <CardHeader>
+                                    <div className="mb-4 p-3 bg-primary/10 w-fit rounded-lg">{service.icon}</div>
+                                    <CardTitle className="text-xl">{service.title}</CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex-grow">
+                                    <CardDescription className="text-base leading-relaxed">
+                                        {service.description}
+                                    </CardDescription>
+                                </CardContent>
+                                <CardFooter className="pt-0 mt-auto">
+                                    <a href="#contact" className="text-sm font-medium text-primary hover:underline inline-flex items-center gap-1">
+                                        Learn More <IconArrowRight size={16} />
+                                    </a>
+                                </CardFooter>
+                            </Card>
+                        </motion.div>
+                    ))}
+                </div>
+
+                <div className="mt-16 text-center">
+                    <div className="inline-flex items-center justify-center p-1 rounded-full bg-muted border border-border">
+                        <span className="px-4 py-2 text-sm text-muted-foreground">
+                            Ready to start a project?
+                        </span>
+                        <a
+                            href="#contact"
+                            className="px-6 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors"
+                        >
+                            Get in Touch
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}

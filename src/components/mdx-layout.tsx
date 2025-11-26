@@ -1,14 +1,21 @@
 "use client";
 import { ReactNode, useEffect } from "react";
 import Dock from "@/components/dock";
+import { usePathname } from "next/navigation";
 
 export function MdxLayout({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+
   useEffect(() => {
     document.body.classList.add("mdx-page");
     return () => {
       document.body.classList.remove("mdx-page");
     };
   }, []);
+
+  if (pathname == "/logs") {
+    return <>{children}</>;
+  }
 
   return (
     <div

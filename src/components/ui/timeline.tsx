@@ -34,7 +34,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
       ref={containerRef}
     >
       <div className="flex flex-col items-center max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="text-4xl md:text-7xl mb-4 text-foreground max-w-4xl font-bold">
+        <h2 className="text-3xl sm:text-4xl mb-4 text-foreground max-w-4xl font-bold">
           My Journey
         </h2>
         <p className="text-muted-foreground text-base md:text-xl max-w-xl text-center">
@@ -77,7 +77,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-foreground via-accent to-transparent from-[0%] via-[10%] rounded-full"
+            className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-foreground via-secondary to-transparent from-[0%] via-[10%] rounded-full"
           />
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
 export function CustomCursor() {
@@ -83,7 +84,9 @@ export function CustomCursor() {
     };
   }, [isMobile]);
 
-  if (isMobile) return null;
+  const pathname = usePathname();
+
+  if (isMobile || pathname?.startsWith("/logs")) return null;
 
   return (
     <>

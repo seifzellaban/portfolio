@@ -5,7 +5,7 @@ export function About() {
     <section id="about" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Mobile heading - appears before image */}
-        <h2 className="text-4xl md:text-7xl font-bold tracking-tight text-foreground text-center mb-8 lg:hidden">
+        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground text-center mb-8 lg:hidden">
           About Me
         </h2>
         <div className="grid grid-cols-1 items-center gap-x-8 gap-y-16 sm:gap-y-24 lg:grid-cols-2">
