@@ -9,20 +9,21 @@ export interface Post {
   image: string;
   tags?: string[];
   pinned?: boolean;
+  hidden?: boolean;
 }
 
 export const posts: Post[] = [
   {
-    id: "post-1",
-    title: "Rafiqi: Our Journey Building Egypt's Mental Health Companion",
+    id: "post-4",
+    title: "Building world's first ITE 'Integrated Thinking Environment'",
     summary:
-      "How we built Rafiqi, an AI-powered mental health companion designed for Egyptians. From tackling cultural stigma to building tech that speaks Egyptian Arabic, here's the story of creating a platform rooted in accessibility, cultural respect, and real impact.",
-    label: "Case Study",
+      "A proposal for a local-first Markdown editor that uses real-time Sentiment Analysis to dynamically adjust its AI assistant's persona, featuring a multi-agent debate system ('The Council') and personalized memory recall.",
+    label: "God-Tier Concept",
     author: "Seif Zakaria",
-    published: "20 May 2025",
-    url: "https://wearemasons.com/en/case-studies/rafiqi",
+    published: "2025-11-28",
+    url: "/logs/gp-idea",
     image: "/logthumb.webp",
-    tags: ["Mental Health", "AI", "Culture", "Case Study"],
+    tags: ["AI", "Systems Engineering", "Project Pitch", "Local-First", "NLP"],
     pinned: true,
   },
   {
@@ -37,6 +38,7 @@ export const posts: Post[] = [
     image: "/logthumb.webp",
     tags: ["Storytelling", "Work Culture", "Lessons Learned", "Growth"],
     pinned: false,
+    hidden: true,
   },
   {
     id: "post-2",
@@ -51,5 +53,18 @@ export const posts: Post[] = [
     image: "/logthumb.webp",
     tags: ["Leadership", "OSC", "Planning", "Student Life"],
     pinned: false,
+  },
+  {
+    id: "post-1",
+    title: "Rafiqi: Our Journey Building Egypt's Mental Health Companion",
+    summary:
+      "How we built Rafiqi, an AI-powered mental health companion designed for Egyptians. From tackling cultural stigma to building tech that speaks Egyptian Arabic, here's the story of creating a platform rooted in accessibility, cultural respect, and real impact.",
+    label: "Case Study",
+    author: "Seif Zakaria",
+    published: "20 May 2025",
+    url: "https://wearemasons.com/en/case-studies/rafiqi",
+    image: "/logthumb.webp",
+    tags: ["Mental Health", "AI", "Culture", "Case Study"],
+    pinned: true,
   },
 ];

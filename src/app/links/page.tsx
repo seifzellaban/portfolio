@@ -15,10 +15,11 @@ import {
 import { LogoSvg } from "@/components/logo";
 import { DownloadResumeButton } from "@/components/download-resume";
 
+
 const links = [
   {
     title: "Website",
-    url: "https://seifzellaban.work",
+    url: "https://seifzellaban.wiki",
     icon: <IconWorldWww className="w-5 h-5" />,
   },
   {
@@ -82,7 +83,7 @@ export default function Linktree() {
       </Card>
 
       {/* Links */}
-      <div className="w-full max-w-sm mt-6 flex flex-col gap-3">
+      <div className="w-full max-w-sm my-6 flex flex-col gap-3">
         {links.map((link, i) => (
           <Button
             key={i}

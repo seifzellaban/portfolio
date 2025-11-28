@@ -24,7 +24,8 @@ const Logs = ({
   posts = defaultPosts,
   count,
 }: LogsProps) => {
-  const sortedPosts = [...posts].sort((a, b) => {
+  const visiblePosts = posts.filter((post) => !post.hidden);
+  const sortedPosts = [...visiblePosts].sort((a, b) => {
     if (a.pinned && !b.pinned) return -1;
     if (!a.pinned && b.pinned) return 1;
     return new Date(b.published).getTime() - new Date(a.published).getTime();
@@ -73,7 +74,7 @@ const Logs = ({
                 height="14"
                 viewBox="0 0 16 16"
                 fill="none"
-                className="opacity-50 group-hover:opacity-100 transition-opacity duration-500"
+                className="opacity-100 group-hover:opacity-50 transition-opacity duration-500"
                 initial={{ x: 0 }}
                 animate={{ x: [0, 3, 0] }}
                 transition={{
