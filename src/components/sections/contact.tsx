@@ -80,7 +80,7 @@ export function Contact() {
                 hi, I&apos;ll try my best to get back to you!
               </p>
               <p className="text-lg font-bold text-muted-foreground mt-4">
-                Local Time: {time}
+                My Local Time Is: {time} in Cairo, Egypt
               </p>
             </div>
 

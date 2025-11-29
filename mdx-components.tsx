@@ -18,7 +18,7 @@ type TdProps = ComponentPropsWithoutRef<"td">;
 const components = {
   h1: (props: HeadingProps) => (
     <h1
-      className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-6xl mb-6 text-foreground font-serif"
+      className="scroll-m-20 text-5xl font-medium italic tracking-tight lg:text-6xl mb-6 text-foreground font-serif"
       {...props}
     />
   ),
@@ -155,7 +155,7 @@ const components = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="mt-6 border-l-4 pl-6 italic text-foreground/80 border-primary bg-muted/40 py-3 rounded-md"
+      className="mt-6 border-l-4 pl-6 italic text-foreground/80 border-primary bg-muted/40 pt-4 pb-0.5 rounded-md"
       {...props}
     />
   ),

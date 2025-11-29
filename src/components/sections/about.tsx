@@ -15,13 +15,16 @@ export function About() {
               About Me
             </h2>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              Hey! I&apos;m Seif Zakaria, a Software Engineering student
-              who&apos;s all in about technology and leadership. I love creating
-              solutions that make an impact, whether through coding or
-              empowering the people I work with. My journey has taught me the
-              value of teamwork, mentorship, and staying curious. Whether
-              it&apos;s leading a team, exploring the latest tech trends, or
-              diving into meaningful conversations.
+              Hey! I&apos;m{" "}
+              <span className="font-serif font-medium italic">
+                Seif Zakaria
+              </span>
+              , a Software Engineering student who&apos;s all in about
+              technology and leadership. I love creating solutions that make an
+              impact, whether through coding or empowering the people I work
+              with. My journey has taught me the value of teamwork, mentorship,
+              and staying curious. Whether it&apos;s leading a team, exploring
+              the latest tech trends, or diving into meaningful conversations.
             </p>
 
             <div className="mt-8 p-4 border-l-4 border-red-500 bg-red-50 dark:bg-red-900/20">

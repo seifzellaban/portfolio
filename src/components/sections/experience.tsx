@@ -26,7 +26,11 @@ export function ExperienceSection() {
             events, mentoring, and experimenting with everything from software
             dev to data analysis and machine learning. All while stirring things
             up in the{" "}
-            <Link href="/osc" className="font-bold underline">
+            <Link href="/logs/msp" className="font-bold underline">
+              Microsoft Student Partner (MSP)
+            </Link>{" "}
+            and formerly the{" "}
+            <Link href="/logs/osc" className="font-bold underline">
               Open Source Community (OSC)
             </Link>
             .
