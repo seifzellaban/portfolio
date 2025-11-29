@@ -18,7 +18,7 @@ export default function LogsPage() {
                 We use the original Logs component but provide custom text to make it feel more integrated
                 into this dedicated page.
               */}
-        <div className="relative">
+        <div className="relative w-full mx-auto">
           {/* Optional decorative element before the section */}
           <div className="absolute top-20 left-1/2 -translate-x-1/2 -z-10">
             <ShinyText

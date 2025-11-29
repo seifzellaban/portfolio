@@ -19,8 +19,11 @@ export function LogCard({ post }: LogCardProps) {
               ))}
             </div>
           </div>
-          <h3 className="text-xl font-semibold md:text-2xl lg:text-3xl">
-            <Link href={post.url} className="hover:underline font-serif">
+          <h3 className="font-semibold">
+            <Link
+              href={post.url}
+              className="hover:underline font-serif text-3xl"
+            >
               {post.title}
             </Link>
           </h3>
