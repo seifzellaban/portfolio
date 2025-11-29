@@ -17,7 +17,14 @@ export const projects: Project[] = [
     demoUrl: "https://umbra.wearemasons.com",
     sourceUrl: "https://github.com/wearemasons/umbra",
     impact: "Enabled researchers to visualize 600+ space biology experiments.",
-    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "NASA API"],
+    techStack: [
+      "Next.js",
+      "Shadcn/UI",
+      "Framer Motion",
+      "TypeScript",
+      "Tailwind CSS",
+      "NASA's space biology database",
+    ],
   },
   {
     name: "Masons Landing Page",
@@ -27,14 +34,16 @@ export const projects: Project[] = [
     demoUrl: "https://wearemasons.com",
     sourceUrl: "https://github.com/wearemasons/website",
     impact: "Increased inquiry rate by 40% through improved UX.",
-    techStack: ["Next.js", "React", "Framer Motion", "Tailwind CSS"],
+    techStack: ["Next.js", "Shadcn/UI", "Framer Motion", "Tailwind CSS"],
   },
   {
     name: "Orbit",
-    description: "A real-time 3D solar system sim using NASA APIs",
+    description:
+      "Orbit is an interactive 3D web application designed to simulate the solar system and track Near-Earth Objects (NEOs). This was our official submission for the NASA Space Apps Cairo 2024 hackathon.",
     imageUrl: "/projects/orbit.png",
     sourceUrl: "https://github.com/wearemasons/orbit",
-    techStack: ["React", "Three.js", "NASA API"],
+    impact: "Visualized the entire solar system with some NEOs.",
+    techStack: ["Next.js", "Three.js", "Blender"],
   },
   {
     name: "repAI",
