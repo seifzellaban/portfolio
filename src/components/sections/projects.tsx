@@ -10,54 +10,12 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import Image from "next/image";
 import GitHubCalendar from "react-github-calendar";
 import { useTheme } from "@/lib/theme-provider";
-
-interface Project {
-  name: string;
-  description: string;
-  imageUrl: string;
-  demoUrl?: string;
-  sourceUrl?: string;
-  impact?: string;
-}
-
-const projects: Project[] = [
-  {
-    name: "Umbra",
-    description:
-      "Built for the 2025 NASA Space Apps Challenge, Umbra empowers researchers, mission planners, and citizen scientists to explore, filter, and visualize NASA’s vast library of space biology experiments. Designed to fuel the next era of human space exploration.",
-    imageUrl: "/projects/umbra.png",
-    demoUrl: "https://umbra.wearemasons.com",
-    sourceUrl: "https://github.com/wearemasons/umbra",
-    impact: "Enabled researchers to visualize 600+ space biology experiments.",
-  },
-  {
-    name: "Masons Landing Page",
-    description:
-      "The landing page for my startup focused on building meaningful, impact-driven software for real-world problems.",
-    imageUrl: "/projects/masons.png",
-    demoUrl: "https://wearemasons.com",
-    sourceUrl: "https://github.com/wearemasons/website",
-    impact: "Increased inquiry rate by 40% through improved UX.",
-  },
-  {
-    name: "Orbit",
-    description: "A real-time 3D solar system sim using NASA APIs",
-    imageUrl: "/projects/orbit.png",
-    sourceUrl: "https://github.com/wearemasons/orbit",
-  },
-  {
-    name: "repAI",
-    description:
-      "An AI Powered Recycling App with Rewards and Cashback for building a Sustainable Future, Built for Google's AI-Finance Hackathon 2025 by GDG Cairo",
-    imageUrl: "/projects/repai.png",
-    sourceUrl: "https://github.com/wearemasons/repAI",
-    impact: "Won 5th place at Google's AI-Finance Hackathon 2025.",
-  },
-];
+import { Project, projects } from "@/lib/projects-data";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
@@ -80,6 +38,16 @@ export function ProjectCard({ project }: { project: Project }) {
         <CardDescription className="text-muted-foreground text-lg mb-4 flex-grow">
           {project.description}
         </CardDescription>
+
+        {project.techStack && (
+          <div className="mb-4 flex flex-wrap gap-2">
+            {project.techStack.map((tech) => (
+              <Badge key={tech} variant="secondary" className="text-xs">
+                {tech}
+              </Badge>
+            ))}
+          </div>
+        )}
 
         {project.impact && (
           <div className="mb-4 p-3 bg-muted/50 rounded-md">
