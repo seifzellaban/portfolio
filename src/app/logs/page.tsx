@@ -24,7 +24,7 @@ export default function LogsPage() {
             <ShinyText
               text="THOUGHTS & STORIES"
               speed={4}
-              className="text-sm font-mono tracking-[0.2em] opacity-60"
+              className="text-xs sm:text-sm font-mono tracking-[0.2em] opacity-60 whitespace-nowrap"
             />
           </div>
 
