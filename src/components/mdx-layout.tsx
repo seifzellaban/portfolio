@@ -20,7 +20,7 @@ export function MdxLayout({ children }: { children: ReactNode }) {
   }
 
   const Header = () => (
-    <div className="mb-12">
+    <div>
       <Link
         href="/logs"
         className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-6 transition-colors"
