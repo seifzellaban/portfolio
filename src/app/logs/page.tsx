@@ -1,8 +1,7 @@
 import { Logs } from "@/components/sections/logs";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import ShinyText from "@/components/ShinyText";
+import { NewsletterForm } from "@/components/newsletter-form";
 
 export default function LogsPage() {
   return (
@@ -49,19 +48,7 @@ export default function LogsPage() {
                   No spam, just updates.
                 </p>
               </div>
-              <div className="flex w-full max-w-sm flex-col sm:flex-row items-center gap-3">
-                <Input
-                  type="email"
-                  placeholder="yourname@provider.com"
-                  className="bg-background/50 border-muted-foreground/20 focus-visible:ring-primary/20"
-                />
-                <Button
-                  variant="default"
-                  className="w-full sm:w-auto whitespace-nowrap"
-                >
-                  Subscribe
-                </Button>
-              </div>
+              <NewsletterForm />
             </CardContent>
           </Card>
         </section>

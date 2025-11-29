@@ -57,10 +57,25 @@ export function Contact() {
       message: "",
     },
     onSubmit: async ({ value }) => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(value);
-      toast.success("Message sent successfully!");
-      form.reset();
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(value),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to send message");
+        }
+
+        toast.success("Message sent successfully!");
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        toast.error("Something went wrong. Please try again.");
+      }
     },
   });
 

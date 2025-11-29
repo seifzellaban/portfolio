@@ -97,7 +97,7 @@ const components = {
       // Auto-detect language and highlight
       const result = hljs.highlightAuto(codeContent);
       highlightedHTML = result.value;
-    } catch (error) {
+    } catch {
       // Fallback to plain text if highlighting fails
       highlightedHTML = codeContent;
     }
