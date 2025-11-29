@@ -8,55 +8,10 @@ import {
     CardTitle,
     CardFooter,
 } from "@/components/ui/card";
-import {
-    IconCode,
-    IconRocket,
-    IconPalette,
-    IconDeviceMobile,
-    IconBrandFigma,
-    IconChartBar,
-    IconArrowRight
-} from "@tabler/icons-react";
+import { IconArrowRight } from "@tabler/icons-react";
 import { motion } from "motion/react";
-
-const services = [
-    {
-        title: "Web Development",
-        description:
-            "Building scalable, performant, and secure web applications using modern technologies like Next.js, React, and Node.js.",
-        icon: <IconCode size={32} className="text-primary" />,
-    },
-    {
-        title: "Mobile App Development",
-        description:
-            "Creating native and cross-platform mobile applications that provide seamless user experiences on iOS and Android devices.",
-        icon: <IconDeviceMobile size={32} className="text-primary" />,
-    },
-    {
-        title: "UI/UX Design",
-        description:
-            "Designing intuitive and beautiful user interfaces that prioritize user experience, accessibility, and engagement.",
-        icon: <IconPalette size={32} className="text-primary" />,
-    },
-    {
-        title: "Brand Identity",
-        description:
-            "Crafting unique and memorable brand identities, including logos, typography, and color palettes that resonate with your audience.",
-        icon: <IconBrandFigma size={32} className="text-primary" />,
-    },
-    {
-        title: "Consulting & Strategy",
-        description:
-            "Providing expert advice on digital strategy, technology stack selection, and product roadmap to ensure your project's success.",
-        icon: <IconRocket size={32} className="text-primary" />,
-    },
-    {
-        title: "SEO & Digital Marketing",
-        description:
-            "Optimizing your digital presence to improve visibility, drive organic traffic, and convert visitors into loyal customers.",
-        icon: <IconChartBar size={32} className="text-primary" />,
-    },
-];
+import { services } from "@/lib/services-data";
+import Link from "next/link";
 
 export function Services() {
     return (
@@ -73,7 +28,7 @@ export function Services() {
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {services.map((service, index) => (
                         <motion.div
-                            key={service.title}
+                            key={service.id}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -91,9 +46,9 @@ export function Services() {
                                     </CardDescription>
                                 </CardContent>
                                 <CardFooter className="pt-0 mt-auto">
-                                    <a href="#contact" className="text-sm font-medium text-primary hover:underline inline-flex items-center gap-1">
+                                    <Link href={`/services/${service.id}`} className="text-sm font-medium text-primary hover:underline inline-flex items-center gap-1">
                                         Learn More <IconArrowRight size={16} />
-                                    </a>
+                                    </Link>
                                 </CardFooter>
                             </Card>
                         </motion.div>
@@ -105,12 +60,12 @@ export function Services() {
                         <span className="px-4 py-2 text-sm text-muted-foreground">
                             Ready to start a project?
                         </span>
-                        <a
+                        <Link
                             href="#contact"
                             className="px-6 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors"
                         >
                             Get in Touch
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
