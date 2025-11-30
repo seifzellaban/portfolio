@@ -24,7 +24,7 @@ export const posts: Post[] = [
     published: "2025-9-28",
     url: "/logs/osc",
     image: "/logthumb.webp",
-    tags: ["Storytelling", "Work Culture", "Lessons Learned", "Growth"],
+    tags: ["Storytelling", "Work Culture", "Growth"],
   },
   {
     id: "post-5",
@@ -36,13 +36,7 @@ export const posts: Post[] = [
     published: "2025-11-20",
     url: "/logs/msp",
     image: "/logthumb.webp",
-    tags: [
-      "Leadership",
-      "Organizational Design",
-      "Systems Engineering",
-      "Audio AI",
-      "Strategy",
-    ],
+    tags: ["Leadership", "Audio AI", "Strategy"],
   },
   {
     id: "post-4",
@@ -54,7 +48,7 @@ export const posts: Post[] = [
     published: "2025-11-28",
     url: "/logs/gp-idea",
     image: "/logthumb.webp",
-    tags: ["AI", "Systems Engineering", "Project Pitch", "Local-First", "NLP"],
+    tags: ["AI", "Project Pitch", "NLP"],
     pinned: true,
   },
   {
@@ -67,7 +61,7 @@ export const posts: Post[] = [
     published: "2025-9-8",
     url: "/logs/misread-productivity",
     image: "/logthumb.webp",
-    tags: ["Storytelling", "Work Culture", "Lessons Learned", "Growth"],
+    tags: ["Storytelling", "Work Culture", "Growth"],
     pinned: false,
     hidden: true,
   },
@@ -82,7 +76,7 @@ export const posts: Post[] = [
     published: "2025-9-1",
     url: "/logs/wbh",
     image: "/logthumb.webp",
-    tags: ["Leadership", "OSC", "Planning", "Student Life"],
+    tags: ["Leadership", "OSC", "Planning",
     pinned: false,
   },
   {
@@ -95,7 +89,7 @@ export const posts: Post[] = [
     published: "2025-5-20",
     url: "https://wearemasons.com/en/case-studies/rafiqi",
     image: "/logthumb.webp",
-    tags: ["Mental Health", "AI", "Culture", "Case Study"],
+    tags: ["Mental Health", "AI", "Case Study"],
     pinned: true,
   },
 ];
