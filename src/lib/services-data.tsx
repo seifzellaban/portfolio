@@ -46,7 +46,7 @@ export const services: Service[] = [
       "Performance Optimization",
     ],
     timeRange: "4 - 12 Weeks",
-    priceRange: "EGP3,000 - EGP15,000+",
+    priceRange: "EGP5,000 - EGP15,000+",
     layoutType: "two-column-cards",
   },
   {
@@ -59,7 +59,7 @@ export const services: Service[] = [
     icon: <IconDeviceMobile size={32} className="text-primary" />,
     features: [
       "iOS & Android App Development",
-      "Cross-Platform Development (React Native/Flutter)",
+      "Cross-Platform Development (React Native/Expo)",
       "UI/UX Design for Mobile",
       "App Store Optimization (ASO)",
       "Maintenance & Support",
@@ -86,7 +86,7 @@ export const services: Service[] = [
       "Accessibility Audits",
     ],
     timeRange: "3 - 8 Weeks",
-    priceRange: "EGP2,500 - EGP10,000",
+    priceRange: "EGP2,500 - EGP10,000+",
     layoutType: "grid-features",
   },
   {
@@ -106,7 +106,7 @@ export const services: Service[] = [
       "Rebranding Services",
     ],
     timeRange: "2 - 6 Weeks",
-    priceRange: "EGP1,500 - EGP8,000",
+    priceRange: "EGP120/hr or Project Basis",
     layoutType: "minimal-centered",
   },
   {
