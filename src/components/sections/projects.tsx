@@ -108,6 +108,10 @@ export function ProjectsSection() {
         <h2 className="font-bold tracking-tight text-foreground text-3xl sm:text-4xl text-center mb-12">
           Projects
         </h2>
+        <p className="mx-auto max-w-2xl text-muted-foreground text-base md:text-xl">
+          Selected works highlighting my proficiency in full-stack development
+          and system design.
+        </p>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2">
           {projects.map((project) => (
             <ProjectCard key={project.name} project={project} />
