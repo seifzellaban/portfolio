@@ -76,7 +76,7 @@ export const posts: Post[] = [
     published: "2025-9-1",
     url: "/logs/wbh",
     image: "/logthumb.webp",
-    tags: ["Leadership", "OSC", "Planning",
+    tags: ["Leadership", "OSC", "Planning"],
     pinned: false,
   },
   {
