@@ -44,7 +44,7 @@ export function TechStackMarquee() {
       {techStack.map((tech) => (
         <div
           key={tech.name}
-          className="flex items-center space-x-4 mx-4 pt-16 text-muted-foreground"
+          className="flex items-center space-x-4 mx-4 pt-16 pb-16 text-muted-foreground"
         >
           {tech.icon}
           <span className="text-2xl font-semibold text-muted-foreground">

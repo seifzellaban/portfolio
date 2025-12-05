@@ -103,12 +103,12 @@ export function ProjectsSection() {
     });
   };
   return (
-    <section id="projects" className="py-24 sm:py-32">
+    <section id="projects" className="py-24 sm:py-32 bg-muted/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 className="font-bold tracking-tight text-foreground text-3xl sm:text-4xl text-center mb-12">
+        <h2 className="font-bold tracking-tight text-foreground text-3xl sm:text-4xl text-center mb-6">
           Projects
         </h2>
-        <p className="mx-auto max-w-2xl text-muted-foreground text-base md:text-xl">
+        <p className="mx-auto max-w-2xl text-muted-foreground text-base text-center md:text-xl mb-12">
           Selected works highlighting my proficiency in full-stack development
           and system design.
         </p>

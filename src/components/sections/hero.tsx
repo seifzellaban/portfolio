@@ -60,8 +60,8 @@ export default function Hero() {
           style={{ opacity: 0.4 }}
         />
         {/* Gradient Orbs for depth */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-screen animate-blob" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-screen animate-blob animation-delay-2000" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-screen animate-blob" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-screen animate-blob" />
       </div>
 
       <motion.div
@@ -86,7 +86,7 @@ export default function Hero() {
               Developer
             </motion.span>
             <motion.div
-              className="block mt-2 overflow-hidden"
+              className="block mt-2 overflow-hidden py-2"
               variants={textVariants}
               transition={{ delay: 0.2 }}
             >
