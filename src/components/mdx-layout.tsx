@@ -35,7 +35,7 @@ export function MdxLayout({ children }: { children: ReactNode }) {
       className="min-h-screen flex flex-col bg-background text-foreground mt-8"
       data-mdx-page
     >
-      <main className="flex-1 w-full max-w-4xl mx-auto px-4 md:px-6 py-10">
+      <main className="flex-1 w-full max-w-5xl mx-auto px-4 md:px-6 py-10">
         <Header />
         {children}
       </main>
