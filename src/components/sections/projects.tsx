@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,9 +14,13 @@ import {
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import Image from "next/image";
-import GitHubCalendar from "react-github-calendar";
 import { useTheme } from "@/lib/theme-provider";
 import { Project, projects } from "@/lib/projects-data";
+
+const GitHubCalendar = dynamic(
+  () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
+  { ssr: false }
+);
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
