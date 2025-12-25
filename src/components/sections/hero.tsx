@@ -99,14 +99,15 @@ export default function Hero() {
 
         <motion.div variants={itemVariants} className="text-center mb-16">
           <p className="text-xl md:text-2xl text-muted-foreground/80 font-light max-w-2xl mx-auto leading-relaxed tracking-wide">
-            Crafting digital experiences that blend{" "}
+            I build{" "}
             <span className="text-foreground font-medium decoration-primary/30 underline decoration-2 underline-offset-4">
-              innovation
-            </span>{" "}
-            with{" "}
-            <span className="text-foreground font-medium decoration-primary/30 underline decoration-2 underline-offset-4">
-              intuitive design
+              products that ship
             </span>
+            , solve{" "}
+            <span className="text-foreground font-medium decoration-primary/30 underline decoration-2 underline-offset-4">
+              real problems
+            </span>
+            , and make users happy.
           </p>
         </motion.div>
 
