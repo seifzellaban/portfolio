@@ -8,7 +8,7 @@ export function ExperienceSection() {
     {
       title: "Sep 2022",
       content: (
-        <div>
+        <div key="edu-asu">
           <h3 className="mb-2 text-2xl font-semibold">
             Attended Ain Shams University
           </h3>
@@ -41,7 +41,7 @@ export function ExperienceSection() {
     {
       title: "Sep 2023 – Present",
       content: (
-        <div>
+        <div key="founded-masons">
           <h3 className="mb-2 text-2xl font-semibold">Founded Masons</h3>
           <div className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
             Launched{" "}
@@ -105,17 +105,17 @@ export function ExperienceSection() {
                   cashback
                 </div>
               </div>
-              <div className="mb-2">
-                <p className="text-base font-medium text-muted-foreground md:text-lg">
-                  <strong>Oct 2025 — NASA Space Apps Challenge</strong>
-                </p>
-                <div className="ml-4 mt-1">
-                  <div className="flex items-center gap-2 text-base text-muted-foreground/80 md:text-lg">
-                    🪐 Umbra: Interactive platform to explore, filter, and
-                    visualize NASA’s space biology experiments; empowering
-                    researchers and citizen scientists to fuel the next era of
-                    human space exploration
-                  </div>
+            </div>
+            <div className="mb-2">
+              <p className="text-base font-medium text-muted-foreground md:text-lg">
+                <strong>Oct 2025 — NASA Space Apps Challenge</strong>
+              </p>
+              <div className="ml-4 mt-1">
+                <div className="flex items-center gap-2 text-base text-muted-foreground/80 md:text-lg">
+                  🪐 Umbra: Interactive platform to explore, filter, and
+                  visualize NASA’s space biology experiments; empowering
+                  researchers and citizen scientists to fuel the next era of
+                  human space exploration
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@ export function ExperienceSection() {
     {
       title: "Sep 2024",
       content: (
-        <div>
+        <div key="intern-cib">
           <h3 className="mb-2 text-2xl font-semibold">
             Fintech Intern @ CIB Egypt
           </h3>
@@ -145,7 +145,7 @@ export function ExperienceSection() {
     {
       title: "Nov 2024 – May 2025",
       content: (
-        <div>
+        <div key="intern-depi">
           <h3 className="mb-2 text-2xl font-semibold">
             Full Stack Intern @ DEPI
           </h3>
