@@ -8,7 +8,7 @@ import { Suspense } from "react";
 import { CustomCursor } from "@/components/custom-cursor";
 
 export const metadata: Metadata = {
-  title: "Seif",
+  title: "Seif Zakaria — Fullstack Developer & Founder",
   description:
     "Seif Zakaria - Full-stack Software Engineer from Cairo, Egypt. Founder of Masons building AI-driven mental health platform Rafiqi. Specializing in React, Next.js, TypeScript, and Python with expertise in fintech, AI integration, and real-time applications. NASA Space Apps finalist and hackathon winner.",
   keywords: [

@@ -34,35 +34,37 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
       ref={containerRef}
     >
       <div className="flex flex-col items-center max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="text-3xl sm:text-4xl mb-4 text-foreground max-w-4xl font-bold">
+        <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl mb-4 text-foreground max-w-4xl font-bold tracking-tight">
           My Journey
         </h2>
+        <div className="mt-1 mb-4 h-[2px] w-16 bg-primary" />
         <p className="text-muted-foreground text-base md:text-xl max-w-xl text-center">
           A chronological journey through my education, startup ventures,
           internships, and hackathon-driven milestones.
         </p>
       </div>
 
-            <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
-              {data.map((item) => (
-                <div key={item.title} className="flex justify-start pt-10 md:gap-10">
-                  <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
-                    <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-background flex items-center justify-center">
-                      <div className="h-4 w-4 rounded-full bg-muted border border-border p-2" />
-                    </div>
-                    <h3 className="hidden md:block text-xl md:pl-20 md:text-5xl font-bold text-muted-foreground">
-                      {item.title}
-                    </h3>
-                  </div>
-      
-                  <div className="relative pl-20 pr-4 md:pl-4 w-full">
-                    <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-muted-foreground">
-                      {item.title}
-                    </h3>
-                    {item.content}
-                  </div>
-                </div>
-              ))}        <div
+      <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
+        {data.map((item) => (
+          <div key={item.title} className="flex justify-start pt-10 md:gap-10">
+            <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+              <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-background flex items-center justify-center">
+                <div className="h-4 w-4 rounded-full bg-primary/30 border border-primary/50 p-2" />
+              </div>
+              <h3 className="hidden md:block text-xl md:pl-20 md:text-5xl font-serif font-bold text-muted-foreground">
+                {item.title}
+              </h3>
+            </div>
+
+            <div className="relative pl-20 pr-4 md:pl-4 w-full">
+              <h3 className="md:hidden block text-2xl mb-4 text-left font-serif font-bold text-muted-foreground">
+                {item.title}
+              </h3>
+              {item.content}
+            </div>
+          </div>
+        ))}{" "}
+        <div
           style={{
             height: height + "px",
           }}

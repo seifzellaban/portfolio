@@ -13,12 +13,8 @@ export default function LogsPage() {
       </div>
 
       <main className="mx-auto relative z-10">
-        {/*
-                We use the original Logs component but provide custom text to make it feel more integrated
-                into this dedicated page.
-              */}
         <div className="relative w-full mx-auto">
-          {/* Optional decorative element before the section */}
+          {/* Decorative element */}
           <div className="absolute top-20 left-1/2 -translate-x-1/2 -z-10">
             <ShinyText
               text="THOUGHTS & STORIES"
@@ -35,15 +31,15 @@ export default function LogsPage() {
 
         {/* Newsletter / CTA Section */}
         <section className="pb-32 max-w-7xl mx-auto px-4">
-          {" "}
-          <Card className="bg-muted/30 border-muted overflow-hidden relative backdrop-blur-sm">
+          <Card className="bg-card/50 border-border/50 overflow-hidden relative backdrop-blur-sm">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-50" />
             <CardContent className="p-8 sm:p-12 flex flex-col md:flex-row gap-8 items-center justify-between relative z-10">
               <div className="space-y-2 text-center md:text-left">
-                <h3 className="text-4xl font-bold tracking-tight font-serif">
+                <h3 className="font-serif text-4xl font-bold tracking-tight">
                   Stay in the loop
                 </h3>
-                <p className="text-muted-foreground max-w-xs text-base leading-relaxed">
+                <div className="h-[2px] w-12 bg-primary mx-auto md:mx-0" />
+                <p className="text-muted-foreground max-w-xs text-base leading-relaxed pt-2">
                   I write about engineering, leadership, and building products.
                   No spam, just updates.
                 </p>

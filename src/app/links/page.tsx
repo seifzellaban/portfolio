@@ -15,7 +15,6 @@ import {
 import { LogoSvg } from "@/components/logo";
 import { DownloadResumeButton } from "@/components/download-resume";
 
-
 const links = [
   {
     title: "Website",
@@ -60,21 +59,23 @@ export default function Linktree() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 mt-4 mb-14">
       {/* Profile Section */}
-      <Card className="w-full max-w-sm border-border text-center">
+      <Card className="w-full max-w-sm border-border/50 text-center">
         <CardContent className="flex flex-col items-center gap-4">
           <Image
             src="/seifalt.jpg"
             alt="avatar"
             width={150}
             height={150}
-            className="w-36 h-36 rounded-full border border-border"
+            className="w-36 h-36 rounded-full border border-primary/30"
           />
           <div>
-            <h1 className="text-xl font-bold text-foreground">
+            <h1 className="font-serif text-2xl font-bold text-foreground">
               Seif Zakaria Ellaban
             </h1>
-            <p className="text-sm text-muted-foreground">Software Engineer</p>
-            <p className="mt-3 text-sm leading-relaxed text-foreground max-w-xs italic">
+            <p className="text-sm font-mono uppercase tracking-widest text-muted-foreground mt-1">
+              Software Engineer
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-foreground max-w-xs italic font-serif">
               building way too many side projects ✦ full-time linux enjoyer 🐧 ✦
               good at Valorant (or so I tell myself) ✦ chronically online
             </p>
@@ -88,12 +89,12 @@ export default function Linktree() {
           <Button
             key={i}
             variant="outline"
-            className="w-full justify-start gap-3 border-border text-foreground"
+            className="w-full justify-start gap-3 border-border/50 text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
             asChild
           >
             <Link href={link.url} target="_blank">
               {link.icon}
-              {link.title}
+              <span className="font-medium">{link.title}</span>
             </Link>
           </Button>
         ))}

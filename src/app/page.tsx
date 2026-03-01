@@ -15,6 +15,7 @@ export default function Page() {
       <About />
       <Services />
       <ExperienceSection />
+      <div className="mt-16" />
       <TechStackMarquee />
       <ProjectsSection />
       <Logs count={3} />

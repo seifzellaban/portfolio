@@ -24,19 +24,19 @@ const components = {
   ),
   h2: (props: HeadingProps) => (
     <h2
-      className="scroll-m-20 text-4xl font-bold tracking-tight border-b border-border pb-2 mt-10 mb-4 text-foreground"
+      className="scroll-m-20 font-serif text-4xl font-bold tracking-tight border-b border-border/50 pb-3 mt-12 mb-5 text-foreground"
       {...props}
     />
   ),
   h3: (props: HeadingProps) => (
     <h3
-      className="scroll-m-20 text-3xl font-semibold tracking-tight mt-8 mb-3 text-foreground"
+      className="scroll-m-20 font-serif text-3xl font-semibold tracking-tight mt-10 mb-3 text-foreground"
       {...props}
     />
   ),
   h4: (props: HeadingProps) => (
     <h4
-      className="scroll-m-20 text-2xl font-medium tracking-tight mt-6 mb-2 text-foreground"
+      className="scroll-m-20 font-serif text-2xl font-medium tracking-tight mt-8 mb-2 text-foreground"
       {...props}
     />
   ),
@@ -155,7 +155,7 @@ const components = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="mt-6 border-l-4 pl-6 italic text-foreground/80 border-primary bg-muted/40 pt-4 pb-0.5 rounded-md"
+      className="mt-6 mb-6 border-l-4 pl-6 italic font-serif text-foreground/80 text-lg leading-relaxed border-primary bg-muted/30 pt-4 pb-1 rounded-r-lg"
       {...props}
     />
   ),

@@ -25,12 +25,11 @@ export default async function ServicePage({
     notFound();
   }
 
-  // Shared Header for all layouts (can be customized per layout if desired, but kept consistent for now)
   const Header = () => (
     <div className="mb-12">
       <Link
         href="/#services"
-        className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-6 transition-colors"
+        className="inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary mb-6 transition-colors"
       >
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to Services
       </Link>
@@ -38,9 +37,12 @@ export default async function ServicePage({
         <div className="p-3 bg-primary/10 rounded-xl text-primary">
           {service.icon}
         </div>
-        <h1 className="text-4xl font-bold tracking-tight">{service.title}</h1>
+        <h1 className="font-serif text-4xl font-bold tracking-tight">
+          {service.title}
+        </h1>
       </div>
-      <p className="text-xl text-muted-foreground max-w-2xl">
+      <div className="mt-2 h-[2px] w-16 bg-primary" />
+      <p className="mt-4 text-xl text-muted-foreground max-w-2xl">
         {service.description}
       </p>
     </div>
@@ -48,31 +50,43 @@ export default async function ServicePage({
 
   const MetaInfo = ({ className }: { className?: string }) => (
     <div className={cn("flex flex-wrap gap-4", className)}>
-      <Badge variant="outline" className="px-4 py-2 text-sm gap-2">
-        <Clock className="h-4 w-4" />
+      <Badge
+        variant="outline"
+        className="px-4 py-2 text-sm gap-2 border-primary/20"
+      >
+        <Clock className="h-4 w-4 text-primary" />
         {service.timeRange}
       </Badge>
-      <Badge variant="outline" className="px-4 py-2 text-sm gap-2">
-        <Banknote className="h-4 w-4" />
+      <Badge
+        variant="outline"
+        className="px-4 py-2 text-sm gap-2 border-primary/20"
+      >
+        <Banknote className="h-4 w-4 text-primary" />
         {service.priceRange}
       </Badge>
     </div>
   );
 
   const CTA = () => (
-    <div className="mt-16 p-8 rounded-2xl bg-muted/50 border border-border text-center">
-      <h3 className="text-2xl font-semibold mb-4">Ready to get started?</h3>
+    <div className="mt-16 p-8 rounded-2xl bg-card border border-border/50 text-center">
+      <h3 className="font-serif text-2xl font-bold mb-4">
+        Ready to get started?
+      </h3>
+      <div className="h-[2px] w-12 bg-primary mx-auto mb-4" />
       <p className="text-muted-foreground mb-6">
         Let&apos;s discuss how our {service.title} services can help your
         business grow.
       </p>
-      <Button asChild size="lg">
+      <Button
+        asChild
+        size="lg"
+        className="bg-primary text-primary-foreground hover:bg-primary/90"
+      >
         <Link href="/#contact">Book a Consultation</Link>
       </Button>
     </div>
   );
 
-  // Layout Implementations
   const renderLayout = () => {
     switch (service.layoutType) {
       case "two-column-cards":
@@ -88,10 +102,15 @@ export default async function ServicePage({
               <MetaInfo className="mb-8" />
             </div>
             <div className="space-y-6">
-              <h3 className="text-xl font-semibold mb-4">Key Features</h3>
+              <h3 className="font-serif text-xl font-semibold mb-4">
+                Key Features
+              </h3>
               <div className="grid gap-4">
                 {service.features.map((feature, idx) => (
-                  <Card key={idx} className="border-l-4 border-l-primary">
+                  <Card
+                    key={idx}
+                    className="border-l-4 border-l-primary border-border/50"
+                  >
                     <CardContent className="p-4 flex items-center gap-3">
                       <Check className="h-5 w-5 text-primary shrink-0" />
                       <span className="font-medium">{feature}</span>
@@ -109,24 +128,25 @@ export default async function ServicePage({
             <div className="mb-12 flex flex-col items-center">
               <Link
                 href="/#services"
-                className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-6 transition-colors"
+                className="inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary mb-6 transition-colors"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back to Services
               </Link>
               <div className="p-4 bg-primary/10 rounded-full text-primary mb-6">
                 {service.icon}
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+              <h1 className="font-serif text-4xl md:text-5xl font-bold tracking-tight mb-4">
                 {service.title}
               </h1>
+              <div className="h-[2px] w-16 bg-primary mx-auto mb-6" />
               <p className="text-xl text-muted-foreground leading-relaxed mb-8">
                 {service.fullDescription}
               </p>
               <MetaInfo className="justify-center mb-12" />
             </div>
 
-            <div className="bg-card rounded-3xl p-8 md:p-12 border shadow-sm text-left">
-              <h3 className="text-2xl font-semibold mb-8 text-center">
+            <div className="bg-card rounded-2xl p-8 md:p-12 border border-border/50 text-left">
+              <h3 className="font-serif text-2xl font-bold mb-8 text-center">
                 What&apos;s Included
               </h3>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
@@ -154,19 +174,19 @@ export default async function ServicePage({
             </div>
             <MetaInfo className="mb-12" />
 
-            <h3 className="text-2xl font-bold mb-8">
-              Our Process & Capabilities
+            <h3 className="font-serif text-2xl font-bold mb-8">
+              Our Process &amp; Capabilities
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {service.features.map((feature, idx) => (
                 <Card
                   key={idx}
-                  className="bg-muted/30 border-0 hover:bg-muted/50 transition-colors"
+                  className="bg-card border-border/50 hover:border-primary/30 transition-colors"
                 >
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
-                      <div className="h-8 w-8 rounded-lg bg-background flex items-center justify-center border shadow-sm">
-                        <span className="text-primary font-bold">
+                      <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
+                        <span className="text-primary font-bold text-sm">
                           {idx + 1}
                         </span>
                       </div>
@@ -184,16 +204,17 @@ export default async function ServicePage({
       case "minimal-centered":
         return (
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16 border-b pb-16">
+            <div className="text-center mb-16 border-b border-border/50 pb-16">
               <Link
                 href="/#services"
-                className="text-sm text-muted-foreground hover:text-primary mb-8 inline-block"
+                className="text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary mb-8 inline-block transition-colors"
               >
                 ← Back
               </Link>
-              <h1 className="text-6xl font-light tracking-tight mb-8">
+              <h1 className="font-serif text-5xl lg:text-6xl font-light tracking-tight mb-4">
                 {service.title}
               </h1>
+              <div className="h-[2px] w-16 bg-primary mx-auto mb-8" />
               <p className="text-2xl font-light text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                 {service.fullDescription}
               </p>
@@ -201,22 +222,22 @@ export default async function ServicePage({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
               <div>
-                <h3 className="text-xl font-medium uppercase tracking-widest mb-6 text-muted-foreground">
+                <h3 className="font-serif text-xl font-medium uppercase tracking-widest mb-6 text-muted-foreground">
                   Details
                 </h3>
                 <div className="space-y-4">
-                  <div className="flex justify-between border-b py-3">
+                  <div className="flex justify-between border-b border-border/50 py-3">
                     <span>Estimated Time</span>
                     <span className="font-medium">{service.timeRange}</span>
                   </div>
-                  <div className="flex justify-between border-b py-3">
+                  <div className="flex justify-between border-b border-border/50 py-3">
                     <span>Starting Price</span>
                     <span className="font-medium">{service.priceRange}</span>
                   </div>
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-medium uppercase tracking-widest mb-6 text-muted-foreground">
+                <h3 className="font-serif text-xl font-medium uppercase tracking-widest mb-6 text-muted-foreground">
                   Scope
                 </h3>
                 <ul className="space-y-3">
@@ -239,7 +260,7 @@ export default async function ServicePage({
               <Header />
               <div className="mt-8 space-y-4">
                 <div className="flex items-center gap-3 text-muted-foreground">
-                  <Calendar className="h-5 w-5" />
+                  <Calendar className="h-5 w-5 text-primary" />
                   <span>
                     Timeline:{" "}
                     <span className="text-foreground font-medium">
@@ -248,7 +269,7 @@ export default async function ServicePage({
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-muted-foreground">
-                  <Banknote className="h-5 w-5" />
+                  <Banknote className="h-5 w-5 text-primary" />
                   <span>
                     Investment:{" "}
                     <span className="text-foreground font-medium">
@@ -259,16 +280,18 @@ export default async function ServicePage({
               </div>
             </div>
             <div className="lg:col-span-7">
-              <div className="bg-card border rounded-2xl p-8">
-                <h3 className="text-xl font-bold mb-8">Consulting Scope</h3>
-                <div className="space-y-8 relative before:absolute before:inset-y-0 before:left-4 before:w-0.5 before:bg-border">
+              <div className="bg-card border border-border/50 rounded-2xl p-8">
+                <h3 className="font-serif text-xl font-bold mb-8">
+                  Consulting Scope
+                </h3>
+                <div className="space-y-8 relative before:absolute before:inset-y-0 before:left-4 before:w-0.5 before:bg-primary/20">
                   {service.features.map((feature, idx) => (
                     <div key={idx} className="relative flex gap-6">
                       <div className="h-8 w-8 rounded-full bg-background border-2 border-primary z-10 flex items-center justify-center shrink-0 text-xs font-bold">
                         {idx + 1}
                       </div>
                       <div className="pt-1">
-                        <h4 className="font-semibold text-lg mb-1">
+                        <h4 className="font-serif font-semibold text-lg mb-1">
                           {feature}
                         </h4>
                         <p className="text-muted-foreground text-sm">
@@ -290,19 +313,21 @@ export default async function ServicePage({
             <Header />
             <div className="grid md:grid-cols-3 gap-8 mt-12">
               <div className="md:col-span-2">
-                <h3 className="text-2xl font-semibold mb-6">
+                <h3 className="font-serif text-2xl font-bold mb-6">
                   Service Overview
                 </h3>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                   {service.fullDescription}
                 </p>
 
-                <h3 className="text-xl font-semibold mb-4">What We Deliver</h3>
+                <h3 className="font-serif text-xl font-semibold mb-4">
+                  What We Deliver
+                </h3>
                 <ul className="space-y-3">
                   {service.features.map((feature, idx) => (
                     <li
                       key={idx}
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/5 transition-colors"
                     >
                       <Check className="h-5 w-5 text-primary" />
                       <span>{feature}</span>
@@ -311,29 +336,34 @@ export default async function ServicePage({
                 </ul>
               </div>
               <div className="md:col-span-1">
-                <Card>
+                <Card className="border-border/50">
                   <CardHeader>
-                    <CardTitle>At a Glance</CardTitle>
+                    <CardTitle className="font-serif">At a Glance</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <div>
-                      <div className="text-sm text-muted-foreground mb-1">
+                      <div className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-1">
                         Estimated Duration
                       </div>
                       <div className="font-semibold flex items-center gap-2">
-                        <Clock className="h-4 w-4" /> {service.timeRange}
+                        <Clock className="h-4 w-4 text-primary" />{" "}
+                        {service.timeRange}
                       </div>
                     </div>
                     <div>
-                      <div className="text-sm text-muted-foreground mb-1">
+                      <div className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-1">
                         Investment Range
                       </div>
                       <div className="font-semibold flex items-center gap-2">
-                        <Banknote className="h-4 w-4" /> {service.priceRange}
+                        <Banknote className="h-4 w-4 text-primary" />{" "}
+                        {service.priceRange}
                       </div>
                     </div>
-                    <div className="pt-4 border-t">
-                      <Button className="w-full" asChild>
+                    <div className="pt-4 border-t border-border/50">
+                      <Button
+                        className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                        asChild
+                      >
                         <Link href="/#contact">Get a Quote</Link>
                       </Button>
                     </div>

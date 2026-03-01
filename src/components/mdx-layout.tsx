@@ -20,13 +20,14 @@ export function MdxLayout({ children }: { children: ReactNode }) {
   }
 
   const Header = () => (
-    <div>
+    <div className="mb-8">
       <Link
         href="/logs"
-        className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-6 transition-colors"
+        className="inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary mb-4 transition-colors"
       >
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to Logs
       </Link>
+      <div className="h-[2px] w-12 bg-primary mt-2" />
     </div>
   );
 

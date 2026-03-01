@@ -9,7 +9,7 @@ export function ExperienceSection() {
       title: "Sep 2022",
       content: (
         <div key="edu-asu">
-          <h3 className="mb-2 text-2xl font-semibold">
+          <h3 className="mb-2 text-2xl font-serif font-semibold">
             Attended Ain Shams University
           </h3>
           <div className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
@@ -42,7 +42,9 @@ export function ExperienceSection() {
       title: "Sep 2023 – Present",
       content: (
         <div key="founded-masons">
-          <h3 className="mb-2 text-2xl font-semibold">Founded Masons</h3>
+          <h3 className="mb-2 text-2xl font-serif font-semibold">
+            Founded Masons
+          </h3>
           <div className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
             Launched{" "}
             <LinkPreview
@@ -127,7 +129,7 @@ export function ExperienceSection() {
       title: "Sep 2024",
       content: (
         <div key="intern-cib">
-          <h3 className="mb-2 text-2xl font-semibold">
+          <h3 className="mb-2 text-2xl font-serif font-semibold">
             Fintech Intern @ CIB Egypt
           </h3>
           <p className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
@@ -146,7 +148,7 @@ export function ExperienceSection() {
       title: "Nov 2024 – May 2025",
       content: (
         <div key="intern-depi">
-          <h3 className="mb-2 text-2xl font-semibold">
+          <h3 className="mb-2 text-2xl font-serif font-semibold">
             Full Stack Intern @ DEPI
           </h3>
           <p className="mb-4 text-base font-normal text-muted-foreground md:text-lg">

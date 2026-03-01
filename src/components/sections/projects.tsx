@@ -3,82 +3,108 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/lib/theme-provider";
 import { Project, projects } from "@/lib/projects-data";
+import { motion } from "motion/react";
 
 const GitHubCalendar = dynamic(
   () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
   { ssr: false }
 );
 
-export function ProjectCard({ project }: { project: Project }) {
+function BentoProjectCard({
+  project,
+  index,
+  className = "",
+}: {
+  project: Project;
+  index: number;
+  className?: string;
+}) {
+  const isLarge = index === 0;
+
   return (
-    <Card className="flex flex-col bg-card rounded-lg shadow-md">
-      <CardContent className="flex flex-col flex-grow">
-        <div className="relative w-full mb-4 aspect-[4/3] sm:aspect-video lg:aspect-[5/4] xl:aspect-video">
-          <Image
-            src={project.imageUrl}
-            alt={project.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="rounded-lg object-cover"
-          />
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      viewport={{ once: true }}
+      className={`group relative overflow-hidden rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all duration-500 ${className}`}
+    >
+      {/* Image */}
+      <div
+        className={`relative w-full ${isLarge ? "aspect-[16/9]" : "aspect-[4/3]"}`}
+      >
+        <Image
+          src={project.imageUrl}
+          alt={project.name}
+          fill
+          sizes={
+            isLarge
+              ? "(max-width: 768px) 100vw, 66vw"
+              : "(max-width: 768px) 100vw, 33vw"
+          }
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+      </div>
+
+      {/* Info bar */}
+      <div className="p-4 flex items-center justify-between">
+        <div>
+          <h3 className="font-serif text-lg font-semibold">{project.name}</h3>
+          {project.impact && (
+            <p className="text-xs text-muted-foreground mt-1">
+              {project.impact}
+            </p>
+          )}
         </div>
+        <div className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-primary transition-colors duration-300" />
+      </div>
 
-        <CardTitle className="text-2xl font-semibold mb-2">
-          {project.name}
-        </CardTitle>
-
-        <CardDescription className="text-muted-foreground text-lg mb-4 flex-grow">
+      {/* Frosted overlay on hover — covers entire card */}
+      <div className="absolute inset-0 bg-background/90 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 z-10">
+        <h3 className="font-serif text-xl font-bold mb-2">{project.name}</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed mb-4">
           {project.description}
-        </CardDescription>
-
+        </p>
         {project.techStack && (
-          <div className="mb-4 flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-4">
             {project.techStack.map((tech) => (
-              <Badge key={tech} variant="secondary" className="text-xs">
+              <Badge
+                key={tech}
+                variant="secondary"
+                className="text-xs bg-foreground/10 border-none"
+              >
                 {tech}
               </Badge>
             ))}
           </div>
         )}
-
-        {project.impact && (
-          <div className="mb-4 p-3 bg-muted/50 rounded-md">
-            <p className="text-base font-medium text-foreground">
-              Impact:{" "}
-              <span className="text-muted-foreground font-normal">
-                {project.impact}
-              </span>
-            </p>
-          </div>
-        )}
-
-        <CardFooter className="flex gap-4 mt-auto p-0">
+        <div className="flex gap-3">
           {project.demoUrl && (
-            <Link href={project.demoUrl} passHref>
-              <Button variant="outline">Visit Demo</Button>
+            <Link href={project.demoUrl} target="_blank">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-primary/30 hover:bg-primary/10 hover:border-primary/50"
+              >
+                Visit Demo
+              </Button>
             </Link>
           )}
           {project.sourceUrl && (
-            <Link href={project.sourceUrl} passHref>
-              <Button variant="outline">View Source Code</Button>
+            <Link href={project.sourceUrl} target="_blank">
+              <Button variant="ghost" size="sm">
+                Source Code
+              </Button>
             </Link>
           )}
-        </CardFooter>
-      </CardContent>
-    </Card>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
@@ -94,53 +120,68 @@ export function ProjectsSection() {
   const selectMonths = (contributions: Activity[]): Activity[] => {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
-    const shownMonths = 9;
+    const shownMonths = 12;
 
     return contributions.filter((activity: Activity) => {
       const date = new Date(activity.date);
       const monthOfDay = date.getMonth();
+      const yearOfDay = date.getFullYear();
 
-      return (
-        date.getFullYear() === currentYear &&
-        monthOfDay > currentMonth - shownMonths &&
-        monthOfDay <= currentMonth
-      );
+      const monthsAgo =
+        (currentYear - yearOfDay) * 12 + (currentMonth - monthOfDay);
+      return monthsAgo >= 0 && monthsAgo < shownMonths;
     });
   };
+
   return (
-    <section id="projects" className="py-24 sm:py-32 bg-muted/30">
+    <section id="projects" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 className="font-bold tracking-tight text-foreground text-3xl sm:text-4xl text-center mb-6">
-          Projects
-        </h2>
-        <p className="mx-auto max-w-2xl text-muted-foreground text-base text-center md:text-xl mb-12">
-          Selected works highlighting my proficiency in full-stack development
-          and system design.
-        </p>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2">
-          {projects.map((project) => (
-            <ProjectCard key={project.name} project={project} />
+        {/* Editorial heading */}
+        <div className="mb-16">
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
+            Projects
+          </h2>
+          <div className="mt-3 h-[2px] w-16 bg-primary" />
+          <p className="mt-6 max-w-2xl text-muted-foreground text-lg">
+            Selected works highlighting proficiency in full-stack development
+            and system design.
+          </p>
+        </div>
+
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {projects.map((project, index) => (
+            <BentoProjectCard
+              key={project.name}
+              project={project}
+              index={index}
+              className={index === 0 ? "md:col-span-2" : ""}
+            />
           ))}
         </div>
-      </div>
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-8">
-        <Card className="w-full max-w-3xl mx-auto">
-          <CardHeader>
-            <CardTitle className="text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              My Github Contributions
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center justify-center space-y-8">
+
+        {/* GitHub Calendar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mt-16 p-8 rounded-xl bg-card border border-border/50"
+        >
+          <h3 className="font-serif text-2xl font-semibold text-center mb-8">
+            GitHub Contributions
+          </h3>
+          <div className="flex justify-center">
             <GitHubCalendar
               username="seifzellaban"
               transformData={selectMonths}
               colorScheme={theme}
               labels={{
-                totalCount: "{{count}} contributions in the last 3 quarters",
+                totalCount: "{{count}} contributions in the last year",
               }}
             />
-          </CardContent>
-        </Card>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
