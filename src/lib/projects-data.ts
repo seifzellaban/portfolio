@@ -1,4 +1,5 @@
 export interface Project {
+  slug: string;
   name: string;
   description: string;
   imageUrl: string;
@@ -10,6 +11,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "umbra",
     name: "Umbra",
     description:
       "Built for the 2025 NASA Space Apps Challenge, Umbra empowers researchers, mission planners, and citizen scientists to explore, filter, and visualize NASA’s vast library of space biology experiments. Designed to fuel the next era of human space exploration.",
@@ -27,6 +29,7 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "masons",
     name: "Masons Landing Page",
     description:
       "The landing page for my startup focused on building meaningful, impact-driven software for real-world problems.",
@@ -37,6 +40,7 @@ export const projects: Project[] = [
     techStack: ["Next.js", "Shadcn/UI", "Framer Motion", "Tailwind CSS"],
   },
   {
+    slug: "orbit",
     name: "Orbit",
     description:
       "Orbit is an interactive 3D web application designed to simulate the solar system and track Near-Earth Objects (NEOs). This was our official submission for the NASA Space Apps Cairo 2024 hackathon.",
@@ -46,6 +50,7 @@ export const projects: Project[] = [
     techStack: ["Next.js", "Three.js", "Blender"],
   },
   {
+    slug: "repai",
     name: "repAI",
     description:
       "An AI Powered Recycling App with Rewards and Cashback for building a Sustainable Future, Built for Google's AI-Finance Hackathon 2025 by GDG Cairo",

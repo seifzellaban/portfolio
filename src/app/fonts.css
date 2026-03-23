@@ -261,3 +261,60 @@
     font-display: swap;
     font-style: normal;
 }
+
+@font-face {
+    font-family: "Argesta";
+    src: url("/fonts/argesta/argesta-hairline.otf") format("opentype");
+    font-weight: 100;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Argesta";
+    src: url("/fonts/argesta/argesta-hairline-italic.otf") format("opentype");
+    font-weight: 100;
+    font-display: swap;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Argesta";
+    src: url("/fonts/argesta/argesta-text.otf") format("opentype");
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Argesta";
+    src: url("/fonts/argesta/argesta-text-italic.otf") format("opentype");
+    font-weight: 400;
+    font-display: swap;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Argesta";
+    src: url("/fonts/argesta/argesta-text-bold.otf") format("opentype");
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Argesta";
+    src: url("/fonts/argesta/argesta-headline.otf") format("opentype");
+    font-weight: 800;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Argesta";
+    src: url("/fonts/argesta/argesta-display.otf") format("opentype");
+    font-weight: 900;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Argesta";
+    src: url("/fonts/argesta/argesta-display-italic.otf") format("opentype");
+    font-weight: 900;
+    font-display: swap;
+    font-style: italic;
+}
