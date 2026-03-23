@@ -1,0 +1,263 @@
+@font-face {
+    font-family: "Barnebok";
+    src: url("/fonts/barnebok/BarnebokLight.eot");
+    src:
+        url("/fonts/barnebok/BarnebokLight.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/barnebok/BarnebokLight.woff") format("woff"),
+        url("/fonts/barnebok/BarnebokLight.ttf")
+            format("truetype");
+    font-style: normal;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+}
+@font-face {
+    font-family: "Barnebok";
+    src: url("/fonts/barnebok/BarnebokRegular.eot");
+    src:
+        url("/fonts/barnebok/BarnebokRegular.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/barnebok/BarnebokRegular.woff") format("woff"),
+        url("/fonts/barnebok/BarnebokRegular.ttf")
+            format("truetype");
+    font-style: normal;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+}
+@font-face {
+    font-family: "Barnebok";
+    src: url("/fonts/barnebok/BarnebokMedium.eot");
+    src:
+        url("/fonts/barnebok/BarnebokMedium.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/barnebok/BarnebokMedium.woff") format("woff"),
+        url("/fonts/barnebok/BarnebokMedium.ttf")
+            format("truetype");
+    font-style: normal;
+    font-weight: 500;
+    text-rendering: optimizeLegibility;
+}
+@font-face {
+    font-family: "Barnebok";
+    src: url("/fonts/barnebok/BarnebokBold.eot");
+    src:
+        url("/fonts/barnebok/BarnebokBold.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/barnebok/BarnebokBold.woff") format("woff"),
+        url("/fonts/barnebok/BarnebokBold.ttf")
+            format("truetype");
+    font-style: normal;
+    font-weight: 700;
+    text-rendering: optimizeLegibility;
+}
+@font-face {
+    font-family: "Barnebok";
+    src: url("/fonts/barnebok/BarnebokBlack.eot");
+    src:
+        url("/fonts/barnebok/BarnebokBlack.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/barnebok/BarnebokBlack.woff") format("woff"),
+        url("/fonts/barnebok/BarnebokBlack.ttf")
+            format("truetype");
+    font-style: normal;
+    font-weight: 900;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-Extralight.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-Extralight.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-Extralight.ttf") format("truetype");
+    font-weight: 200;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-ExtralightItalic.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-ExtralightItalic.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-ExtralightItalic.ttf") format("truetype");
+    font-weight: 200;
+    font-display: swap;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-Light.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-Light.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-LightItalic.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-LightItalic.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-LightItalic.ttf") format("truetype");
+    font-weight: 300;
+    font-display: swap;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-Regular.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-Regular.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-Italic.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-Italic.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-Italic.ttf") format("truetype");
+    font-weight: 400;
+    font-display: swap;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-Medium.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-Medium.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-MediumItalic.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-MediumItalic.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-MediumItalic.ttf") format("truetype");
+    font-weight: 500;
+    font-display: swap;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-Bold.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-Bold.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Chubbo";
+    src:
+        url("/fonts/chubbo/Chubbo-BoldItalic.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-BoldItalic.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-BoldItalic.ttf") format("truetype");
+    font-weight: 700;
+    font-display: swap;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Chubbo-Variable";
+    src:
+        url("/fonts/chubbo/Chubbo-Variable.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-Variable.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-Variable.ttf") format("truetype");
+    font-weight: 200 700;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Chubbo-VariableItalic";
+    src:
+        url("/fonts/chubbo/Chubbo-VariableItalic.woff2") format("woff2"),
+        url("/fonts/chubbo/Chubbo-VariableItalic.woff") format("woff"),
+        url("/fonts/chubbo/Chubbo-VariableItalic.ttf") format("truetype");
+    font-weight: 200 700;
+    font-display: swap;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Allison";
+    src: url("/fonts/allison_script/Allison_Script.otf") format("opentype");
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "n27";
+    src: url("/fonts/n27/n27-regular-webfont.eot");
+    src:
+        url("/fonts/n27/n27-regular-webfont.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/n27/n27-regular-webfont.woff2") format("woff2"),
+        url("/fonts/n27/n27-regular-webfont.woff") format("woff"),
+        url("/fonts/n27/n27-regular-webfont.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Trench Slab";
+    src: url("/fonts/trenchslab/TrenchSlab-Light.woff2") format("woff2"),
+         url("/fonts/trenchslab/TrenchSlab-Light.woff") format("woff"),
+         url("/fonts/trenchslab/TrenchSlab-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Trench Slab";
+    src: url("/fonts/trenchslab/TrenchSlab-Regular.woff2") format("woff2"),
+         url("/fonts/trenchslab/TrenchSlab-Regular.woff") format("woff"),
+         url("/fonts/trenchslab/TrenchSlab-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Trench Slab";
+    src: url("/fonts/trenchslab/TrenchSlab-Medium.woff2") format("woff2"),
+         url("/fonts/trenchslab/TrenchSlab-Medium.woff") format("woff"),
+         url("/fonts/trenchslab/TrenchSlab-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Trench Slab";
+    src: url("/fonts/trenchslab/TrenchSlab-Semibold.woff2") format("woff2"),
+         url("/fonts/trenchslab/TrenchSlab-Semibold.woff") format("woff"),
+         url("/fonts/trenchslab/TrenchSlab-Semibold.ttf") format("truetype");
+    font-weight: 600;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Trench Slab";
+    src: url("/fonts/trenchslab/TrenchSlab-Bold.woff2") format("woff2"),
+         url("/fonts/trenchslab/TrenchSlab-Bold.woff") format("woff"),
+         url("/fonts/trenchslab/TrenchSlab-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Trench Slab-Variable";
+    src: url("/fonts/trenchslab/TrenchSlab-Variable.woff2") format("woff2"),
+         url("/fonts/trenchslab/TrenchSlab-Variable.woff") format("woff"),
+         url("/fonts/trenchslab/TrenchSlab-Variable.ttf") format("truetype");
+    font-weight: 300 700;
+    font-display: swap;
+    font-style: normal;
+}

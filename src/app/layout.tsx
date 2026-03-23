@@ -6,6 +6,7 @@ import Dock from "@/components/dock";
 import ScrollHandler from "@/components/scroll-handler";
 import { Suspense } from "react";
 import { CustomCursor } from "@/components/custom-cursor";
+import { LenisProvider } from "@/lib/lenis-provider";
 
 export const metadata: Metadata = {
   title: "Seif Zakaria — Fullstack Developer & Founder",
@@ -79,12 +80,14 @@ export default function RootLayout({
         className={`antialiased ${spaceMono.variable} ${ibmPlexSansArabic.variable}`}
       >
         <ThemeProvider>
-          <CustomCursor />
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-          <Dock />
-          <Suspense fallback={null}>
-            <ScrollHandler />
-          </Suspense>
+          <LenisProvider>
+            <CustomCursor />
+            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+            <Dock />
+            <Suspense fallback={null}>
+              <ScrollHandler />
+            </Suspense>
+          </LenisProvider>
         </ThemeProvider>
       </body>
     </html>

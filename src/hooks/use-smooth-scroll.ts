@@ -1,10 +1,18 @@
 import { usePathname, useRouter } from "next/navigation";
+import { useLenis } from "lenis/react";
 
 export const useSmoothScroll = () => {
+  const lenis = useLenis();
+
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
-    if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 8; // 8px extra space
+    if (el && lenis) {
+      lenis.scrollTo(el, {
+        offset: -8,
+        duration: 1.5,
+      });
+    } else if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 8;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
@@ -13,8 +21,6 @@ export const useSmoothScroll = () => {
   const pathname = usePathname();
 
   const handleNav = (sectionId: string) => {
-    // Only smooth scroll if already on the root path
-    // Otherwise, navigate to the root with scrollTo param
     if (pathname === "/") {
       scrollToSection(sectionId);
     } else {

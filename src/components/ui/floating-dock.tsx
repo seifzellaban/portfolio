@@ -81,7 +81,7 @@ const FloatingDockMobile = ({
                   <Link
                     href={item.href}
                     key={item.title}
-                    className="flex h-10 w-10 items-center justify-center rounded-full glassmorphic"
+                    className="flex h-10 w-10 items-center justify-center rounded-full icons-glassmorphic"
                   >
                     <div className="h-6 w-6">{item.icon}</div>
                   </Link>
@@ -89,7 +89,7 @@ const FloatingDockMobile = ({
                   <button
                     onClick={(e) => item.onClick?.(e)}
                     key={item.title}
-                    className="flex h-10 w-10 items-center justify-center rounded-full glassmorphic"
+                    className="flex h-10 w-10 items-center justify-center rounded-full icons-glassmorphic"
                   >
                     <div className="h-6 w-6">{item.icon}</div>
                   </button>
@@ -101,7 +101,7 @@ const FloatingDockMobile = ({
       </AnimatePresence>
       <button
         onClick={() => setOpen(!open)}
-        className="flex h-10 w-10 items-center justify-center rounded-full glassmorphic"
+        className="flex h-10 w-10 items-center justify-center rounded-full icons-glassmorphic"
       >
         <IconLayoutNavbarCollapse className="h-5 w-5 text-muted-foreground" />
       </button>
@@ -128,11 +128,14 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto hidden h-16 items-end rounded-2xl border border-border/30 bg-sidebar/50 md:flex glassmorphic",
+        "mx-auto hidden h-16 items-end rounded-2xl md:flex relative overflow-visible",
         className
       )}
     >
-      <div className="flex h-full items-end gap-4 px-4 pb-3">
+      {/* Visual background layer - separate to avoid clipping child backdrop filters */}
+      <div className="absolute inset-0 rounded-2xl border border-border/30 bg-sidebar/20 glassmorphic -z-10 pointer-events-none" />
+      
+      <div className="flex h-full items-end gap-4 px-4 pb-3 overflow-visible">
         {items.map((item) => (
           <IconContainer mouseX={mouseX} key={item.title} {...item} />
         ))}
@@ -206,7 +209,7 @@ function IconContainer({
       style={{ width, height }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex aspect-square items-center justify-center rounded-full glassmorphic"
+      className="relative flex aspect-square items-center justify-center rounded-full icons-glassmorphic"
     >
       <AnimatePresence>
         {hovered && (

@@ -51,6 +51,7 @@
     "google-spreadsheet": "^5.0.2",
     "highlight.js": "^11.11.1",
     "input-otp": "^1.4.2",
+    "lenis": "^1.3.20",
     "lucide-react": "^0.562.0",
     "motion": "^12.23.26",
     "next": "16.1.0",

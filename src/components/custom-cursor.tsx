@@ -91,10 +91,11 @@ export function CustomCursor() {
   return (
     <>
       <motion.div
-        className="cursor-dot"
+        className="cursor-dot fixed top-0 left-0"
+        style={{ translateX: "-50%", translateY: "-50%" }}
         animate={{
-          x: position.x - 4,
-          y: position.y - 4,
+          x: position.x,
+          y: position.y,
           scale: clicked ? 0.8 : linkHovered ? 2.4 : 1.2,
           opacity: hidden ? 0 : 1,
         }}
@@ -105,11 +106,13 @@ export function CustomCursor() {
           damping: 30,
         }}
       />
+
       <motion.div
-        className="cursor-outline"
+        className="cursor-outline fixed top-0 left-0"
+        style={{ translateX: "-50%", translateY: "-50%" }}
         animate={{
-          x: position.x - 16,
-          y: position.y - 16,
+          x: position.x,
+          y: position.y,
           scale: clicked ? 0.8 : linkHovered ? 2.4 : 1.2,
           opacity: hidden ? 0 : 1,
         }}

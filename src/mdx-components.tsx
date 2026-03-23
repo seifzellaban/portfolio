@@ -104,7 +104,7 @@ const components = {
 
     return (
       <code
-        className="relative rounded bg-muted/70 px-[0.4rem] py-[0.25rem] font-mono text-base font-medium text-primary shadow-sm"
+        className="relative rounded bg-muted/70 px-[0.4rem] py-1 font-mono text-base font-medium text-primary shadow-sm"
         dangerouslySetInnerHTML={{ __html: highlightedHTML }}
         {...props}
       />
