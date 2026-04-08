@@ -15,7 +15,7 @@ type TrProps = ComponentPropsWithoutRef<"tr">;
 type ThProps = ComponentPropsWithoutRef<"th">;
 type TdProps = ComponentPropsWithoutRef<"td">;
 
-const components = {
+export const components = {
   h1: (props: HeadingProps) => (
     <h1
       className="scroll-m-20 text-5xl font-medium italic tracking-tight lg:text-6xl mb-6 text-foreground font-serif"

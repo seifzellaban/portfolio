@@ -5,7 +5,15 @@ import { usePathname } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-export function MdxLayout({ children }: { children: ReactNode }) {
+export function MdxLayout({
+  children,
+  backLink = "/logs",
+  backLabel = "Back to Logs",
+}: {
+  children: ReactNode;
+  backLink?: string;
+  backLabel?: string;
+}) {
   const pathname = usePathname();
 
   useEffect(() => {
@@ -15,17 +23,17 @@ export function MdxLayout({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  if (pathname == "/logs") {
+  if (pathname === backLink) {
     return <>{children}</>;
   }
 
   const Header = () => (
     <div className="mb-8">
       <Link
-        href="/logs"
+        href={backLink}
         className="inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary mb-4 transition-colors"
       >
-        <ArrowLeft className="mr-2 h-4 w-4" /> Back to Logs
+        <ArrowLeft className="mr-2 h-4 w-4" /> {backLabel}
       </Link>
       <div className="h-[2px] w-12 bg-primary mt-2" />
     </div>

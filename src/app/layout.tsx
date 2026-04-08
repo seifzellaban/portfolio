@@ -75,7 +75,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('vite-ui-theme');
+                  var theme = stored || 'dark';
+                  var root = document.documentElement;
+                  if (theme === 'dark' && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    root.classList.add('light');
+                  } else if (theme === 'dark') {
+                    root.classList.add('dark');
+                  } else if (theme === 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    root.classList.add('dark');
+                  } else {
+                    root.classList.add('light');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
         className={`antialiased ${spaceMono.variable} ${ibmPlexSansArabic.variable}`}
       >

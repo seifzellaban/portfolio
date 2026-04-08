@@ -1,27 +1,77 @@
 ---
 title: "Umbra"
-description: "Built for the 2025 NASA Space Apps Challenge, Umbra empowers researchers, mission planners, and citizen scientists to explore, filter, and visualize NASA’s vast library of space biology experiments."
+description: "Built for the 2025 NASA Space Apps Challenge, Umbra empowers researchers, mission planners, and citizen scientists to explore, filter, and visualize NASA's vast library of space biology experiments."
 imageUrl: "/projects/umbra.png"
 demoUrl: "https://umbra.wearemasons.com"
 sourceUrl: "https://github.com/wearemasons/umbra"
 techStack: ["Next.js", "Shadcn/UI", "Framer Motion", "TypeScript", "Tailwind CSS"]
 ---
 
-# Umbra
+# Making NASA's Space Biology Research Conversational
 
-Umbra was built for the **2025 NASA Space Apps Challenge**. It empowers researchers, mission planners, and citizen scientists to explore, filter, and visualize NASA’s vast library of space biology experiments.
+> A full-stack research intelligence platform that scrapes, indexes, and makes scientific literature on space biology searchable and conversational using AI.
 
 ## The Challenge
 
-NASA has an incredible amount of data from decades of space biology research, but it's often fragmented and difficult for the general public or even researchers to navigate quickly.
+On October 4–5, 2025, my team and I participated in the **NASA Space Apps Challenge**. The challenge was called *"A Body in Motion"* — and it was deceptively simple on paper.
 
-## Our Solution
+NASA has been performing biology experiments in space for decades. Over 600 publications worth of research. All publicly available. And almost entirely impossible to navigate unless you already know exactly what you're looking for.
 
-We built Umbra to provide a seamless, modern interface for this data. Key features include:
-- **3D Visualizations** of space biology datasets.
-- **Advanced Filtering** by organism, experiment type, and flight mission.
-- **Interactive Timelines** of research milestones.
+The objective: build a web application that lets users explore the impacts and results of these experiments using AI, knowledge graphs, or any creative approach we could think of.
 
-## Impact
+## The Problem With 608 Research Papers
 
-Umbra enabled researchers to visualize over **600+ space biology experiments** in a cohesive manner, fueling the next era of human space exploration.
+Here's the thing about scientific literature — it's written for specialists, by specialists. If you're a student curious about how microgravity affects plant growth, or a mission planner trying to understand radiation impacts on cellular processes, you're staring at a wall of dense academic prose with no entry point.
+
+We needed to build that entry point.
+
+## What We Built
+
+**Umbra** is a three-part system:
+
+A **Python scraper** that reads all 608 NASA bioscience publications, extracts structured data using Gemini AI — identifying organisms, experimental conditions, biological processes, and space environments — then generates vector embeddings for semantic search.
+
+An **ASP.NET Core backend** that handles authentication and serves as a clean REST API layer following proper BLL/DAL architecture.
+
+And the **Next.js frontend** — the part users actually interact with. An AI chat interface where you can ask questions like *"What happens to bone density on the ISS?"* and get answers synthesized from the actual research. A knowledge graph visualization that lets you see relationships between papers, organisms, and biological processes. A research paper browser with smart filtering by organism, experimental condition, and space environment.
+
+## The Architecture
+
+```
+┌──────────────┐     ┌──────────────┐     ┌────────────────┐
+│   umbra/     │────▶│  Convex DB   │◀────│   scraper/     │
+│  Next.js 15  │     │  (Realtime)  │     │  Python + AI   │
+│  Frontend    │     └──────────────┘     └────────────────┘
+└──────┬───────┘
+       ▼
+┌──────────────┐
+│  Urban.api/  │
+│ ASP.NET Core │
+└──────────────┘
+```
+
+The scraper runs as a background pipeline, processing papers in bulk with progress tracking and exponential backoff for API rate limits. The Convex database provides real-time updates, so when new papers are indexed, the frontend reflects it instantly.
+
+## The Interesting Parts
+
+**The AI chat** was the most ambitious piece. We didn't just slap a Gemini wrapper on a search bar. The system uses the structured entities extracted by the scraper — organisms, conditions, processes — to ground responses in actual NASA research data. No hallucinations, no made-up papers.
+
+**The knowledge graph** uses D3.js to visualize relationships between papers. You can see which organisms appear across multiple experiments, which biological processes are most studied, and how different space environments affect different systems. It turns a list of 608 papers into a navigable map.
+
+**The scraper** was where the real engineering happened. Reading HTML from NASA's publication pages, extracting structured fields with BeautifulSoup, then sending each paper through Gemini for entity extraction. With progress tracking via `progress.json` so we could resume after interruptions — because processing 608 papers through an AI API absolutely will hit rate limits.
+
+## What We Used
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 15, TypeScript, Tailwind CSS, Radix UI |
+| AI | Google Gemini 2.0 Flash |
+| Database | Convex (real-time) |
+| Backend | ASP.NET Core 8, C#, Entity Framework |
+| Scraper | Python, BeautifulSoup, httpx |
+| Visualization | D3.js |
+| Auth | WorkOS AuthKit, JWT |
+
+## The Result
+
+Umbra turned 608 impenetrable research papers into something a curious student could explore conversationally. That was the goal. Whether we won or not, we built something that actually solves the problem NASA described.

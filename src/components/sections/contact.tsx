@@ -82,9 +82,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative py-24 sm:py-32 overflow-hidden">
-      {/* Grid pattern background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute h-full w-full bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]" />
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]" />
       </div>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

@@ -61,15 +61,11 @@ export function CustomCursor() {
 
     const handleLinkHoverEvents = () => {
       document
-        .querySelectorAll("a, button, input, textarea, highlight")
+        .querySelectorAll("a, button, input, textarea, [class*='cursor-link'], .highlight")
         .forEach((el) => {
           el.addEventListener("mouseenter", () => setLinkHovered(true));
           el.addEventListener("mouseleave", () => setLinkHovered(false));
         });
-      Array.from(document.getElementsByClassName("highlight")).forEach((el) => {
-        el.addEventListener("mouseenter", () => setLinkHovered(true));
-        el.addEventListener("mouseleave", () => setLinkHovered(false));
-      });
     };
 
     // Only add event listeners if not on mobile
@@ -86,7 +82,7 @@ export function CustomCursor() {
 
   const pathname = usePathname();
 
-  if (isMobile || pathname?.startsWith("/logs")) return null;
+  if (isMobile || pathname?.startsWith("/logs") || pathname?.startsWith("/projects")) return null;
 
   return (
     <>

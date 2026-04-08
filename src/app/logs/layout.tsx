@@ -9,7 +9,9 @@ export default function BlogLayout({
 }) {
   return (
     <>
-      <MdxLayout>{children}</MdxLayout>
+      <MdxLayout backLink="/logs" backLabel="Back to Logs">
+        {children}
+      </MdxLayout>
       <Contact />
       <Signature />
     </>

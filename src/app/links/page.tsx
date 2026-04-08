@@ -75,7 +75,7 @@ export default function Linktree() {
             <p className="text-sm font-mono uppercase tracking-widest text-muted-foreground mt-1">
               Software Engineer
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-foreground max-w-xs italic font-serif">
+            <p className="mt-3 text-sm leading-relaxed text-foreground max-w-xs font-sans">
               building way too many side projects ✦ full-time linux enjoyer 🐧 ✦
               good at Valorant (or so I tell myself) ✦ chronically online
             </p>

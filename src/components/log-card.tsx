@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import { Post } from "@/lib/logs-data";
+import { Post } from "@/lib/posts";
 
 interface LogCardProps {
   post: Post;

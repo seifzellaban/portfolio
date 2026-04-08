@@ -1,7 +1,7 @@
 "use client";
 
 import { LogCard } from "@/components/log-card";
-import { posts as defaultPosts, Post } from "@/lib/logs-data";
+import { Post } from "@/lib/posts";
 import ShinyText from "@/components/ShinyText";
 import { motion } from "motion/react";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import Link from "next/link";
 interface LogsProps {
   heading?: string;
   description?: string;
-  posts?: Post[];
+  posts: Post[];
   count?: number;
 }
 
@@ -21,7 +21,7 @@ const itemVariants = {
 const Logs = ({
   heading = "Logs",
   description = "Personal notes and deep dives from my journey—building apps, leading teams, and exploring the craft of modern web development.",
-  posts = defaultPosts,
+  posts,
   count,
 }: LogsProps) => {
   const visiblePosts = posts.filter((post) => !post.hidden);

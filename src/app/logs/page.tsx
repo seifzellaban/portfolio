@@ -2,8 +2,10 @@ import { Logs } from "@/components/sections/logs";
 import { Card, CardContent } from "@/components/ui/card";
 import ShinyText from "@/components/ShinyText";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { getPosts } from "@/lib/posts";
 
 export default function LogsPage() {
+  const posts = getPosts();
   return (
     <div className="relative min-h-screen w-full bg-background selection:bg-primary/10 selection:text-primary overflow-hidden">
       {/* Ambient Background Effects */}
@@ -26,6 +28,7 @@ export default function LogsPage() {
           <Logs
             heading="My Logs"
             description="A collection of thoughts, deep dives, and stories from my journey—building apps, leading teams, and exploring the craft of modern web development."
+            posts={posts}
           />
         </div>
 
