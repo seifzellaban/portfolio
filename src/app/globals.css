@@ -393,3 +393,44 @@ body.mdx-page .fixed button {
         cursor: auto !important;
     }
 }
+
+/* Audio player slider styling with progress tracking */
+.audio-slider,
+.volume-slider {
+    --slider-progress: 0%;
+    background: linear-gradient(
+        to right,
+        var(--primary) var(--slider-progress),
+        var(--border) var(--slider-progress)
+    );
+}
+
+.audio-slider {
+    --thumb-size: 0.75rem;
+}
+
+.volume-slider {
+    --thumb-size: 0.625rem;
+}
+
+.audio-slider::-webkit-slider-thumb,
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: none;
+}
+
+.audio-slider::-moz-range-thumb,
+.volume-slider::-moz-range-thumb {
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: none;
+}

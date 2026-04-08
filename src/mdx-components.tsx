@@ -2,6 +2,7 @@ import React, { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import hljs from "highlight.js";
 import katex from "katex";
+import AudioPlayer from "@/components/audio-player";
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -71,6 +72,17 @@ export const components = {
   a: ({ href, children, ...props }: AnchorProps) => {
     const className =
       "font-medium underline underline-offset-4 text-primary hover:text-primary/80 transition-colors";
+
+    // Check if this is an audio file link
+    if (href?.includes("/audio/") && href?.endsWith(".mp3")) {
+      return (
+        <>
+          {" " /* Close the parent paragraph context */}
+          <AudioPlayer src={href} title={children as string} />
+        </>
+      );
+    }
+
     if (href?.startsWith("/")) {
       return (
         <Link href={href} className={className} {...props}>
