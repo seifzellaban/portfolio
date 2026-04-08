@@ -1,6 +1,7 @@
 @import "./fonts.css";
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "katex/dist/katex.min.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -228,11 +229,21 @@
 }
 
 /* Stagger delays applied via CSS custom property or utility classes */
-.reveal-delay-1 { transition-delay: 0.08s; }
-.reveal-delay-2 { transition-delay: 0.16s; }
-.reveal-delay-3 { transition-delay: 0.24s; }
-.reveal-delay-4 { transition-delay: 0.32s; }
-.reveal-delay-5 { transition-delay: 0.40s; }
+.reveal-delay-1 {
+    transition-delay: 0.08s;
+}
+.reveal-delay-2 {
+    transition-delay: 0.16s;
+}
+.reveal-delay-3 {
+    transition-delay: 0.24s;
+}
+.reveal-delay-4 {
+    transition-delay: 0.32s;
+}
+.reveal-delay-5 {
+    transition-delay: 0.4s;
+}
 
 @media (prefers-reduced-motion: reduce) {
     .reveal {

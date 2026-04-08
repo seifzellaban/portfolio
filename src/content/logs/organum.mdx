@@ -1,0 +1,151 @@
+---
+title: "I Built a Pipe Organ Synthesizer From Scratch Because Egypt Has None"
+summary: "No samples. No soundfonts. Just sine waves, additive synthesis, and a borderline obsessive deep-dive into acoustic physics, building a real-time pipe organ synthesizer in Python because the instrument I love most barely exists in my country."
+label: "Personal Project"
+author: "Seif Zakaria"
+published: "2026-03-16"
+image: "/logthumb.webp"
+showImage: false
+tags: ["Audio DSP", "Python", "Synthesis", "Open Source"]
+pinned: true
+---
+
+There are maybe three pipe organs in all of Egypt.
+
+I'm not exaggerating. The instrument that shaped centuries of Western music, Bach's entire output, every cathedral soundscape you've ever heard in a film, the sonic backbone of Gothic Revival architecture, is essentially absent from my entire country. You cannot walk into a church here and hear one. You cannot find a digital recreation that actually sounds right. The apps are garbage. The VSTs cost hundreds of dollars and still require you to load gigabytes of samples.
+
+So I built one from scratch.
+
+[Organum](https://github.com/seifzellaban/organum) is a real-time pipe organ synthesizer written in Python. No samples. No soundfonts. Every single note you hear is computed live from sine waves, harmonic profiles, and acoustic simulation. It runs on your laptop. It sounds like a cathedral.
+
+This is how I built it, and every problem I had to solve to make it not sound like garbage.
+
+
+
+## Why Additive Synthesis
+
+The obvious question is: why not just record pipe organ samples and play them back? It is what every commercial organ VST does. It works. It is easy.
+
+Three reasons I did not.
+
+First, samples are static. A real pipe organ's sound changes with the room, with the wind pressure, with how many pipes are speaking simultaneously. Samples bake all of that in, and you cannot change it.
+
+Second, the full spectrum of organ registrations, the combinations of stops you can draw, is effectively infinite. You would need to record every combination. Nobody has done that. So sample-based organs cheat and mix stems, which sounds wrong in ways that are hard to articulate but immediately obvious when you hear it.
+
+Third, and most importantly, I wanted to understand how it works. Additive synthesis is the honest approach. You build up complex tones from their constituent harmonics, the same way physics does. If you do it right, you get something true. If you do it wrong, you learn exactly why.
+
+Additive synthesis for a pipe organ means: for every note, sum up a set of sine waves at integer multiples of the fundamental frequency, each with a specific amplitude. The set of amplitudes is the **harmonic profile**, and different stop types such as principal, flute, reed, and string have radically different profiles. That is the entire concept. The challenge is making it sound like a real instrument instead of a math homework problem.
+
+
+
+## Stop Profiles and What Makes Each Family Sound Different
+
+The first thing I had to nail was the harmonic profiles for each pipe family. A principal stop sounds the way it does because it has a strong fundamental, balanced even and odd harmonics, with a specific rolloff toward the upper partials. A flute sounds different because it has a near-pure fundamental with mostly odd harmonics. A reed sounds like it does because it approaches a sawtooth, a dense harmonic series with a \( \frac{1}{k} \) amplitude rolloff.
+
+Getting these profiles right required listening to reference recordings obsessively, then tuning the harmonic amplitudes by ear until they matched. There is no formula that drops straight out of a physics textbook. Every stop family has lore baked into it. Pipe organ builders have been voicing these things for centuries, and the "right" sound is largely accumulated craft tradition, not a derivable constant.
+
+The reed profiles gave me the most trouble. Real reed pipes have a striking quality. They cut through an ensemble in a way that is almost aggressive. Getting that from additive synthesis without making it sound buzzy and synthetic required getting the harmonic rolloff exponent right, \( \frac{1}{k} \cdot 0.92^k \), rather than pure \( \frac{1}{k} \), and, critically, getting the attack transient correct. Which brings me to the next problem.
+
+
+
+## The Chiff Problem
+
+When a pipe organ key is pressed, you do not hear an instant steady tone. There is a brief, breathy noise burst at the onset, the sound of wind rushing into the pipe before it settles into steady speech. This is called **chiff**, and it is a defining characteristic of the instrument. Without it, organ synthesis sounds clinical, like a Hammond with extra steps.
+
+Simulating chiff in software means adding a short burst of filtered noise at note-on, shaped by an amplitude envelope that decays quickly. The noise needs to be spectrally shaped to match the pipe family, brighter for principals, breathier for flutes, more buzzy for reeds.
+
+The second transient is the **tracker click**, the mechanical impulse of the valve opening. Historical pipe organs with tracker action have this characteristic thump, and it adds physicality to the sound. It is a very short, low-frequency impulse. Without it, the attack is too clean, too electronic.
+
+Both of these I implemented as precomputed tables that get mixed into the voice at note-on. That was straightforward. The hard part was the **machine gun problem**.
+
+
+
+## Killing the Machine Gun Artifact
+
+Here is a pathological case I did not anticipate: what happens when a player presses the same key in rapid succession? Each note-on creates a new voice with fresh transients. Chiff and click fire every time. At fast tempos, this makes the organ sound like a snare drum. Real pipe organs do not do this. Once a pipe is speaking, re-pressing the key does not produce a new attack transient.
+
+The fix: track the last release time for each note. If a note is restruck within 500 ms of its previous release, suppress the chiff and tracker click on the new voice. The time tracking uses a **sample clock**, an integer counter incremented each render block, rather than `time.monotonic()`. That distinction matters because the audio callback runs on a dedicated OS audio thread, and making syscalls inside a real-time callback is how you get dropouts. The sample clock is free.
+
+
+
+## ADSR That Actually Does Not Click
+
+Envelope design sounds boring until you implement it naively and your synthesizer clicks on every note-on and note-off. Then it becomes an obsession.
+
+The naive implementation is a linear attack: amplitude ramps from 0 to 1 over some duration. Problem: a linear ramp has a non-zero slope at \( t = 0 \), which means you are jumping from slope \( 0 \) to slope \( \neq 0 \) instantly. That discontinuity is audible as a click at low attack times.
+
+The fix is a **smoothstep** attack curve: \( 3t^2 - 2t^3 \). This function goes from 0 to 1 over the interval \([0,1]\) with zero derivative at both endpoints. The note blooms in with zero slope at onset, rises smoothly, and arrives at peak with zero slope again. No click. No punch. Just the sound appearing naturally, the way a pipe organ actually speaks.
+
+The release is an exponential decay: \( e^{-1.2t} \). This matches how real pipe energy dissipates. Fast at first, then a long tail. A linear release sounds artificial. The exponential lingers correctly.
+
+
+
+## The Retrigger Problem
+
+Here is the click I missed even after nailing the main envelope: what happens when you re-press a key that is currently in release?
+
+The naive solution is to re-enter the attack stage. But the voice is currently at some arbitrary amplitude level, maybe 0.6, and you are asking the attack envelope to start from 0 again. This means the amplitude jumps from 0.6 to 0 in one sample, then starts climbing. That is a 0.6-amplitude cliff. It clicks loudly.
+
+You might think: start the attack from the current level instead of 0. But now the attack curve is \( 3t^2 - 2t^3 \) scaled to start at 0.6 and end at 1.0. The derivative at \( t = 0 \) is no longer zero. The smoothstep formula only guarantees zero slope when transitioning from exactly 0 to 1. At other ranges, it has a non-zero slope at the start. It still clicks, just quieter.
+
+The real fix is a dedicated **RETRIGGER** stage. When a voice is in release and gets a note-on, instead of jumping back to attack, you run a Hermite crossfade from current amplitude to sustain level over 15 ms. The Hermite curve, \( 3t^2 - 2t^3 \), used as an interpolation blend, has zero derivative at both endpoints by construction. The transition is click-free regardless of the current amplitude. Level and slope are both continuous across the crossfade. After the 15 ms crossfade, the voice enters sustain directly, skipping the attack entirely. Because oscillator phases are preserved through the retrigger, the steady tone continues uninterrupted. No click, no phase jump, no audible seam.
+
+
+
+## The Normalization Pop
+
+When you play multiple notes simultaneously, raw summing clips. The standard solution is gain normalization: scale the output by \( \frac{1}{\sqrt{N}} \), where \( N \) is the number of active voices. Equal-power mixing.
+
+The subtle bug: applying this as a hard scalar per block means the gain jumps discretely when \( N \) changes. Going from 1 voice to 2 voices changes the gain from 1.0 to 0.707, a 30 percent drop, in a single sample. That is an audible amplitude pop every time a new note is pressed.
+
+The fix: **linear ramp** the gain from its previous value to the new target across the entire block. A 4096-sample block at 44100 Hz is about 93 ms, long enough that a smooth ramp is inaudible, but short enough that the gain tracks note events in real time. This turns a discrete jump into a continuous slide. Zero pop.
+
+
+
+## The Reverb Architecture
+
+No pipe organ simulation is complete without reverb. But not just any reverb. The specific quality of a large stone room is what makes the instrument feel correct. A bathroom reverb sounds wrong. A spring reverb sounds wrong. You need the character of a cathedral: long decay, dense late reverb, specific early reflections, and sub-bass resonance from stone walls.
+
+I implemented a **Schroeder reverb** network. The architecture:
+
+- A pre-delay buffer of 18 to 48 ms creates the initial gap before reflections arrive
+- Seven parallel comb filters simulate distinct reflections
+- Four series allpass filters diffuse the result into a dense tail
+
+For stereo, I run two independent networks with prime-offset delay times. Shared delay times collapse the image to mono. Prime offsets prevent alignment and produce width.
+
+Room resonance is modeled with three tuned sine oscillators in the sub-bass, fed by the dry signal with slow attack and long release. Subtle, but physically felt.
+
+
+
+## The Performance Problem
+
+Python is not a real-time audio language. NumPy makes it viable, but you must be paranoid about allocations.
+
+The audio callback fires every ~93 ms and must return exactly 4096 samples. If it takes longer, you get dropouts.
+
+The worst offender: each oscillator allocating arrays per harmonic per voice per callback. With 8 voices and multiple harmonics, that is over 1000 allocations per callback. Python's garbage collector does not care about your audio deadline. It will happily run mid-callback and ruin your day.
+
+The fix: **preallocated work buffers**. Allocate once at startup and reuse. Zero allocations in the hot path.
+
+After this change, 8-voice renders dropped to ~45 ms. About 49 percent of the budget. Comfortable.
+
+Same idea for harmonic amplitudes. Compute once per block, share across voices. Eight redundant computations become one.
+
+
+
+## What I Learned
+
+Building Organum taught me more about signal processing than any textbook ever could, because every mistake was audible. Every flaw had consequences.
+
+More importantly, physical instruments encode centuries of craft knowledge that is not cleanly written anywhere. The "correct" sound is not just physics. It is tradition, iteration, and human perception.
+
+Reverse-engineering that by ear and rebuilding it from first principles is hard.
+
+And worth it.
+
+If you are in Egypt and want to hear what a pipe organ sounds like without booking a flight to Europe, you can just run this. That was always the point.
+
+
+
+Organum is open source under MIT. The code is at [github.com/seifzellaban/organum](https://github.com/seifzellaban/organum).

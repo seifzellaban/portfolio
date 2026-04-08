@@ -25,6 +25,7 @@
     "google-spreadsheet": "^5.0.2",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
+    "katex": "^0.16.45",
     "lenis": "^1.3.20",
     "lucide-react": "^0.562.0",
     "motion": "^12.23.26",
@@ -36,7 +37,9 @@
     "react-dom": "^19.2.3",
     "react-fast-marquee": "^1.6.5",
     "react-github-calendar": "^5.0.3",
+    "rehype-katex": "^7.0.1",
     "remark-gfm": "^4.0.1",
+    "remark-math-extended": "^6.1.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.2.1"

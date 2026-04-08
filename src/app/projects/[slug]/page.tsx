@@ -10,6 +10,8 @@ import Link from "next/link";
 import { ExternalLink, Github } from "lucide-react";
 import { components as mdxComponents } from "@/mdx-components";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math-extended";
+import rehypeKatex from "rehype-katex";
 
 export async function generateStaticParams() {
   const contentDir = path.join(process.cwd(), "src/content/projects");
@@ -92,7 +94,12 @@ export default async function ProjectPage({
         <MDXRemote
           source={content}
           components={mdxComponents}
-          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm, remarkMath],
+              rehypePlugins: [rehypeKatex],
+            },
+          }}
         />
       </article>
     </div>

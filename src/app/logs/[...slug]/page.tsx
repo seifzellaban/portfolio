@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { getPosts } from "@/lib/posts";
 import { components as mdxComponents } from "@/mdx-components";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math-extended";
+import rehypeKatex from "rehype-katex";
 
 function getAllMdxFiles(dir: string, baseDir: string): string[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -69,12 +71,12 @@ export default async function LogPage({
               {frontmatter.published}
             </span>
           </div>
-          <h1 className="font-serif text-2xl sm:text-3xl lg:text-5xl font-bold leading-tight">
+          <h1 className="font-serif text-3xl lg:text-5xl font-bold leading-tight">
             {frontmatter.title}
           </h1>
         </div>
 
-        <p className="text-xl text-muted-foreground leading-relaxed italic border-l-4 border-primary/20 pl-6">
+        <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed italic border-l-4 border-primary/20 pl-6">
           {frontmatter.summary}
         </p>
 
@@ -107,7 +109,12 @@ export default async function LogPage({
         <MDXRemote
           source={content}
           components={mdxComponents}
-          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm, remarkMath],
+              rehypePlugins: [rehypeKatex],
+            },
+          }}
         />
       </div>
     </article>

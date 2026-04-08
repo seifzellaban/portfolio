@@ -1,6 +1,7 @@
 import React, { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import hljs from "highlight.js";
+import katex from "katex";
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -187,6 +188,25 @@ export const components = {
       {...props}
     />
   ),
+  InlineMath: ({ children }: { children: string }) => {
+    const html = katex.renderToString(children, {
+      throwOnError: false,
+      displayMode: false,
+    });
+    return <span dangerouslySetInnerHTML={{ __html: html }} />;
+  },
+  BlockMath: ({ children }: { children: string }) => {
+    const html = katex.renderToString(children, {
+      throwOnError: false,
+      displayMode: true,
+    });
+    return (
+      <div
+        className="my-4 overflow-x-auto"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    );
+  },
 };
 
 declare global {
