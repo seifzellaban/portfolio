@@ -5,6 +5,8 @@ import {
   IconDeviceMobile,
   IconBrandFigma,
   IconChartBar,
+  IconRobot,
+  IconApi,
 } from "@tabler/icons-react";
 import { JSX } from "react";
 
@@ -148,5 +150,25 @@ export const services: Service[] = [
     timeRange: "Ongoing / Monthly",
     priceRange: "EGP1,000 - EGP5,000 / month",
     layoutType: "classic-feature-list",
+  },
+  {
+    id: "api-bot-ai-automation",
+    title: "API, Bot & AI Automation",
+    description:
+      "Building intelligent automation systems, chatbots, and AI-powered workflows that streamline operations and reduce manual work.",
+    fullDescription:
+      "Transform your business operations with intelligent automation. We design and develop custom APIs, automated bots, and AI-powered workflows that handle repetitive tasks, improve efficiency, and unlock new capabilities. From customer service chatbots to complex automation pipelines, we leverage cutting-edge AI technologies including LLMs, machine learning, and workflow orchestration to deliver measurable results.",
+    icon: <IconRobot size={32} className="text-primary" />,
+    features: [
+      "Custom API Development",
+      "Chatbot & Conversational AI",
+      "Workflow Automation",
+      "AI-Powered Integrations",
+      "Data Pipeline Development",
+      "Intelligent Document Processing",
+    ],
+    timeRange: "3 - 10 Weeks",
+    priceRange: "EGP4,000 - EGP12,000+",
+    layoutType: "grid-features",
   },
 ];
