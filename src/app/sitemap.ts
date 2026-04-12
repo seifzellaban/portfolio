@@ -4,7 +4,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://seifzellaban.wiki";
 
   const logs = [
-    "gp-idea",
+    "tesseract",
+    "the-manuscript",
     "misread-productivity",
     "msp",
     "msp/rules",
