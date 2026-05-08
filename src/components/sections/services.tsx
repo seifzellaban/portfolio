@@ -42,7 +42,7 @@ function ServiceCard({
       </div>
 
       {/* Background icon watermark */}
-      <div className="absolute bottom-[-20px] right-[-20px] opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-500">
+      <div className="absolute bottom-5 right-5 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-500">
         <div className="scale-[8]">{service.icon}</div>
       </div>
 
@@ -50,8 +50,8 @@ function ServiceCard({
       <div
         className={`relative z-10 p-8 flex ${
           isBig
-            ? "flex-col sm:flex-row sm:items-center gap-6 min-h-[280px]"
-            : "flex-col justify-between min-h-[320px]"
+            ? "flex-col sm:flex-row sm:items-center gap-6 min-h-70"
+            : "flex-col justify-between min-h-80"
         }`}
       >
         <div className={`pt-4 ${isBig ? "shrink-0" : ""}`}>
@@ -94,7 +94,7 @@ export function Services() {
 
   // Sort services into bento order
   const orderedServices = BENTO_ORDER.map((id) =>
-    services.find((s) => s.id === id)
+    services.find((s) => s.id === id),
   ).filter(Boolean) as typeof services;
 
   return (
@@ -105,7 +105,7 @@ export function Services() {
           <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
             Services
           </h2>
-          <div className="mt-3 h-[2px] w-16 bg-primary" />
+          <div className="mt-3 h-0.5 w-16 bg-primary" />
           <p className="mt-6 max-w-2xl text-muted-foreground text-lg">
             Comprehensive solutions to help you build, design, and grow your
             digital presence with precision and purpose.

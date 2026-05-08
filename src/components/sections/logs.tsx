@@ -36,12 +36,12 @@ const Logs = ({
 
   return (
     <section className="py-32">
-      <div className="w-full mx-auto flex flex-col items-center gap-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-16 px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="mx-auto mb-4 font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground tracking-tight text-pretty lg:max-w-3xl">
             {heading}
           </h2>
-          <div className="h-[2px] w-16 bg-primary mx-auto mb-6" />
+          <div className="h-0.5 w-16 bg-primary mx-auto mb-6" />
           <p className="mx-auto max-w-2xl text-muted-foreground text-base md:text-xl">
             {description}
           </p>

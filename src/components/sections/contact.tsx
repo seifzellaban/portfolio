@@ -83,7 +83,7 @@ export function Contact() {
   return (
     <section id="contact" className="relative py-24 sm:py-32 overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-77.5 w-77.5 rounded-full bg-primary/20 opacity-20 blur-[100px]" />
       </div>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Centered editorial heading */}
@@ -101,7 +101,7 @@ export function Contact() {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="mt-4 h-[2px] w-16 bg-primary mx-auto"
+            className="mt-4 h-0.5 w-16 bg-primary mx-auto"
           />
           <motion.p
             initial={{ opacity: 0 }}
@@ -116,7 +116,7 @@ export function Contact() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start max-w-7xl mx-auto">
           {/* Left: Info & Socials */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -273,7 +273,7 @@ export function Contact() {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       placeholder="Tell me about your project..."
-                      className="min-h-[120px] border-border/50 focus:border-primary/50"
+                      className="min-h-30 border-border/50 focus:border-primary/50"
                     />
                     {field.state.meta.errors ? (
                       <p className="text-sm text-destructive">

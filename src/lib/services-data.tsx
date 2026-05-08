@@ -81,7 +81,7 @@ export const services: Service[] = [
       "Bring the goal, the current constraints, and the rough timeline. I will help shape the build into a realistic first scope.",
     icon: <IconCode size={32} className="text-primary" />,
     timeRange: "4 - 12 Weeks",
-    priceRange: "EGP5,000 - EGP15,000+",
+    priceRange: "EGP8,000 - EGP25,000+",
     theme: {
       eyebrow: "Architecture Ledger",
       identity: "Technical, precise, product-focused",
@@ -168,7 +168,7 @@ export const services: Service[] = [
       "Send the product goal, the screens or flows that feel weak, and what users need to do next. I will help define the sprint.",
     icon: <IconPalette size={32} className="text-primary" />,
     timeRange: "3 - 8 Weeks",
-    priceRange: "EGP2,500 - EGP10,000+",
+    priceRange: "EGP4,000 - EGP10,000+",
     theme: {
       eyebrow: "Interface Studio",
       identity: "Human, visual, product-experience led",
@@ -254,7 +254,7 @@ export const services: Service[] = [
       "Share the site, market, and current traffic picture. I will help identify whether the first move should be audit, content, technical cleanup, or conversion work.",
     icon: <IconChartBar size={32} className="text-primary" />,
     timeRange: "Ongoing / Monthly",
-    priceRange: "EGP1,000 - EGP5,000 / month",
+    priceRange: "EGP1,500 - EGP5,000 / month",
     theme: {
       eyebrow: "Growth Observatory",
       identity: "Analytical, measured, compounding",
@@ -332,7 +332,8 @@ export const services: Service[] = [
       "Design APIs, bots, and AI workflows that remove repetitive work while keeping safeguards, logging, and human control clear.",
     metaDescription:
       "API, bot, and AI automation services for workflow automation, chatbots, integrations, data pipelines, document processing, and operational safeguards.",
-    heroTitle: "Replace repeated manual work with systems that know when to stop.",
+    heroTitle:
+      "Replace repeated manual work with systems that know when to stop.",
     heroLead:
       "I design automation around the full operational loop: trigger, context, decision, integration, output, review, and logging. The result is useful automation, not a fragile demo.",
     ctaLabel: "Scope an Automation",

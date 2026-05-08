@@ -32,7 +32,7 @@ export default function ServiceDetail({ service }: { service: Service }) {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <section className="relative overflow-hidden border-b border-border/50 py-20 sm:py-28">
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:80px_80px] opacity-[0.25]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-size:[80px_80px] opacity-[0.25]" />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div ref={heroRef} className="reveal">
             <Link
@@ -73,8 +73,8 @@ export default function ServiceDetail({ service }: { service: Service }) {
                 Deliverables shaped for this kind of project.
               </h2>
               <p className="text-muted-foreground">
-                The service is scoped around outcomes and handoff quality, not
-                a loose pile of tasks.
+                The service is scoped around outcomes and handoff quality, not a
+                loose pile of tasks.
               </p>
             </div>
           </div>
@@ -337,9 +337,7 @@ function InterfaceStudioVisual({ service }: { service: Service }) {
             <p className="font-mono text-xs text-muted-foreground">
               {(index + 1).toString().padStart(2, "0")}
             </p>
-            <h3 className="mt-3 font-serif text-2xl font-bold">
-              {node.label}
-            </h3>
+            <h3 className="mt-3 font-serif text-2xl font-bold">{node.label}</h3>
             <p className="mt-2 text-sm text-muted-foreground">{node.value}</p>
           </div>
         ))}
@@ -477,7 +475,7 @@ function ServiceCTA({
   ctaRef: RefObject<HTMLDivElement | null>;
 }) {
   return (
-    <section className="py-20 sm:py-24">
+    <section className="py-20 sm:py-24 mb-8">
       <div className="mx-auto max-w-5xl px-6 lg:px-8">
         <div
           ref={ctaRef}

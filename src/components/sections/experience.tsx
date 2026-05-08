@@ -1,4 +1,3 @@
-import React from "react";
 import { Timeline } from "@/components/ui/timeline";
 import Link from "next/link";
 import { LinkPreview } from "@/components/ui/link-preview";
@@ -57,13 +56,27 @@ export function ExperienceSection() {
             for real-world problems.
           </div>
           <div className="mb-4">
-            <h4 className="mb-2 text-lg font-medium">Flagship Project:</h4>
+            <h4 className="mb-2 text-lg font-medium">Flagship Projects</h4>
             <div className="text-base font-normal text-muted-foreground md:text-lg">
               <LinkPreview
                 url="https://test-rafiqi.wearemasons.com"
                 className="font-bold underline text-muted-foreground"
               >
                 Rafiqi
+              </LinkPreview>{" "}
+              — an AI-powered mental health platform tailored for Egyptians.
+            </div>
+            <p className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
+              Rafiqi combines culturally informed design with AI to provide
+              mental health support that’s accessible and relevant to the people
+              it serves.
+            </p>
+            <div className="text-base font-normal text-muted-foreground md:text-lg">
+              <LinkPreview
+                url="https://agencykit.app"
+                className="font-bold underline text-muted-foreground"
+              >
+                Agency Kit
               </LinkPreview>{" "}
               — an AI-powered mental health platform tailored for Egyptians.
             </div>
@@ -81,7 +94,7 @@ export function ExperienceSection() {
               </p>
               <div className="ml-4 mt-1">
                 <div className="flex items-center gap-2 text-base text-muted-foreground/80 md:text-lg">
-                  🌦️ NAVERIS: A weather-based early warning system for climate
+                  NAVERIS: A weather-based early warning system for climate
                   hazards
                 </div>
               </div>
@@ -92,7 +105,7 @@ export function ExperienceSection() {
               </p>
               <div className="ml-4 mt-1">
                 <div className="flex items-center gap-2 text-base text-muted-foreground/80 md:text-lg">
-                  🌌 Orbit: A real-time 3D solar system sim using NASA APIs
+                  Orbit: A real-time 3D solar system sim using NASA APIs
                 </div>
               </div>
             </div>
@@ -103,7 +116,7 @@ export function ExperienceSection() {
               </p>
               <div className="ml-4 mt-1">
                 <div className="flex items-center gap-2 text-base text-muted-foreground/80 md:text-lg">
-                  ♻️ RepAi: AI-powered recycling rewards platform with dynamic
+                  RepAi: AI-powered recycling rewards platform with dynamic
                   cashback
                 </div>
               </div>
@@ -114,10 +127,10 @@ export function ExperienceSection() {
               </p>
               <div className="ml-4 mt-1">
                 <div className="flex items-center gap-2 text-base text-muted-foreground/80 md:text-lg">
-                  🪐 Umbra: Interactive platform to explore, filter, and
-                  visualize NASA’s space biology experiments; empowering
-                  researchers and citizen scientists to fuel the next era of
-                  human space exploration
+                  Umbra: Interactive platform to explore, filter, and visualize
+                  NASA’s space biology experiments; empowering researchers and
+                  citizen scientists to fuel the next era of human space
+                  exploration
                 </div>
               </div>
             </div>

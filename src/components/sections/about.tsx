@@ -16,13 +16,13 @@ export function About() {
           <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
             About
           </h2>
-          <div className="mt-3 h-[2px] w-16 bg-primary" />
+          <div className="mt-3 h-0.5 w-16 bg-primary" />
         </div>
 
         <div className="grid grid-cols-1 items-start gap-x-16 gap-y-16 lg:grid-cols-12">
           {/* Photo */}
           <div className="lg:col-span-4 order-2 lg:order-1">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-lg">
+            <div className="relative aspect-3/4 overflow-hidden rounded-lg">
               <Image
                 src="/seif.jpg"
                 alt="Seif Zakaria"
@@ -30,7 +30,7 @@ export function About() {
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-background/20 to-transparent" />
             </div>
           </div>
 

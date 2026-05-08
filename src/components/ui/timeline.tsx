@@ -30,14 +30,14 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <div
-      className="w-full lg:max-w-8/12 mx-auto bg-background md:px-10"
+      className="max-w-7xl mx-auto bg-background md:px-10"
       ref={containerRef}
     >
       <div className="flex flex-col items-center max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
         <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl mb-4 text-foreground max-w-4xl font-bold tracking-tight">
           My Journey
         </h2>
-        <div className="mt-1 mb-4 h-[2px] w-16 bg-primary" />
+        <div className="mt-1 mb-4 h-0.5 w-16 bg-primary" />
         <p className="text-muted-foreground text-base md:text-xl max-w-xl text-center">
           A chronological journey through my education, startup ventures,
           internships, and hackathon-driven milestones.
@@ -68,14 +68,14 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
           style={{
             height: height + "px",
           }}
-          className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-border to-transparent to-[99%]  [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] "
+          className="absolute md:left-8 left-8 top-0 overflow-hidden w-0.5 bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-0% via-border to-transparent to-99%  mask-[linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] "
         >
           <motion.div
             style={{
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-foreground via-secondary to-transparent from-[0%] via-[10%] rounded-full"
+            className="absolute inset-x-0 top-0  w-0.5 bg-linear-to-t from-foreground via-secondary to-transparent from-0% via-10% rounded-full"
           />
         </div>
       </div>
