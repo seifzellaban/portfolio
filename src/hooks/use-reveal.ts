@@ -16,6 +16,9 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
   options?: IntersectionObserverInit
 ) {
   const ref = useRef<T>(null);
+  const root = options?.root;
+  const rootMargin = options?.rootMargin;
+  const threshold = options?.threshold;
 
   useEffect(() => {
     const el = ref.current;
@@ -29,15 +32,15 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
         }
       },
       {
-        threshold: 0.1,
-        rootMargin: "-40px",
-        ...options,
+        threshold: threshold ?? 0.1,
+        rootMargin: rootMargin ?? "-40px",
+        root,
       }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [root, rootMargin, threshold]);
 
   return ref;
 }
@@ -53,6 +56,9 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
 export function useRevealGroup(options?: IntersectionObserverInit) {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const pendingRef = useRef<Set<HTMLElement>>(new Set());
+  const root = options?.root;
+  const rootMargin = options?.rootMargin;
+  const threshold = options?.threshold;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,9 +71,9 @@ export function useRevealGroup(options?: IntersectionObserverInit) {
         }
       },
       {
-        threshold: 0.1,
-        rootMargin: "-40px",
-        ...options,
+        threshold: threshold ?? 0.1,
+        rootMargin: rootMargin ?? "-40px",
+        root,
       }
     );
 
@@ -80,7 +86,7 @@ export function useRevealGroup(options?: IntersectionObserverInit) {
     pendingRef.current.clear();
 
     return () => observer.disconnect();
-  }, []);
+  }, [root, rootMargin, threshold]);
 
   const attachRef = useCallback((el: HTMLElement | null) => {
     if (!el) return;

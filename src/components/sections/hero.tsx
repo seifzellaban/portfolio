@@ -11,7 +11,8 @@ export default function Hero() {
   const { handleNav } = useSmoothScroll();
 
   useEffect(() => {
-    setIsLoaded(true);
+    const timer = setTimeout(() => setIsLoaded(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const containerVariants: Variants = {

@@ -301,7 +301,7 @@ function ArchitectureLedgerVisual({ service }: { service: Service }) {
         </div>
       </div>
       <div className="rounded-xl border border-border/70 bg-background p-4 lg:col-span-3">
-        <div className="grid min-h-[340px] grid-cols-1 gap-3 sm:grid-cols-3">
+        <div className="grid min-h-85 grid-cols-1 gap-3 sm:grid-cols-3">
           {service.visualNodes.slice(0, 3).map((node, index) => (
             <div
               key={node.label}

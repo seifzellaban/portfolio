@@ -35,16 +35,19 @@ export function ThemeProvider({
 
   useEffect(() => {
     // Only run on client
-    setMounted(true);
-    const storedTheme =
-      typeof window !== "undefined"
-        ? (localStorage.getItem(storageKey) as Theme)
-        : null;
-    if (storedTheme) {
-      setTheme(storedTheme);
-    } else {
-      setTheme(defaultTheme);
-    }
+    const timer = setTimeout(() => {
+      setMounted(true);
+      const storedTheme =
+        typeof window !== "undefined"
+          ? (localStorage.getItem(storageKey) as Theme)
+          : null;
+      if (storedTheme) {
+        setTheme(storedTheme);
+      } else {
+        setTheme(defaultTheme);
+      }
+    }, 0);
+    return () => clearTimeout(timer);
   }, [defaultTheme, storageKey]);
 
   useEffect(() => {

@@ -27,25 +27,21 @@ export function MdxLayout({
     return <>{children}</>;
   }
 
-  const Header = () => (
-    <div className="mb-8">
-      <Link
-        href={backLink}
-        className="inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary mb-4 transition-colors"
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" /> {backLabel}
-      </Link>
-      <div className="h-[2px] w-12 bg-primary mt-2" />
-    </div>
-  );
-
   return (
     <div
       className="min-h-screen flex flex-col bg-background text-foreground mt-8"
       data-mdx-page
     >
       <main className="flex-1 w-full max-w-5xl mx-auto px-4 md:px-6 py-10">
-        <Header />
+        <div className="mb-8">
+          <Link
+            href={backLink}
+            className="inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary mb-4 transition-colors"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" /> {backLabel}
+          </Link>
+          <div className="h-[2px] w-12 bg-primary mt-2" />
+        </div>
         {children}
       </main>
 

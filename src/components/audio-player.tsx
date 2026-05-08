@@ -100,8 +100,6 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
     }
   };
 
-  const progress = duration ? (currentTime / duration) * 100 : 0;
-
   return (
     <span className="my-6 block rounded-lg border border-border bg-muted/50 p-4 shadow-sm">
       <audio ref={audioRef} src={src} preload="metadata" />
