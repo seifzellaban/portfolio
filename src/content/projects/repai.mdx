@@ -1,21 +1,59 @@
 ---
 title: "repAI"
-description: "An AI Powered Recycling App with Rewards and Cashback for building a Sustainable Future."
-imageUrl: "/projects/repai.png"
+description: "An AI-powered recycling app with rewards and cashback, built at the GDG Cairo AI Finance Hackathon."
+imageUrl: "/projects/repai.webp"
 sourceUrl: "https://github.com/wearemasons/repAI"
 techStack: ["React", "Google AI", "Tailwind CSS"]
+featured: false
+role: "Full-stack Developer"
+timeline: "March 2025"
+year: "2025"
+status: "Hackathon build"
+team: "GDG Cairo team"
+metrics:
+  - label: "Result"
+    value: "Top 7 of 88 teams"
+  - label: "Event"
+    value: "GDG Cairo AI Finance"
+  - label: "AI"
+    value: "Google AI"
+outcomes:
+  - "A working prototype that identifies recyclable items from a photo."
+  - "A rewards loop that ties recycling activity to cashback."
+  - "Top 7 finish out of 88 teams at the GDG Cairo AI Finance Hackathon."
 ---
 
-# repAI
+## The brief
 
-repAI is a sustainable recycling application built with Google AI.
+repAI was built for the GDG Cairo AI Finance Hackathon in March 2025. The prompt sat at the intersection of two problems: recycling is inconvenient, and the financial incentive to do it is usually invisible.
 
-## The Goal
+Most recycling apps stop at information. They tell you what can be recycled and where, then leave the actual work to you. We wanted to close the loop — identify the item, make the action worth something, and show the reward immediately.
 
-We want to make recycling more accessible and rewarding for everyone.
+## What we built
 
-## Features
+repAI lets a user point a camera at an item and get an answer: is this recyclable, and what is it worth? The app uses Google AI for object detection, then maps the result to a rewards model with cashback attached to the recycling action.
 
-- **AI Object Detection** to identify recyclable items.
-- **Rewards System** for recycling.
-- **Cashback Integration** for sustainable purchases.
+The loop is deliberately short:
+
+1. Scan an item.
+2. Confirm what the model found.
+3. See the reward.
+4. Track what you have diverted from waste.
+
+Short loops matter in sustainability products. If the reward takes a week to arrive, the habit never forms.
+
+## The build
+
+The app is a React frontend with Tailwind CSS, wired to Google AI for recognition and a lightweight backend for the rewards ledger. The hackathon timeline forced hard choices: we optimized for a demo that felt complete rather than a feature list that felt impressive.
+
+That meant focusing on the scan-to-reward path and cutting anything that did not make that path clearer. It also meant designing the empty and error states early, because live demos rarely behave.
+
+## The result
+
+repAI placed in the **top 7 out of 88 teams** at the GDG Cairo AI Finance Hackathon.
+
+More useful than the placement was the feedback: judges and other teams pushed on the incentive design, not the model accuracy. That told us the AI was good enough and the product question was the real one.
+
+## What I took away
+
+A hackathon is a forcing function for scope. The version we shipped in a weekend was not the version we imagined on day one, and it was better for it. Since then I have been more aggressive about cutting features that do not serve the core loop.

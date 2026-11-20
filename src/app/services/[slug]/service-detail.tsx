@@ -3,13 +3,13 @@
 import { Service } from "@/lib/services-data";
 import { useReveal, useRevealGroup } from "@/hooks/use-reveal";
 import {
-  ArrowLeft,
-  ArrowRight,
-  Banknote,
-  Check,
-  Clock,
-  MessageSquare,
-} from "lucide-react";
+  IconArrowLeft,
+  IconArrowRight,
+  IconCash,
+  IconCheck,
+  IconClock,
+  IconMessage,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { RefObject } from "react";
 
@@ -30,7 +30,7 @@ export default function ServiceDetail({ service }: { service: Service }) {
   const processRevealRef = useRevealGroup();
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" className="min-h-screen bg-background text-foreground">
       <section className="relative overflow-hidden border-b border-border/50 py-20 sm:py-28">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-size:[80px_80px] opacity-[0.25]" />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -39,7 +39,7 @@ export default function ServiceDetail({ service }: { service: Service }) {
               href="/#services"
               className="group mb-10 inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
             >
-              <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              <IconArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               Back to Services
             </Link>
 
@@ -157,7 +157,7 @@ function ServiceHero({ service }: { service: Service }) {
           className="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           {service.ctaLabel}
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
     </div>
@@ -172,14 +172,14 @@ function QuickInfoPanel({ service }: { service: Service }) {
       </p>
       <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
         <div className="flex items-start gap-3">
-          <Clock className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+          <IconClock className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
           <div>
             <p className="text-sm text-muted-foreground">Timeline</p>
             <p className="mt-1 font-semibold">{service.timeRange}</p>
           </div>
         </div>
         <div className="flex items-start gap-3">
-          <Banknote className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+          <IconCash className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
           <div>
             <p className="text-sm text-muted-foreground">Investment</p>
             <p className="mt-1 font-semibold">{service.priceRange}</p>
@@ -231,7 +231,7 @@ function DeliverablesGrid({
           )} group min-h-36 rounded-xl border border-border/60 bg-background p-6 transition-colors hover:border-primary/40`}
         >
           <div className="mb-5 flex items-center justify-between gap-4">
-            <Check className="h-5 w-5 text-primary" />
+            <IconCheck className="h-5 w-5 text-primary" />
             <span className="font-mono text-xs text-muted-foreground">
               {(index + 1).toString().padStart(2, "0")}
             </span>
@@ -482,7 +482,7 @@ function ServiceCTA({
           className="reveal grid grid-cols-1 gap-8 rounded-xl border border-border/60 bg-card p-8 sm:p-10 lg:grid-cols-[auto_1fr] lg:items-center"
         >
           <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-border/60 bg-background text-primary">
-            <MessageSquare className="h-8 w-8" />
+            <IconMessage className="h-8 w-8" />
           </div>
           <div>
             <h2 className="font-serif text-3xl font-bold tracking-tight sm:text-4xl">
@@ -497,7 +497,7 @@ function ServiceCTA({
                 className="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 {service.ctaLabel}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href="/#services"

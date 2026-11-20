@@ -5,6 +5,8 @@ import { motion, Variants } from "motion/react";
 import { useEffect, useState } from "react";
 import ShinyText from "../ShinyText";
 import Image from "next/image";
+import { IconDownload } from "@tabler/icons-react";
+import { site } from "@/lib/site";
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -93,7 +95,21 @@ export default function Hero() {
               Seif Zakaria — Cairo, Egypt
             </motion.p>
 
-            <motion.div variants={itemVariants} className="mt-10">
+            <motion.p
+              variants={itemVariants}
+              className="mt-3 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-muted-foreground"
+            >
+              <span
+                aria-hidden
+                className="inline-block h-1.5 w-1.5 rounded-full bg-primary"
+              />
+              {site.availability}
+            </motion.p>
+
+            <motion.div
+              variants={itemVariants}
+              className="mt-10 flex flex-wrap items-center gap-3"
+            >
               <motion.button
                 onClick={() => handleNav("projects")}
                 className="group relative inline-flex items-center gap-3 px-8 py-4 bg-foreground/5 backdrop-blur-sm border border-primary/20 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-500"
@@ -128,6 +144,17 @@ export default function Hero() {
                   />
                 </motion.svg>
               </motion.button>
+
+              <motion.a
+                href={site.resume.path}
+                download={site.resume.name}
+                className="inline-flex items-center gap-2 rounded-full border border-border/60 px-6 py-4 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground transition-all duration-500 hover:border-primary/40 hover:text-foreground"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <IconDownload size={14} />
+                Résumé
+              </motion.a>
             </motion.div>
           </motion.div>
 
@@ -139,7 +166,7 @@ export default function Hero() {
             <div className="relative w-full aspect-[3/4] max-w-sm ml-auto rounded-lg overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-tr from-background/30 via-transparent to-primary/10 z-10" />
               <Image
-                src="/seif.jpg"
+                src="/seif.webp"
                 alt="Seif Zakaria"
                 fill
                 sizes="(max-width: 1024px) 0vw, 350px"

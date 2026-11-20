@@ -10,10 +10,15 @@ import {
   IconMoon,
   IconBrandLinkedin,
   IconLink,
+  IconBriefcase,
+  IconNotebook,
+  IconMail,
+  IconDownload,
 } from "@tabler/icons-react";
 import { useTheme } from "@/lib/theme-provider";
 import { LogoSvg } from "@/components/logo";
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
+import { site } from "@/lib/site";
 
 export default function Dock() {
   const { theme, toggleTheme } = useTheme();
@@ -27,83 +32,99 @@ export default function Dock() {
     toggleTheme({ x, y });
   };
 
+  const iconClass =
+    "h-full w-full text-muted-foreground dark:text-foreground/80";
+
   const links = [
     {
       title: "Home",
-      icon: (
-        <IconHome className="h-full w-full text-muted-foreground dark:text-foreground/80" />
-      ),
+      icon: <IconHome className={iconClass} />,
       onClick: () => handleNav("home"),
       mobile: true,
     },
-
-    {
-      title: "Projects",
-      icon: (
-        <IconDeviceDesktopCode className="h-full w-full text-muted-foreground dark:text-foreground/80" />
-      ),
-      onClick: () => handleNav("projects"),
-      mobile: false,
-    },
     {
       title: "About",
-      icon: (
-        <IconUser className="h-full w-full text-muted-foreground dark:text-foreground/80" />
-      ),
+      icon: <IconUser className={iconClass} />,
       onClick: () => handleNav("about"),
-      mobile: false,
+      mobile: true,
+    },
+    {
+      title: "Services",
+      icon: <IconBriefcase className={iconClass} />,
+      href: "/services",
+      mobile: true,
+    },
+    {
+      title: "Projects",
+      icon: <IconDeviceDesktopCode className={iconClass} />,
+      onClick: () => handleNav("projects"),
+      mobile: true,
+    },
+    {
+      title: "Logs",
+      icon: <IconNotebook className={iconClass} />,
+      href: "/logs",
+      mobile: true,
+    },
+    {
+      title: "Contact",
+      icon: <IconMail className={iconClass} />,
+      onClick: () => handleNav("contact"),
+      mobile: true,
     },
     {
       title: "Links",
-      icon: (
-        <IconLink className="h-full w-full text-muted-foreground dark:text-foreground/80" />
-      ),
+      icon: <IconLink className={iconClass} />,
       href: "/links",
       mobile: true,
+      desktop: false,
     },
     {
       title: "Masons",
       icon: (
-        <LogoSvg className="h-full w-full text-muted-foreground dark:text-foreground/80 scale-150 fill-current" />
+        <LogoSvg
+          className={`${iconClass} scale-150 fill-current`}
+        />
       ),
       href: "https://wearemasons.com",
       mobile: true,
     },
     {
       title: "LinkedIn",
-      icon: (
-        <IconBrandLinkedin className="h-full w-full text-muted-foreground dark:text-foreground/80" />
-      ),
-      href: "https://linkedin.com/in/seifzellaban",
+      icon: <IconBrandLinkedin className={iconClass} />,
+      href: site.socials.find((s) => s.label === "LinkedIn")?.href,
       mobile: false,
     },
     {
       title: "X",
-      icon: (
-        <IconBrandX className="h-full w-full text-muted-foreground dark:text-foreground/80" />
-      ),
-      href: "https://x.com/seifzellaban",
+      icon: <IconBrandX className={iconClass} />,
+      href: site.socials.find((s) => s.label === "X")?.href,
       mobile: false,
     },
     {
       title: "GitHub",
-      icon: (
-        <IconBrandGithub className="h-full w-full text-muted-foreground dark:text-foreground/80" />
-      ),
-      href: "https://github.com/seifzellaban",
+      icon: <IconBrandGithub className={iconClass} />,
+      href: site.socials.find((s) => s.label === "GitHub")?.href,
       mobile: false,
+    },
+    {
+      title: "Resume",
+      icon: <IconDownload className={iconClass} />,
+      href: site.resume.path,
+      download: site.resume.name,
+      mobile: true,
     },
     {
       title: "Toggle theme",
       icon: (
-        <div className="relative h-full w-full cursor-pointer">
+        <div className="relative h-full w-full">
           <IconSun
-            className={`h-full w-full text-muted-foreground dark:text-foreground/80 transition-all duration-200 ${
+            className={`${iconClass} transition-all duration-200 ${
               isDark ? "rotate-90 scale-0" : "rotate-0 scale-100"
             }`}
           />
           <IconMoon
-            className={`absolute inset-0 h-full w-full text-muted-foreground dark:text-foreground/80 transition-all duration-200 ${
+            className={`${iconClass} absolute inset-0 transition-all duration-200 ${
               isDark ? "rotate-0 scale-100" : "-rotate-90 scale-0"
             }`}
           />
@@ -113,8 +134,9 @@ export default function Dock() {
       mobile: true,
     },
   ];
+
   return (
-    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+    <div className="fixed bottom-8 left-1/2 z-50 -translate-x-1/2">
       <FloatingDock items={links} />
     </div>
   );

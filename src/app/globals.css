@@ -254,6 +254,24 @@
     }
 }
 
+/* Without JavaScript nothing can add `.revealed`, so never hide content. */
+@media (scripting: none) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* Printing never scrolls, so IntersectionObserver never reveals sections. */
+@media print {
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
 @layer base {
     * {
         @apply border-border outline-ring/50;
@@ -262,11 +280,39 @@
     body {
         @apply bg-background text-foreground text-xl font-sans;
     }
+    input,
+    textarea,
+    select {
+        cursor: text;
+    }
+    select {
+        cursor: pointer;
+    }
     a[href^="#fnref"] {
         @apply text-primary underline-offset-2;
     }
     .font-allison {
         font-family: "Allison", sans-serif;
+    }
+}
+
+html {
+    scroll-padding-top: 1.5rem;
+    scroll-behavior: smooth;
+}
+
+/* Users who ask for less motion get native scrolling and a real cursor */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        cursor: auto !important;
     }
 }
 

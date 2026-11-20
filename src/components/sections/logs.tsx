@@ -1,7 +1,7 @@
 "use client";
 
 import { LogCard } from "@/components/log-card";
-import { Post } from "@/lib/posts";
+import type { Post } from "@/lib/posts";
 import ShinyText from "@/components/ShinyText";
 import { motion } from "motion/react";
 import Link from "next/link";

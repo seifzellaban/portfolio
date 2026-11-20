@@ -1,17 +1,56 @@
 ---
 title: "Orbit"
-description: "Orbit is an interactive 3D web application designed to simulate the solar system and track Near-Earth Objects (NEOs)."
-imageUrl: "/projects/orbit.png"
+description: "An interactive 3D solar system built for the 2024 NASA Space Apps Challenge, with real orbital data and near-Earth object tracking."
+imageUrl: "/projects/orbit.webp"
 sourceUrl: "https://github.com/wearemasons/orbit"
 techStack: ["Next.js", "Three.js", "Blender"]
+featured: false
+role: "Developer"
+timeline: "October 2024"
+year: "2024"
+status: "Open source"
+team: "Hackathon team"
+metrics:
+  - label: "Event"
+    value: "NASA Space Apps 2024"
+  - label: "Rendering"
+    value: "Three.js"
+  - label: "Data"
+    value: "NASA APIs"
+outcomes:
+  - "A working 3D solar system that runs in the browser without a plugin."
+  - "Near-Earth object data pulled from NASA and surfaced in the scene."
+  - "A reusable Blender-to-web asset pipeline for future 3D work."
 ---
 
-# Orbit
+## The brief
 
-Orbit is an interactive 3D solar system simulator.
+Orbit started as a 2024 NASA Space Apps Challenge build: make the solar system explorable in a browser, and make near-Earth objects feel less abstract.
 
-## Features
+Space data is usually presented as tables, charts, or flat diagrams. That works for researchers, but it hides the thing that makes the topic compelling — scale, motion, and the fact that these objects are actually moving around us.
 
-- **3D Planet Visualization** using Three.js.
-- **NEO Tracking** using NASA's APIs.
-- **Accurate Physics** simulations.
+## What Orbit does
+
+Orbit renders the solar system as an interactive 3D scene. You can move through it, look at planets from different angles, and see how near-Earth objects relate to the orbits around them.
+
+The scene is driven by real data rather than hand-placed props. Planet positions and NEO information come from NASA's public APIs, so the visualization reflects the actual state of the system instead of a static illustration.
+
+## How it is built
+
+The frontend is Next.js with Three.js doing the rendering. Planetary textures and models were prepared in Blender, then exported for the web. The challenge was keeping the scene readable and performant on ordinary laptops, not just machines with a dedicated GPU.
+
+A few constraints shaped the build:
+
+- **Level of detail** — distant objects use simpler geometry and textures.
+- **Lazy loading** — heavy assets load as they come into view.
+- **Data boundaries** — API responses are normalized before they reach the scene graph.
+
+## What I learned
+
+Web 3D is mostly a performance discipline. The rendering code is the easy part; the hard part is deciding what the user does not need to see at any given moment.
+
+The project also made me much more comfortable with Blender as part of a web pipeline — not as a separate art step, but as a source of assets that have to survive compression, loading, and mobile screens.
+
+## Reflections
+
+Orbit is the project that made orbital mechanics click for me. Once you watch a near-Earth object move through a scene you built, the data stops being abstract. That is the whole argument for interactive visualization.

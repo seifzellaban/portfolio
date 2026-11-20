@@ -6,7 +6,7 @@ export default function ProjectsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <MdxLayout backLink="/#projects" backLabel="Back to Projects">
+    <MdxLayout backLink="/projects" backLabel="Back to Projects">
       {children}
     </MdxLayout>
   );

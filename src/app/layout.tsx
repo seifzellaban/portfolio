@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-provider";
@@ -7,53 +7,75 @@ import ScrollHandler from "@/components/scroll-handler";
 import { Suspense } from "react";
 import { CustomCursor } from "@/components/custom-cursor";
 import { LenisProvider } from "@/lib/lenis-provider";
+import { Footer } from "@/components/footer";
+import { Toaster } from "@/components/toaster";
+import { Analytics } from "@vercel/analytics/next";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Seif Zakaria — Fullstack Developer & Founder",
-  description:
-    "Seif Zakaria - Full-stack Software Engineer from Cairo, Egypt. Founder of Masons building AI-driven mental health platform Rafiqi. Specializing in React, Next.js, TypeScript, and Python with expertise in fintech, AI integration, and real-time applications. NASA Space Apps finalist and hackathon winner.",
-  keywords: [
-    "Seif Zakaria",
-    "Full-stack Software Engineer",
-    "Cairo Egypt developer",
-    "React developer",
-    "Next.js developer",
-    "TypeScript developer",
-    "Python developer",
-    "AI integration",
-    "Mental health platform",
-    "Rafiqi",
-    "Masons founder",
-    "MERN stack",
-    "Node.js",
-    "Express.js",
-    "MongoDB",
-    "PostgreSQL",
-    "Firebase",
-    "Socket.io",
-    "Real-time applications",
-    "Fintech developer",
-    "GenAI",
-    "NASA Space Apps Challenge",
-    "Hackathon winner",
-    "GDG Cairo",
-    "Three.js",
-    "3D web development",
-    "TailwindCSS",
-    "CI/CD pipelines",
-    "DevOps",
-    "Open source",
-    "Web development",
-    "Software engineering",
-    "Computer science",
-    "Startup founder",
-    "Technical mentoring",
-    "Arabic developer",
-    "Middle East tech",
-  ],
+  metadataBase: new URL(site.url),
+  title: {
+    default: site.title,
+    template: `%s — ${site.name}`,
+  },
+  description: site.description,
+  keywords: [...site.keywords],
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  applicationName: site.name,
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": [{ url: "/feed.xml", title: "Seif Zakaria — Logs" }],
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: site.url,
+    siteName: site.name,
+    title: site.title,
+    description: site.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.title,
+    description: site.description,
+    creator: "@seifzellaban",
+    site: "@seifzellaban",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/logo.svg",
+    shortcut: "/logo.svg",
+    apple: "/logo.svg",
   },
+  manifest: "/manifest.webmanifest",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "dark light",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#171717" },
+    { media: "(prefers-color-scheme: light)", color: "#f3f3f3" },
+  ],
 };
 
 const spaceMono = Space_Mono({
@@ -77,6 +99,27 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link
+          rel="preload"
+          href="/fonts/chubbo/Chubbo-Regular.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/chubbo/Chubbo-Bold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/n27/n27-regular-webfont.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -103,16 +146,25 @@ export default function RootLayout({
       <body
         className={`antialiased ${spaceMono.variable} ${ibmPlexSansArabic.variable}`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-100 focus:rounded-md focus:border focus:border-border focus:bg-background focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-widest focus:text-foreground"
+        >
+          Skip to content
+        </a>
         <ThemeProvider>
           <LenisProvider>
             <CustomCursor />
-            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+            <Suspense fallback={null}>{children}</Suspense>
+            <Footer />
             <Dock />
+            <Toaster />
             <Suspense fallback={null}>
               <ScrollHandler />
             </Suspense>
           </LenisProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

@@ -1,7 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { IconDownload } from "@tabler/icons-react";
+import { track } from "@vercel/analytics";
+import { site } from "@/lib/site";
 
 type DownloadResumeButtonProps = {
   variant: "default" | "outline" | "ghost" | "link";
@@ -12,24 +14,16 @@ export function DownloadResumeButton({
   variant,
   size,
 }: DownloadResumeButtonProps) {
-  const fileUrl = "/files/Seif Zakaria - Fullstack Software Engineer.pdf";
-  const fileName = "Seif Zakaria - Fullstack Software Engineer.pdf";
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = fileUrl;
-    link.download = fileName;
-    link.click();
-  };
-
   return (
-    <Button
-      variant={variant}
-      size={size}
-      className={`mt-4 text-${size} mx-auto flex`}
-      onClick={handleDownload}
-    >
-      <Download className="h-8 w-8" />
-      Download Resume
+    <Button variant={variant} size={size} className="mx-auto flex" asChild>
+      <a
+        href={site.resume.path}
+        download={site.resume.name}
+        onClick={() => track("resume_download")}
+      >
+        <IconDownload className="h-5 w-5" />
+        Download Resume
+      </a>
     </Button>
   );
 }

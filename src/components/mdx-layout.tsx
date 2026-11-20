@@ -1,8 +1,7 @@
 "use client";
 import { ReactNode, useEffect } from "react";
-import Dock from "@/components/dock";
 import { usePathname } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { IconArrowLeft } from "@tabler/icons-react";
 import Link from "next/link";
 
 export function MdxLayout({
@@ -23,29 +22,30 @@ export function MdxLayout({
     };
   }, []);
 
-  if (pathname === backLink) {
+  if (pathname === backLink || pathname?.startsWith("/logs/tag")) {
     return <>{children}</>;
   }
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-background text-foreground mt-8"
+      className="mt-8 flex min-h-screen flex-col bg-background text-foreground"
       data-mdx-page
     >
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 md:px-6 py-10">
+      <main
+        id="main-content"
+        className="mx-auto w-full max-w-5xl flex-1 px-4 py-10 md:px-6"
+      >
         <div className="mb-8">
           <Link
             href={backLink}
-            className="inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground hover:text-primary mb-4 transition-colors"
+            className="mb-4 inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
           >
-            <ArrowLeft className="mr-2 h-4 w-4" /> {backLabel}
+            <IconArrowLeft className="mr-2 h-4 w-4" /> {backLabel}
           </Link>
-          <div className="h-[2px] w-12 bg-primary mt-2" />
+          <div className="mt-2 h-[2px] w-12 bg-primary" />
         </div>
         {children}
       </main>
-
-      <Dock />
     </div>
   );
 }

@@ -1,83 +1,94 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { doc } from "@/lib/google-sheets";
 import { sendEmail } from "@/lib/email";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { escapeHtml, stripNewlines } from "@/lib/html";
 
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
+const schema = z.object({
+  name: z.string().trim().min(2).max(100),
+  email: z.string().trim().email().max(254),
+  message: z.string().trim().min(10).max(5_000),
+  projectType: z.string().trim().max(60).optional().default(""),
+  // Honeypot — real browsers never fill this.
+  website: z.string().max(200).optional().default(""),
+});
 
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const windowMs = 60 * 1000;
-  const maxRequests = 3;
-
-  const record = rateLimit.get(ip);
-
-  if (!record || now > record.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + windowMs });
-    return true;
-  }
-
-  if (record.count >= maxRequests) {
-    return false;
-  }
-
-  record.count++;
-  return true;
-}
-
-function getIp(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0] ||
-    request.headers.get("x-real-ip") ||
-    "unknown"
-  );
-}
+const projectTypes = [
+  "Website",
+  "Web app",
+  "UI/UX design",
+  "AI / automation",
+  "Other",
+];
 
 export async function POST(request: Request) {
-  const ip = getIp(request);
+  const ip = getClientIp(request);
+  const limit = rateLimit(`contact:${ip}`, { limit: 5, windowMs: 60_000 });
 
-  if (!checkRateLimit(ip)) {
+  if (!limit.ok) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
-      { status: 429 },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
     );
   }
 
+  let parsed: z.infer<typeof schema>;
+
   try {
-    const body = await request.json();
-    const { name, email, message } = body;
+    parsed = schema.parse(await request.json());
+  } catch {
+    return NextResponse.json(
+      { error: "Please check the form fields and try again." },
+      { status: 400 }
+    );
+  }
 
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 },
-      );
-    }
+  // Silently accept honeypot submissions so bots don't learn.
+  if (parsed.website) {
+    return NextResponse.json({ success: true });
+  }
 
-    // 1. Add to Google Sheet
+  const { name, email, message } = parsed;
+  const projectType = projectTypes.includes(parsed.projectType)
+    ? parsed.projectType
+    : "Not specified";
+  const safeName = stripNewlines(name);
+
+  try {
+    // 1. Persist to Google Sheets
     await doc.loadInfo();
     const sheet = doc.sheetsByTitle["Contact Form"];
-    if (!sheet) {
-      console.error("Sheet 'Contact Form' not found");
-      // Start a background process to create it? Or just fail?
-      // For now, let's log and proceed (email might still work).
-    } else {
+
+    if (sheet) {
+      const headers = sheet.headerValues;
+      if (!headers.includes("Type")) {
+        await sheet.setHeaderRow([...headers, "Type"]);
+      }
+
       await sheet.addRow({
         Date: new Date().toISOString(),
         Name: name,
         Email: email,
+        Type: projectType,
         Message: message,
       });
+    } else {
+      console.error("Sheet 'Contact Form' not found");
     }
 
-    // 2. Send Email
+    // 2. Notify by email
     await sendEmail({
-      subject: `New Contact Form Submission from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      subject: `New project inquiry from ${safeName}`,
+      replyTo: email,
+      text: `Name: ${name}\nEmail: ${email}\nProject type: ${projectType}\n\n${message}`,
       html: `
-        <h3>New Contact Form Submission</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p> <p>${message}</p>
+        <h3>New project inquiry</h3>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Project type:</strong> ${escapeHtml(projectType)}</p>
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-wrap">${escapeHtml(message)}</p>
       `,
     });
 
@@ -86,7 +97,7 @@ export async function POST(request: Request) {
     console.error("Error processing contact form:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

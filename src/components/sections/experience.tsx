@@ -59,7 +59,7 @@ export function ExperienceSection() {
             <h4 className="mb-2 text-lg font-medium">Flagship Projects</h4>
             <div className="text-base font-normal text-muted-foreground md:text-lg">
               <LinkPreview
-                url="https://test-rafiqi.wearemasons.com"
+                url="https://wearemasons.com"
                 className="font-bold underline text-muted-foreground"
               >
                 Rafiqi
@@ -78,13 +78,8 @@ export function ExperienceSection() {
               >
                 Agency Kit
               </LinkPreview>{" "}
-              — an AI-powered mental health platform tailored for Egyptians.
+              — a product built at Masons for agency workflows.
             </div>
-            <p className="mb-4 text-base font-normal text-muted-foreground md:text-lg">
-              Rafiqi combines culturally informed design with AI to provide
-              mental health support that’s accessible and relevant to the people
-              it serves.
-            </p>
           </div>
           <div className="mb-4">
             <h4 className="mb-2 text-lg font-medium">Competitive Builds:</h4>

@@ -24,7 +24,7 @@ export function About() {
           <div className="lg:col-span-4 order-2 lg:order-1">
             <div className="relative aspect-3/4 overflow-hidden rounded-lg">
               <Image
-                src="/seif.jpg"
+                src="/seif.webp"
                 alt="Seif Zakaria"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"

@@ -2,92 +2,86 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 
 export function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [clicked, setClicked] = useState(false);
   const [linkHovered, setLinkHovered] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [isMobile, setIsMobile] = useState(true); // Default to true to prevent flash on mobile
+  const [isCoarse, setIsCoarse] = useState(true); // avoid flash on touch devices
+  const reduceMotion = useReducedMotion();
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Check if we're on mobile
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const query = window.matchMedia(
+      "(pointer: coarse), (max-width: 767px)"
+    );
+    const update = () => setIsCoarse(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (isCoarse || reduceMotion) return;
+
+    const interactiveSelector =
+      "a, button, input, textarea, select, [class*='cursor-link'], .highlight";
+
+    const onMouseMove = (e: MouseEvent) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+    };
+    const onMouseEnter = () => setHidden(false);
+    const onMouseLeave = () => setHidden(true);
+    const onMouseDown = () => setClicked(true);
+    const onMouseUp = () => setClicked(false);
+
+    // Event delegation keeps hover state correct for links added after mount.
+    const onMouseOver = (event: MouseEvent) => {
+      if ((event.target as Element | null)?.closest?.(interactiveSelector)) {
+        setLinkHovered(true);
+      }
+    };
+    const onMouseOut = (event: MouseEvent) => {
+      if ((event.target as Element | null)?.closest?.(interactiveSelector)) {
+        setLinkHovered(false);
+      }
     };
 
-    // Initial check
-    checkIfMobile();
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseenter", onMouseEnter);
+    document.addEventListener("mouseleave", onMouseLeave);
+    document.addEventListener("mousedown", onMouseDown);
+    document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("mouseover", onMouseOver);
+    document.addEventListener("mouseout", onMouseOut);
 
-    // Add resize listener
-    window.addEventListener("resize", checkIfMobile);
-
-    const addEventListeners = () => {
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseenter", onMouseEnter);
-      document.addEventListener("mouseleave", onMouseLeave);
-      document.addEventListener("mousedown", onMouseDown);
-      document.addEventListener("mouseup", onMouseUp);
-    };
-
-    const removeEventListeners = () => {
+    return () => {
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseenter", onMouseEnter);
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("mouseup", onMouseUp);
+      document.removeEventListener("mouseover", onMouseOver);
+      document.removeEventListener("mouseout", onMouseOut);
     };
+  }, [isCoarse, reduceMotion]);
 
-    const onMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-    };
-
-    const onMouseEnter = () => {
-      setHidden(false);
-    };
-
-    const onMouseLeave = () => {
-      setHidden(true);
-    };
-
-    const onMouseDown = () => {
-      setClicked(true);
-    };
-
-    const onMouseUp = () => {
-      setClicked(false);
-    };
-
-    const handleLinkHoverEvents = () => {
-      document
-        .querySelectorAll("a, button, input, textarea, [class*='cursor-link'], .highlight")
-        .forEach((el) => {
-          el.addEventListener("mouseenter", () => setLinkHovered(true));
-          el.addEventListener("mouseleave", () => setLinkHovered(false));
-        });
-    };
-
-    // Only add event listeners if not on mobile
-    if (!isMobile) {
-      addEventListeners();
-      handleLinkHoverEvents();
-    }
-
-    return () => {
-      removeEventListeners();
-      window.removeEventListener("resize", checkIfMobile);
-    };
-  }, [isMobile]);
-
-  const pathname = usePathname();
-
-  if (isMobile || pathname?.startsWith("/logs") || pathname?.startsWith("/projects")) return null;
+  if (
+    isCoarse ||
+    reduceMotion ||
+    pathname?.startsWith("/logs") ||
+    pathname?.startsWith("/projects")
+  ) {
+    return null;
+  }
 
   return (
     <>
       <motion.div
-        className="cursor-dot fixed top-0 left-0"
+        aria-hidden
+        className="cursor-dot fixed left-0 top-0"
         style={{ translateX: "-50%", translateY: "-50%" }}
         animate={{
           x: position.x,
@@ -104,7 +98,8 @@ export function CustomCursor() {
       />
 
       <motion.div
-        className="cursor-outline fixed top-0 left-0"
+        aria-hidden
+        className="cursor-outline fixed left-0 top-0"
         style={{ translateX: "-50%", translateY: "-50%" }}
         animate={{
           x: position.x,

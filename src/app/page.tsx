@@ -6,22 +6,26 @@ import { ProjectsSection } from "@/components/sections/projects";
 import Hero from "@/components/sections/hero";
 import { Logs } from "@/components/sections/logs";
 import { Services } from "@/components/sections/services";
+import { TestimonialsSection } from "@/components/sections/testimonials";
 import Signature from "@/components/signature";
 import { getProjects } from "@/lib/projects";
 import { getPosts } from "@/lib/posts";
+import { getContributions } from "@/lib/github";
 
-export default function Page() {
+export default async function Page() {
   const projects = getProjects();
   const posts = getPosts();
+  const contributions = await getContributions("seifzellaban");
   return (
-    <main>
+    <main id="main-content">
       <Hero />
       <About />
       <Services />
       <ExperienceSection />
       <div className="mt-16" />
       <TechStackMarquee />
-      <ProjectsSection projects={projects} />
+      <ProjectsSection projects={projects} contributions={contributions} />
+      <TestimonialsSection />
       <Logs count={3} posts={posts} />
       <div className="relative">
         <div className="absolute inset-0 -z-10">

@@ -16,7 +16,10 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
+    <main
+      id="main-content"
+      className="min-h-screen flex flex-col items-center justify-center bg-background px-4"
+    >
       <h1 className="font-serif text-4xl font-bold text-foreground mb-4">
         Something went wrong
       </h1>
@@ -31,6 +34,6 @@ export default function Error({
           <Link href="/">Go home</Link>
         </Button>
       </div>
-    </div>
+    </main>
   );
 }

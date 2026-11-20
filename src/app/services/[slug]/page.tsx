@@ -19,13 +19,20 @@ export async function generateMetadata({
 
   if (!service) {
     return {
-      title: "Service Not Found | Seif Zakaria",
+      title: "Service not found",
     };
   }
 
   return {
-    title: `${service.title} | Seif Zakaria`,
+    title: service.title,
     description: service.metaDescription,
+    alternates: { canonical: `/services/${service.id}` },
+    openGraph: {
+      type: "website",
+      title: `${service.title} — Seif Zakaria`,
+      description: service.metaDescription,
+      url: `https://seifzellaban.com/services/${service.id}`,
+    },
   };
 }
 

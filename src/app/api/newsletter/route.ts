@@ -1,36 +1,79 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { doc } from "@/lib/google-sheets";
 import { sendEmail } from "@/lib/email";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { escapeHtml } from "@/lib/html";
+
+const schema = z.object({
+  email: z.string().trim().email().max(254),
+  website: z.string().max(200).optional().default(""),
+});
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const { email } = body;
+  const ip = getClientIp(request);
+  const limit = rateLimit(`newsletter:${ip}`, { limit: 3, windowMs: 60_000 });
 
-    if (!email) {
+  if (!limit.ok) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+    );
+  }
+
+  let parsed: z.infer<typeof schema>;
+
+  try {
+    parsed = schema.parse(await request.json());
+  } catch {
+    return NextResponse.json(
+      { error: "Please enter a valid email address." },
+      { status: 400 }
+    );
+  }
+
+  if (parsed.website) {
+    return NextResponse.json({ success: true });
+  }
+
+  const email = parsed.email.toLowerCase();
+
+  try {
+    await doc.loadInfo();
+    const sheet = doc.sheetsByTitle["Newsletter Signup"];
+
+    if (!sheet) {
+      console.error("Sheet 'Newsletter Signup' not found");
       return NextResponse.json(
-        { error: "Email is required" },
-        { status: 400 }
+        { error: "Subscriptions are temporarily unavailable." },
+        { status: 503 }
       );
     }
 
-    // 1. Add to Google Sheet
-    await doc.loadInfo();
-    const sheet = doc.sheetsByTitle["Newsletter Signup"];
-    if (!sheet) {
-      console.error("Sheet 'Newsletter Signup' not found");
-    } else {
-      await sheet.addRow({
-        Date: new Date().toISOString(),
-        Email: email,
-      });
+    const rows = await sheet.getRows();
+    const existing = rows.find(
+      (row) => (row.get("Email") || "").toLowerCase() === email
+    );
+
+    // Idempotent: re-subscribing is fine and must not spam the inbox.
+    if (existing) {
+      return NextResponse.json({ success: true, existing: true });
     }
 
-    // 2. Send Email Notification to Admin
+    await sheet.addRow({
+      Date: new Date().toISOString(),
+      Email: email,
+    });
+
     await sendEmail({
-      subject: `New Newsletter Signup: ${email}`,
+      subject: `New newsletter signup: ${email}`,
       text: `New subscriber: ${email}`,
-      html: `<p>New subscriber: <strong>${email}</strong></p>`,
+      html: `<p>New subscriber: <strong>${escapeHtml(email)}</strong></p>`,
+      headers: {
+        "List-Unsubscribe": `<mailto:seifzellaban@gmail.com?subject=Unsubscribe%20${encodeURIComponent(
+          email
+        )}>`,
+      },
     });
 
     return NextResponse.json({ success: true });

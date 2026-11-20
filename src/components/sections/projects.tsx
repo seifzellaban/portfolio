@@ -2,147 +2,234 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "@/lib/theme-provider";
 import { Project } from "@/lib/projects";
-import { motion } from "motion/react";
-import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
+import { useReveal, useRevealGroup } from "@/hooks/use-reveal";
+import { IconArrowUpRight, IconBrandGithub } from "@tabler/icons-react";
 
 const GitHubCalendar = dynamic(
   () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
   { ssr: false }
 );
 
-const cardSizes = [
-  "md:col-span-2 md:row-span-2",
-  "md:col-span-1 md:row-span-1",
-  "md:col-span-1 md:row-span-1",
-  "md:col-span-2 md:row-span-1",
-];
+const ActivityCalendar = dynamic(
+  () =>
+    import("react-activity-calendar").then((mod) => mod.ActivityCalendar),
+  { ssr: false }
+);
 
-function BentoProjectCard({
-  project,
-  index,
+interface Activity {
+  date: string;
+  count: number;
+  level: 0 | 1 | 2 | 3 | 4;
+}
+
+const pad = (n: number) => n.toString().padStart(2, "0");
+
+const metaClasses =
+  "flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground";
+
+function TechStack({
+  items,
   className = "",
 }: {
-  project: { slug: string; name: string; description: string; imageUrl: string; demoUrl?: string; sourceUrl?: string; impact?: string; techStack?: string[] };
-  index: number;
+  items?: string[];
   className?: string;
 }) {
-  const router = useRouter();
-  const isLarge = index === 0;
+  if (!items?.length) return null;
 
   return (
-    <motion.div
-      onClick={() => router.push(`/projects/${project.slug}`)}
-      className={`group relative overflow-hidden rounded-2xl bg-card border border-border/50 hover:border-primary/40 transition-all duration-500 cursor-link ${className}`}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      viewport={{ once: true }}
-    >
-      {/* Project number */}
-      <div className="absolute top-4 left-4 z-20 font-mono text-xs text-foreground/40 tracking-widest">
-        {(index + 1).toString().padStart(2, "0")}
-      </div>
+    <ul className={`flex flex-wrap items-center gap-2 ${className}`}>
+      {items.map((tech) => (
+        <li
+          key={tech}
+          className="rounded-full border border-border/70 px-2.5 py-1 font-mono text-[10px] uppercase leading-none tracking-[0.12em] text-muted-foreground transition-colors duration-300 group-hover:border-border"
+        >
+          {tech}
+        </li>
+      ))}
+    </ul>
+  );
+}
 
+function ProjectLinks({ project }: { project: Project }) {
+  if (!project.demoUrl && !project.sourceUrl) return null;
+
+  return (
+    <div className="relative z-10 flex flex-wrap items-center gap-6 font-mono text-[11px] uppercase tracking-[0.16em]">
+      {project.demoUrl && (
+        <a
+          href={project.demoUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="group/link inline-flex items-center gap-1.5 text-foreground transition-colors hover:text-primary"
+        >
+          Live site
+          <IconArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+        </a>
+      )}
+      {project.sourceUrl && (
+        <a
+          href={project.sourceUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <IconBrandGithub className="h-3.5 w-3.5" />
+          Source
+        </a>
+      )}
+    </div>
+  );
+}
+
+/**
+ * The card's only real link. A stretched ::after pseudo-element makes the
+ * whole article clickable without nesting anchors, so the external links
+ * can sit above it with `relative z-10`.
+ */
+function CaseStudyLink({
+  project,
+  className = "",
+}: {
+  project: Project;
+  className?: string;
+}) {
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className={`decoration-primary/40 decoration-1 underline-offset-[6px] after:absolute after:inset-0 after:content-[''] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background group-hover:underline ${className}`}
+    >
+      {project.name}
+      <IconArrowUpRight
+        aria-hidden
+        className="ml-2 inline-block h-[0.65em] w-[0.65em] -translate-y-[0.1em] text-primary transition-transform duration-300 group-hover:-translate-y-[0.2em] group-hover:translate-x-1"
+      />
+    </Link>
+  );
+}
+
+function FeaturedProject({
+  project,
+  number,
+  revealRef,
+}: {
+  project: Project;
+  number: number;
+  revealRef: (el: HTMLElement | null) => void;
+}) {
+  return (
+    <article ref={revealRef} className="reveal group relative">
       {/* Image */}
-      <div className={`relative w-full ${isLarge ? "min-h-[420px]" : "min-h-[260px]"}`}>
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border/50 bg-muted sm:aspect-[16/9]">
         <Image
           src={project.imageUrl}
           alt={project.name}
           fill
-          sizes={
-            isLarge
-              ? "(max-width: 768px) 100vw, 66vw"
-              : "(max-width: 768px) 100vw, 33vw"
-          }
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          sizes="(max-width: 768px) 100vw, 1200px"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
+        <span className="absolute left-5 top-5 rounded-full bg-background/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-foreground backdrop-blur-sm">
+          Featured
+        </span>
       </div>
 
-      {/* Gradient overlay — always visible for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent z-10" />
+      {/* Caption */}
+      <div className="mt-8 grid grid-cols-1 gap-8 md:mt-10 md:grid-cols-12 md:gap-10">
+        <div className="md:col-span-8">
+          <div className={metaClasses}>
+            <span>{pad(number)}</span>
+            <span aria-hidden className="h-px w-8 bg-border" />
+            <span>Featured project</span>
+          </div>
 
-      {/* Always-visible info at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 p-6">
-        <div className="flex items-end justify-between">
-          <div className="space-y-1">
-            <h3 className="font-serif text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-              {project.name}
-            </h3>
-            {project.impact && (
-              <p className="text-sm text-muted-foreground line-clamp-1">
-                {project.impact}
-              </p>
-            )}
-          </div>
-          <div className="w-10 h-10 rounded-full bg-foreground/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-            <ArrowUpRight className="w-4 h-4 text-foreground group-hover:text-primary-foreground transition-colors duration-300" />
-          </div>
+          <h3 className="mt-4 font-serif text-3xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+            <CaseStudyLink project={project} />
+          </h3>
+
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            {project.description}
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-6 md:col-span-4 md:items-end md:justify-end">
+          <TechStack items={project.techStack} className="md:justify-end" />
+          <ProjectLinks project={project} />
         </div>
       </div>
-
-      {/* Hover reveal panel */}
-      <div className="absolute inset-0 z-30 bg-background/95 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8 translate-y-4 group-hover:translate-y-0">
-        <h3 className="font-serif text-2xl sm:text-3xl font-bold mb-6">
-          {project.name}
-        </h3>
-        {project.techStack && project.techStack.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.techStack.slice(0, 4).map((tech) => (
-              <Badge
-                key={tech}
-                variant="secondary"
-                className="text-xs bg-foreground/10 border-none px-3 py-0.5"
-              >
-                {tech}
-              </Badge>
-            ))}
-            {project.techStack.length > 4 && (
-              <Badge
-                variant="secondary"
-                className="text-xs bg-foreground/10 border-none px-3 py-0.5"
-              >
-                +{project.techStack.length - 4}
-              </Badge>
-            )}
-          </div>
-        )}
-        <div className="flex gap-3">
-          {project.demoUrl && (
-            <Link href={project.demoUrl} target="_blank" onClick={(e) => e.stopPropagation()}>
-              <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
-                <ExternalLink className="w-4 h-4" />
-                Live Demo
-              </button>
-            </Link>
-          )}
-          {project.sourceUrl && (
-            <Link href={project.sourceUrl} target="_blank" onClick={(e) => e.stopPropagation()}>
-              <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-sm font-medium hover:bg-foreground/5 transition-colors">
-                <Github className="w-4 h-4" />
-                Source
-              </button>
-            </Link>
-          )}
-        </div>
-      </div>
-    </motion.div>
+    </article>
   );
 }
 
-export function ProjectsSection({ projects }: { projects: Project[] }) {
-  const { theme } = useTheme();
+function ProjectRow({
+  project,
+  number,
+  revealRef,
+}: {
+  project: Project;
+  number: number;
+  revealRef: (el: HTMLElement | null) => void;
+}) {
+  return (
+    <article
+      ref={revealRef}
+      className="reveal group relative border-t border-border/50 py-10 md:py-14"
+    >
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:items-center md:gap-10">
+        <div className="md:col-span-5">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border/50 bg-muted">
+            <Image
+              src={project.imageUrl}
+              alt={project.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 40vw"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            />
+          </div>
+        </div>
 
-  interface Activity {
-    date: string;
-    count: number;
-    level: 0 | 1 | 2 | 3 | 4;
-  }
+        <div className="md:col-span-7 md:pl-2">
+          <div className={metaClasses}>
+            <span>{pad(number)}</span>
+            <span aria-hidden className="h-px w-8 bg-border" />
+            <span>Case study</span>
+          </div>
+
+          <h3 className="mt-3 font-serif text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+            <CaseStudyLink project={project} />
+          </h3>
+
+          <p className="mt-3 line-clamp-2 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            {project.description}
+          </p>
+
+          <div className="mt-6">
+            <TechStack items={project.techStack} />
+          </div>
+
+          <div className="mt-6">
+            <ProjectLinks project={project} />
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export function ProjectsSection({
+  projects,
+  contributions,
+}: {
+  projects: Project[];
+  contributions?: Activity[];
+}) {
+  const { theme } = useTheme();
+  const headingRef = useReveal<HTMLDivElement>();
+  const calendarRef = useReveal<HTMLDivElement>();
+  const cardRevealRef = useRevealGroup();
 
   const selectMonths = (contributions: Activity[]): Activity[] => {
     const currentYear = new Date().getFullYear();
@@ -160,55 +247,104 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
     });
   };
 
+  if (projects.length === 0) return null;
+
+  const featuredIndex = Math.max(
+    0,
+    projects.findIndex((project) => project.featured)
+  );
+  const featured = projects[featuredIndex];
+  const rows = projects
+    .map((project, index) => ({ project, index }))
+    .filter(({ index }) => index !== featuredIndex);
+
   return (
     <section id="projects" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Editorial heading */}
-        <div className="mb-16">
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
-            Projects
-          </h2>
-          <div className="mt-3 h-[2px] w-16 bg-primary" />
-          <p className="mt-6 max-w-2xl text-muted-foreground text-lg">
-            Selected works highlighting proficiency in full-stack development
-            and system design.
-          </p>
+        <div ref={headingRef} className="reveal">
+          <header className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
+            <div className="md:col-span-7">
+              <p className={metaClasses}>
+                <span aria-hidden className="h-px w-8 bg-primary" />
+                Selected work — {pad(projects.length)}
+              </p>
+              <h2 className="mt-5 font-serif text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                Projects
+              </h2>
+            </div>
+            <p className="max-w-md text-base leading-relaxed text-muted-foreground md:col-span-5 md:justify-self-end md:text-right lg:text-lg">
+              Selected works highlighting proficiency in full-stack development
+              and system design.
+            </p>
+          </header>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[260px]">
-          {projects.map((project, index) => (
-            <BentoProjectCard
-              key={project.name}
-              project={project}
-              index={index}
-              className={cardSizes[index] || "md:col-span-1 md:row-span-1"}
-            />
-          ))}
-        </div>
+        {/* Featured + index list */}
+        <div className="mt-14 md:mt-20">
+          <FeaturedProject
+            project={featured}
+            number={featuredIndex + 1}
+            revealRef={cardRevealRef}
+          />
 
-        {/* GitHub Calendar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mt-16 p-8 rounded-xl bg-card border border-border/50"
-        >
-          <h3 className="font-serif text-2xl font-semibold text-center mb-8">
-            GitHub Contributions
-          </h3>
-          <div className="flex justify-center">
-            <GitHubCalendar
-              username="seifzellaban"
-              transformData={selectMonths}
-              colorScheme={theme}
-              labels={{
-                totalCount: "{{count}} contributions in the last year",
-              }}
-            />
+          <div className="mt-10 md:mt-14">
+            {rows.map(({ project, index }) => (
+              <ProjectRow
+                key={project.slug}
+                project={project}
+                number={index + 1}
+                revealRef={cardRevealRef}
+              />
+            ))}
           </div>
-        </motion.div>
+        </div>
+
+        {/* Activity strip */}
+        <div
+          ref={calendarRef}
+          className="reveal mt-16 border-t border-border/50 pt-10 md:mt-20"
+        >
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="shrink-0">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                Activity / last 12 months
+              </p>
+              <p className="mt-2 font-serif text-xl font-semibold text-foreground">
+                GitHub contributions
+              </p>
+            </div>
+
+            <div className="min-w-0 max-w-full overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="w-max">
+                {contributions?.length ? (
+                  <ActivityCalendar
+                    data={contributions}
+                    colorScheme={theme}
+                    blockSize={11}
+                    blockMargin={3}
+                    fontSize={12}
+                    labels={{
+                      totalCount: "{{count}} contributions in the last year",
+                    }}
+                  />
+                ) : (
+                  <GitHubCalendar
+                    username="seifzellaban"
+                    transformData={selectMonths}
+                    colorScheme={theme}
+                    blockSize={11}
+                    blockMargin={3}
+                    fontSize={12}
+                    labels={{
+                      totalCount: "{{count}} contributions in the last year",
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

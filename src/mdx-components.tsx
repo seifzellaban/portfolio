@@ -3,6 +3,21 @@ import Link from "next/link";
 import hljs from "highlight.js";
 import katex from "katex";
 import AudioPlayer from "@/components/audio-player";
+import { slugify } from "@/lib/text";
+
+function childrenToText(children: React.ReactNode): string {
+  if (typeof children === "string" || typeof children === "number") {
+    return String(children);
+  }
+  if (Array.isArray(children)) {
+    return children.map(childrenToText).join("");
+  }
+  if (React.isValidElement(children)) {
+    const props = children.props as { children?: React.ReactNode };
+    return childrenToText(props.children);
+  }
+  return "";
+}
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -24,23 +39,32 @@ export const components = {
       {...props}
     />
   ),
-  h2: (props: HeadingProps) => (
+  h2: ({ children, ...props }: HeadingProps) => (
     <h2
+      id={props.id ?? slugify(childrenToText(children))}
       className="scroll-m-20 font-serif text-4xl font-bold tracking-tight border-b border-border/50 pb-3 mt-12 mb-5 text-foreground"
       {...props}
-    />
+    >
+      {children}
+    </h2>
   ),
-  h3: (props: HeadingProps) => (
+  h3: ({ children, ...props }: HeadingProps) => (
     <h3
+      id={props.id ?? slugify(childrenToText(children))}
       className="scroll-m-20 font-serif text-3xl font-semibold tracking-tight mt-10 mb-3 text-foreground"
       {...props}
-    />
+    >
+      {children}
+    </h3>
   ),
-  h4: (props: HeadingProps) => (
+  h4: ({ children, ...props }: HeadingProps) => (
     <h4
+      id={props.id ?? slugify(childrenToText(children))}
       className="scroll-m-20 font-serif text-2xl font-medium tracking-tight mt-8 mb-2 text-foreground"
       {...props}
-    />
+    >
+      {children}
+    </h4>
   ),
   p: (props: ParagraphProps) => (
     <p className="leading-relaxed text-lg text-foreground/90 mb-4" {...props} />

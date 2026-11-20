@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import {
+  IconPlayerPause,
+  IconPlayerPlay,
+  IconVolume,
+  IconVolumeOff,
+} from "@tabler/icons-react";
 
 interface AudioPlayerProps {
   src: string;
@@ -138,9 +143,9 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
             aria-label={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? (
-              <Pause className="h-5 w-5" />
+              <IconPlayerPause className="h-5 w-5" />
             ) : (
-              <Play className="h-5 w-5 ml-0.5" />
+              <IconPlayerPlay className="h-5 w-5 ml-0.5" />
             )}
           </button>
 
@@ -151,9 +156,9 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
               aria-label={isMuted ? "Unmute" : "Mute"}
             >
               {isMuted ? (
-                <VolumeX className="h-4 w-4" />
+                <IconVolumeOff className="h-4 w-4" />
               ) : (
-                <Volume2 className="h-4 w-4" />
+                <IconVolume className="h-4 w-4" />
               )}
             </button>
             <input

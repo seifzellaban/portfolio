@@ -2,10 +2,26 @@ import { Logs } from "@/components/sections/logs";
 import { Card, CardContent } from "@/components/ui/card";
 import ShinyText from "@/components/ShinyText";
 import { NewsletterForm } from "@/components/newsletter-form";
-import { getPosts } from "@/lib/posts";
+import { getAllTags, getPosts } from "@/lib/posts";
+import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Logs",
+  description:
+    "Notes on engineering, products, leadership, and the craft of building software, by Seif Zakaria.",
+  alternates: { canonical: "/logs" },
+  openGraph: {
+    type: "website",
+    title: "Logs — Seif Zakaria",
+    description:
+      "Notes on engineering, products, leadership, and the craft of building software.",
+  },
+};
 
 export default function LogsPage() {
   const posts = getPosts();
+  const tags = getAllTags(posts);
   return (
     <div className="relative min-h-screen w-full bg-background selection:bg-primary/10 selection:text-primary overflow-hidden">
       {/* Ambient Background Effects */}
@@ -14,7 +30,7 @@ export default function LogsPage() {
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-77.5 w-77.5 rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
       </div>
 
-      <main className="mx-auto relative z-10">
+      <main id="main-content" className="mx-auto relative z-10">
         <div className="relative w-full mx-auto">
           {/* Decorative element */}
           <div className="absolute top-20 left-1/2 -translate-x-1/2 -z-10">
@@ -30,6 +46,26 @@ export default function LogsPage() {
             description="A collection of thoughts, deep dives, and stories from my journey—building apps, leading teams, and exploring the craft of modern web development."
             posts={posts}
           />
+
+          {tags.length > 0 && (
+            <div className="mx-auto max-w-6xl px-6 pb-8">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                Browse by topic
+              </p>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <li key={tag.slug}>
+                    <Link
+                      href={`/logs/tag/${tag.slug}`}
+                      className="inline-block rounded-full border border-border/60 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+                    >
+                      {tag.tag} ({tag.count})
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Newsletter / CTA Section */}
