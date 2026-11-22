@@ -275,18 +275,26 @@
 @layer base {
     * {
         @apply border-border outline-ring/50;
-        cursor: none;
     }
     body {
-        @apply bg-background text-foreground text-xl font-sans;
+        @apply bg-background text-foreground text-base font-sans antialiased overflow-x-clip;
     }
-    input,
-    textarea,
-    select {
+    body.custom-cursor-active,
+    body.custom-cursor-active * {
+        cursor: none;
+    }
+    body.custom-cursor-active input,
+    body.custom-cursor-active textarea {
         cursor: text;
     }
-    select {
+    body.custom-cursor-active select {
         cursor: pointer;
+    }
+    @media (hover: none), (pointer: coarse) {
+        body.custom-cursor-active,
+        body.custom-cursor-active * {
+            cursor: auto;
+        }
     }
     a[href^="#fnref"] {
         @apply text-primary underline-offset-2;
@@ -355,7 +363,7 @@ html {
     background-color: white;
     border-radius: 9999px;
     pointer-events: none;
-    z-index: 50;
+    z-index: 9999;
     mix-blend-mode: difference;
 }
 .cursor-outline {
@@ -365,7 +373,7 @@ html {
     border: 1px solid white;
     border-radius: 9999px;
     pointer-events: none;
-    z-index: 50;
+    z-index: 9999;
     mix-blend-mode: difference;
 }
 
@@ -385,14 +393,6 @@ html {
     backdrop-filter: blur(var(--icons-glass-blur));
     will-change: backdrop-filter, opacity;
     border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Reduce expensive blur on small screens where performance is more important */
-@media (max-width: 768px) {
-    :root {
-        --glass-blur: 6px;
-        --icons-glass-blur: 4px;
-    }
 }
 
 /* Respect users who prefer reduced motion / less visual noise: remove heavy effects */

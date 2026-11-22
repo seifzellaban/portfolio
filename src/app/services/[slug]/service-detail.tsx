@@ -1,522 +1,606 @@
 "use client";
 
-import { Service } from "@/lib/services-data";
-import { useReveal, useRevealGroup } from "@/hooks/use-reveal";
+import { useState } from "react";
+import Link from "next/link";
 import {
   IconArrowLeft,
   IconArrowRight,
-  IconCash,
+  IconArrowUpRight,
   IconCheck,
-  IconClock,
-  IconMessage,
+  IconChevronDown,
+  IconCopy,
+  IconMail,
 } from "@tabler/icons-react";
-import Link from "next/link";
-import { RefObject } from "react";
+import type { Service } from "@/lib/services-data";
+import { site } from "@/lib/site";
 
-const motifLabels = {
-  architecture: "Build readiness",
-  interface: "Experience map",
-  growth: "Growth system",
-  automation: "Workflow circuit",
-} as const;
+interface AdjacentService {
+  id: string;
+  title: string;
+}
 
-export default function ServiceDetail({ service }: { service: Service }) {
-  const heroRef = useReveal();
-  const deliverablesRef = useReveal();
-  const diagnosticsRef = useReveal();
-  const processRef = useReveal();
-  const ctaRef = useReveal();
-  const deliverableRevealRef = useRevealGroup();
-  const processRevealRef = useRevealGroup();
+interface ServiceDetailProps {
+  service: Service;
+  index: number;
+  total: number;
+  previous?: AdjacentService;
+  next?: AdjacentService;
+}
+
+const pad = (n: number) => n.toString().padStart(2, "0");
+
+export default function ServiceDetail({
+  service,
+  index,
+  total,
+  previous,
+  next,
+}: ServiceDetailProps) {
+  const [copied, setCopied] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+  const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent(
+    service.emailSubject
+  )}`;
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(site.email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.open(mailtoHref, "_blank", "noopener,noreferrer");
+    }
+  };
 
   return (
-    <main id="main-content" className="min-h-screen bg-background text-foreground">
-      <section className="relative overflow-hidden border-b border-border/50 py-20 sm:py-28">
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-size:[80px_80px] opacity-[0.25]" />
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div ref={heroRef} className="reveal">
+    <main
+      id="main-content"
+      className="min-h-screen bg-background text-foreground"
+    >
+      {/* 01 · Editorial Hero + Scope Dossier */}
+      <section className="relative overflow-hidden border-b border-border/50 pb-14 pt-12 sm:pb-20 sm:pt-16 lg:pb-24 lg:pt-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-size-[72px_72px] opacity-[0.16]"
+        />
+
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          {/* Top navigation bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/50 pb-5">
             <Link
-              href="/#services"
-              className="group mb-10 inline-flex items-center text-sm font-mono uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
+              href="/services"
+              className="group inline-flex min-h-[36px] items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
             >
-              <IconArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-              Back to Services
+              <IconArrowLeft
+                size={14}
+                className="transition-transform group-hover:-translate-x-0.5"
+              />
+              All services
             </Link>
 
-            <ServiceHero service={service} />
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              Service / {pad(index + 1)} of {pad(total)}
+            </span>
+          </div>
+
+          {/* 12-col asymmetric hero */}
+          <div className="mt-10 grid grid-cols-1 gap-10 lg:mt-14 lg:grid-cols-12 lg:items-start lg:gap-12">
+            {/* Left thesis */}
+            <div className="lg:col-span-7">
+              <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                <span className="text-primary">{service.title}</span>
+                <span aria-hidden className="text-border">
+                  /
+                </span>
+                <span>{service.engagementStyle}</span>
+              </div>
+
+              <h1 className="mt-5 font-serif text-4xl font-bold leading-[1.03] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                {service.heroTitle}
+              </h1>
+
+              <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl">
+                {service.heroLead}
+              </p>
+
+              {/* Best for callout */}
+              <div className="mt-8 max-w-2xl border-l-2 border-primary/70 py-1 pl-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Best fit
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-foreground/90 sm:text-base">
+                  {service.idealFor}
+                </p>
+              </div>
+            </div>
+
+            {/* Right engagement scope card */}
+            <aside className="lg:col-span-5">
+              <div className="rounded-2xl border border-border/75 bg-card/70 p-6 backdrop-blur-sm sm:p-8">
+                <div className="flex items-center justify-between gap-3 border-b border-border/50 pb-5">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-background/80">
+                      {service.icon}
+                    </span>
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                        {service.theme.eyebrow}
+                      </p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        {service.theme.identity}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Timeline + Starting range */}
+                <dl className="grid grid-cols-1 gap-5 border-b border-border/50 py-6 sm:grid-cols-2 sm:gap-0 sm:divide-x sm:divide-border/50">
+                  <div className="sm:pr-5">
+                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                      Typical timeline
+                    </dt>
+                    <dd className="mt-1.5 font-serif text-xl font-bold text-foreground sm:text-2xl">
+                      {service.timeRange}
+                    </dd>
+                  </div>
+                  <div className="border-t border-border/40 pt-4 sm:border-t-0 sm:pl-5 sm:pt-0">
+                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                      Starting range
+                    </dt>
+                    <dd className="mt-1.5 font-serif text-xl font-bold text-foreground sm:text-2xl">
+                      {service.priceRange}
+                    </dd>
+                  </div>
+                </dl>
+
+                {/* 3 engagement specs */}
+                <dl className="divide-y divide-border/40 py-2">
+                  {service.metrics.map((metric) => (
+                    <div
+                      key={metric.label}
+                      className="flex items-baseline justify-between gap-4 py-3 text-sm"
+                    >
+                      <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                        {metric.label}
+                      </dt>
+                      <dd className="text-right font-medium text-foreground">
+                        {metric.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+
+                {/* Direct email CTAs */}
+                <div className="mt-5 flex flex-col gap-2.5">
+                  <a
+                    href={mailtoHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-background transition-colors hover:bg-primary hover:text-primary-foreground"
+                  >
+                    <IconMail size={15} />
+                    {service.ctaLabel}
+                    <IconArrowUpRight
+                      size={15}
+                      className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    />
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full border border-border/80 bg-background/60 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.16em] text-foreground transition-colors hover:border-primary/50 hover:bg-primary/5"
+                  >
+                    {copied ? (
+                      <>
+                        <IconCheck size={14} className="text-primary" />
+                        Copied {site.email}
+                      </>
+                    ) : (
+                      <>
+                        <IconCopy size={14} className="text-muted-foreground" />
+                        Copy {site.email}
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                  {site.responseTime} · Direct 1-on-1 work
+                </p>
+              </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section className="py-20 sm:py-24">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 lg:grid-cols-[0.86fr_1.14fr] lg:px-8">
-          <div ref={diagnosticsRef} className="reveal">
-            <SectionKicker label="Diagnostic" />
-            <h2 className="mt-4 max-w-xl font-serif text-3xl font-bold tracking-tight sm:text-4xl">
+      {/* 02 · Fit / Diagnostic */}
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
+          <div className="lg:col-span-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              Fit / Diagnostic
+            </p>
+            <h2 className="mt-4 font-serif text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl">
               {service.diagnostics.title}
             </h2>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
               {service.diagnostics.body}
             </p>
           </div>
 
-          <DiagnosticPanel service={service} />
+          <div className="lg:col-span-7">
+            <div className="divide-y divide-border/50 rounded-2xl border border-border/60 bg-card/45 px-5 sm:px-7">
+              {service.diagnostics.items.map((item, idx) => (
+                <div
+                  key={item}
+                  className="grid grid-cols-[auto_1fr] items-baseline gap-4 py-5 sm:gap-6 sm:py-6"
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
+                    {pad(idx + 1)}
+                  </span>
+                  <p className="text-base leading-relaxed text-foreground/90">
+                    {item}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="border-y border-border/40 bg-card/30 py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div ref={deliverablesRef} className="reveal mb-12">
-            <SectionKicker label="What's included" />
-            <div className="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-[0.8fr_1fr] lg:items-end">
-              <h2 className="font-serif text-3xl font-bold tracking-tight sm:text-4xl">
-                Deliverables shaped for this kind of project.
+      {/* 03 · Scope & Deliverables */}
+      <section className="border-y border-border/50 bg-card/25 py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                Scope / {pad(service.deliverables.length)} Deliverables
+              </p>
+              <h2 className="mt-4 font-serif text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl">
+                What you actually get at handoff.
               </h2>
-              <p className="text-muted-foreground">
-                The service is scoped around outcomes and handoff quality, not a
-                loose pile of tasks.
-              </p>
+            </div>
+
+            <div className="lg:col-span-5 lg:justify-self-end">
+              <div className="flex flex-wrap gap-2">
+                {service.stack.map((tool) => (
+                  <span
+                    key={tool}
+                    className="rounded-full border border-border/70 bg-background/70 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground"
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
-          <DeliverablesGrid
-            service={service}
-            revealRef={deliverableRevealRef}
-          />
-        </div>
-      </section>
-
-      <MotifSection service={service} />
-
-      <section className="border-y border-border/40 bg-card/30 py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div ref={processRef} className="reveal mb-12">
-            <SectionKicker label="Process" />
-            <h2 className="mt-4 font-serif text-3xl font-bold tracking-tight sm:text-4xl">
-              A clear path from first conversation to handoff.
-            </h2>
-          </div>
-
-          <ProcessSection service={service} revealRef={processRevealRef} />
-        </div>
-      </section>
-
-      <ServiceCTA service={service} ctaRef={ctaRef} />
-    </main>
-  );
-}
-
-function ServiceHero({ service }: { service: Service }) {
-  return (
-    <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
-      <div>
-        <div className="mb-7 flex flex-wrap items-center gap-4">
-          <div
-            className={`flex h-14 w-14 items-center justify-center rounded-xl border ${service.theme.accentClass}`}
-          >
-            {service.icon}
-          </div>
-          <div>
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
-              {service.theme.eyebrow}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {service.theme.identity}
-            </p>
-          </div>
-        </div>
-
-        <h1 className="max-w-4xl font-serif text-4xl font-bold leading-[0.98] tracking-tight sm:text-6xl lg:text-7xl">
-          {service.heroTitle}
-        </h1>
-        <div className="mt-8 h-px w-24 bg-primary" />
-        <p className="mt-8 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-          {service.heroLead}
-        </p>
-      </div>
-
-      <div className="grid gap-5">
-        <QuickInfoPanel service={service} />
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {service.metrics.map((metric) => (
-            <div
-              key={metric.label}
-              className="rounded-xl border border-border/60 bg-card/70 p-4"
-            >
-              <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">
-                {metric.label}
-              </p>
-              <p className="mt-3 text-sm font-semibold leading-snug">
-                {metric.value}
-              </p>
-            </div>
-          ))}
-        </div>
-        <Link
-          href="/#contact"
-          className="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-        >
-          {service.ctaLabel}
-          <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-function QuickInfoPanel({ service }: { service: Service }) {
-  return (
-    <div className="rounded-xl border border-border/60 bg-card p-6">
-      <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
-        Quick Info
-      </p>
-      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
-        <div className="flex items-start gap-3">
-          <IconClock className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-          <div>
-            <p className="text-sm text-muted-foreground">Timeline</p>
-            <p className="mt-1 font-semibold">{service.timeRange}</p>
-          </div>
-        </div>
-        <div className="flex items-start gap-3">
-          <IconCash className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-          <div>
-            <p className="text-sm text-muted-foreground">Investment</p>
-            <p className="mt-1 font-semibold">{service.priceRange}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DiagnosticPanel({ service }: { service: Service }) {
-  return (
-    <div
-      className={`rounded-xl border border-border/60 p-5 sm:p-7 ${service.theme.surfaceClass}`}
-    >
-      <div className="grid gap-4">
-        {service.diagnostics.items.map((item, index) => (
-          <div
-            key={item}
-            className="grid grid-cols-[auto_1fr] gap-4 border-b border-border/40 pb-4 last:border-b-0 last:pb-0"
-          >
-            <span className="font-mono text-xs text-muted-foreground">
-              {(index + 1).toString().padStart(2, "0")}
-            </span>
-            <p className="leading-relaxed">{item}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function DeliverablesGrid({
-  service,
-  revealRef,
-}: {
-  service: Service;
-  revealRef: (el: HTMLElement | null) => void;
-}) {
-  return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {service.deliverables.map((deliverable, index) => (
-        <div
-          key={deliverable}
-          ref={revealRef}
-          className={`reveal reveal-delay-${Math.min(
-            index + 1,
-            5,
-          )} group min-h-36 rounded-xl border border-border/60 bg-background p-6 transition-colors hover:border-primary/40`}
-        >
-          <div className="mb-5 flex items-center justify-between gap-4">
-            <IconCheck className="h-5 w-5 text-primary" />
-            <span className="font-mono text-xs text-muted-foreground">
-              {(index + 1).toString().padStart(2, "0")}
-            </span>
-          </div>
-          <p className="font-medium leading-relaxed">{deliverable}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function MotifSection({ service }: { service: Service }) {
-  return (
-    <section className="py-20 sm:py-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mb-12 grid grid-cols-1 gap-5 lg:grid-cols-[0.75fr_1fr] lg:items-end">
-          <div>
-            <SectionKicker label={motifLabels[service.theme.motif]} />
-            <h2 className="mt-4 font-serif text-3xl font-bold tracking-tight sm:text-4xl">
-              The working model for this engagement.
-            </h2>
-          </div>
-          <p className="text-muted-foreground">
-            Each page uses a service-specific visual model so the offer is
-            understandable before the visitor reaches the contact form.
-          </p>
-        </div>
-
-        {service.theme.motif === "architecture" ? (
-          <ArchitectureLedgerVisual service={service} />
-        ) : null}
-        {service.theme.motif === "interface" ? (
-          <InterfaceStudioVisual service={service} />
-        ) : null}
-        {service.theme.motif === "growth" ? (
-          <GrowthObservatoryVisual service={service} />
-        ) : null}
-        {service.theme.motif === "automation" ? (
-          <AutomationCircuitVisual service={service} />
-        ) : null}
-
-        <ProofPoints service={service} />
-      </div>
-    </section>
-  );
-}
-
-function ArchitectureLedgerVisual({ service }: { service: Service }) {
-  return (
-    <div className="grid grid-cols-1 gap-5 lg:grid-cols-5">
-      <div className="rounded-xl border border-border/70 bg-card p-6 lg:col-span-2">
-        <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
-          Product Stack
-        </p>
-        <div className="mt-8 grid gap-3">
-          {service.visualNodes.map((node) => (
-            <div
-              key={node.label}
-              className="flex items-center justify-between gap-4 border-b border-border/40 pb-3 last:border-0 last:pb-0"
-            >
-              <span className="font-semibold">{node.label}</span>
-              <span className="text-right text-sm text-muted-foreground">
-                {node.value}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="rounded-xl border border-border/70 bg-background p-4 lg:col-span-3">
-        <div className="grid min-h-85 grid-cols-1 gap-3 sm:grid-cols-3">
-          {service.visualNodes.slice(0, 3).map((node, index) => (
-            <div
-              key={node.label}
-              className="flex flex-col justify-between rounded-lg border border-border/70 bg-card/70 p-5"
-            >
-              <span className="font-mono text-xs text-muted-foreground">
-                Layer 0{index + 1}
-              </span>
-              <div>
-                <h3 className="font-serif text-2xl font-bold">{node.label}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {node.value}
+          <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border/60 bg-border/60 md:grid-cols-2 lg:grid-cols-3">
+            {service.deliverables.map((deliverable, idx) => (
+              <div
+                key={deliverable}
+                className="flex flex-col justify-between gap-6 bg-background p-6 sm:p-7"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                    {pad(idx + 1)}
+                  </span>
+                  <IconCheck size={16} className="text-primary" />
+                </div>
+                <p className="text-base font-medium leading-relaxed text-foreground">
+                  {deliverable}
                 </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </div>
-  );
-}
+      </section>
 
-function InterfaceStudioVisual({ service }: { service: Service }) {
-  return (
-    <div className="grid grid-cols-1 gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-      <div className="space-y-4">
-        {service.visualNodes.map((node, index) => (
-          <div
-            key={node.label}
-            className="rounded-xl border border-border/60 bg-card p-5"
-            style={{ marginLeft: `${Math.min(index, 2) * 18}px` }}
-          >
-            <p className="font-mono text-xs text-muted-foreground">
-              {(index + 1).toString().padStart(2, "0")}
-            </p>
-            <h3 className="mt-3 font-serif text-2xl font-bold">{node.label}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{node.value}</p>
-          </div>
-        ))}
-      </div>
-      <div className="rounded-xl border border-border/70 bg-background p-4">
-        <div className="rounded-lg border border-border/60 bg-card p-4">
-          <div className="mb-4 flex gap-2">
-            <span className="h-2 w-2 rounded-full bg-primary/50" />
-            <span className="h-2 w-2 rounded-full bg-muted" />
-            <span className="h-2 w-2 rounded-full bg-muted" />
-          </div>
-          <div className="grid gap-4 sm:grid-cols-[0.75fr_1fr]">
-            <div className="space-y-3">
-              <div className="h-9 rounded-md bg-foreground/10" />
-              <div className="h-9 w-4/5 rounded-md bg-foreground/10" />
-              <div className="h-9 w-3/5 rounded-md bg-foreground/10" />
+      {/* 04 · System Blueprint & Proof Standards */}
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                Blueprint / {service.blueprint.kicker}
+              </p>
+              <h2 className="mt-4 font-serif text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl">
+                {service.blueprint.title}
+              </h2>
             </div>
-            <div className="rounded-lg border border-border/60 bg-background p-4">
-              <div className="h-28 rounded-md bg-foreground/10" />
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <div className="h-12 rounded-md bg-foreground/10" />
-                <div className="h-12 rounded-md bg-primary/15" />
+            <p className="text-base leading-relaxed text-muted-foreground lg:col-span-6">
+              {service.blueprint.body}
+            </p>
+          </div>
+
+          {/* Connected pipeline / layer blueprint */}
+          <ol
+            className={`mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 ${
+              service.visualNodes.length === 4
+                ? "lg:grid-cols-4"
+                : "lg:grid-cols-5"
+            }`}
+          >
+            {service.visualNodes.map((node, idx) => (
+              <li
+                key={node.label}
+                className="flex flex-col justify-between rounded-2xl border border-border/60 bg-card/45 p-5 sm:p-6"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">
+                      {pad(idx + 1)}
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+                      {node.value}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 font-serif text-xl font-bold tracking-tight text-foreground">
+                    {node.label}
+                  </h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
+                    {node.detail}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          {/* Operating standards */}
+          <div className="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border/60 bg-border/60 md:grid-cols-2 lg:grid-cols-4">
+            {service.proofPoints.map((point, idx) => (
+              <div key={point} className="bg-background p-5 sm:p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Standard {pad(idx + 1)}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-foreground/90">
+                  {point}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 05 · Process */}
+      <section className="border-y border-border/50 bg-card/25 py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              Process / {pad(service.process.length)} Phases
+            </p>
+            <h2 className="mt-4 font-serif text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl">
+              From first email to production handoff.
+            </h2>
+          </div>
+
+          <ol className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {service.process.map((step) => (
+              <li
+                key={step.label}
+                className="flex flex-col justify-between rounded-2xl border border-border/60 bg-background p-6 sm:p-7"
+              >
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary">
+                  Phase {step.label}
+                </span>
+                <div className="mt-8">
+                  <h3 className="font-serif text-xl font-bold leading-snug tracking-tight text-foreground sm:text-2xl">
+                    {step.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {step.description}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 06 · Practical FAQ + Related Work */}
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-5 sm:px-6 lg:grid-cols-12 lg:px-8">
+          <div className="lg:col-span-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              FAQ / Common questions
+            </p>
+            <h2 className="mt-4 font-serif text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl">
+              Straight answers before you email.
+            </h2>
+
+            {service.relatedWork ? (
+              <div className="mt-8 rounded-2xl border border-border/60 bg-card/45 p-5 sm:p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Related case study
+                </p>
+                <h3 className="mt-2 font-serif text-xl font-bold text-foreground">
+                  {service.relatedWork.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {service.relatedWork.summary}
+                </p>
+                <Link
+                  href={`/projects/${service.relatedWork.slug}`}
+                  className="group mt-4 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground transition-colors hover:text-primary"
+                >
+                  Read case study
+                  <IconArrowUpRight
+                    size={14}
+                    className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </Link>
+              </div>
+            ) : null}
+          </div>
+
+          <div className="lg:col-span-7">
+            <div className="divide-y divide-border/50 rounded-2xl border border-border/60 bg-card/45">
+              {service.faqs.map((faq, idx) => {
+                const isOpen = openFaq === idx;
+                return (
+                  <div key={faq.question}>
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenFaq(isOpen ? null : idx)}
+                      className="flex min-h-[60px] w-full items-center justify-between gap-4 px-5 py-5 text-left transition-colors hover:text-primary sm:px-7"
+                    >
+                      <span className="font-serif text-lg font-semibold leading-snug text-foreground sm:text-xl">
+                        {faq.question}
+                      </span>
+                      <IconChevronDown
+                        size={18}
+                        aria-hidden
+                        className={`shrink-0 text-muted-foreground transition-transform duration-200 ${
+                          isOpen ? "rotate-180 text-primary" : ""
+                        }`}
+                      />
+                    </button>
+                    {isOpen ? (
+                      <div className="px-5 pb-6 sm:px-7">
+                        <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 07 · Direct Email CTA + Adjacent Service Navigation */}
+      <section className="border-t border-border/50 pb-20 pt-16 sm:pb-24 sm:pt-20">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border border-border/75 bg-card/65 p-6 sm:p-10 lg:p-12">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-7">
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">
+                  Start the conversation
+                </p>
+                <h2 className="mt-3 font-serif text-3xl font-bold leading-[1.06] tracking-tight sm:text-4xl">
+                  {service.ctaTitle}
+                </h2>
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
+                  {service.ctaBody}
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3 lg:col-span-5 lg:items-end">
+                <a
+                  href={mailtoHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-foreground px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-background transition-colors hover:bg-primary hover:text-primary-foreground sm:w-auto"
+                >
+                  <IconMail size={15} />
+                  {service.ctaLabel}
+                  <IconArrowUpRight
+                    size={15}
+                    className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </a>
+
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full border border-border/80 bg-background/60 px-6 py-2.5 font-mono text-xs uppercase tracking-[0.16em] text-foreground transition-colors hover:border-primary/50 hover:bg-primary/5 sm:w-auto"
+                >
+                  {copied ? (
+                    <>
+                      <IconCheck size={14} className="text-primary" />
+                      Copied {site.email}
+                    </>
+                  ) : (
+                    <>
+                      <IconCopy size={14} className="text-muted-foreground" />
+                      {site.email}
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
-function GrowthObservatoryVisual({ service }: { service: Service }) {
-  return (
-    <div className="rounded-xl border border-border/70 bg-card/60 p-5 sm:p-8">
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-5 lg:items-end">
-        {service.visualNodes.map((node, index) => (
-          <div key={node.label} className="min-w-0">
-            <div className="mb-4 flex h-48 items-end rounded-lg border border-border/60 bg-background p-3">
-              <div
-                className="w-full rounded-md bg-primary/70"
-                style={{ height: `${34 + index * 12}%` }}
-              />
-            </div>
-            <p className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">
-              {node.label}
-            </p>
-            <p className="mt-2 text-sm font-medium">{node.value}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function AutomationCircuitVisual({ service }: { service: Service }) {
-  return (
-    <div className="rounded-xl border border-foreground bg-foreground p-5 text-background sm:p-8">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 xl:grid-cols-6">
-        {service.visualNodes.map((node, index) => (
-          <div key={node.label} className="relative">
-            <div className="min-h-40 rounded-lg border border-background/25 bg-background/10 p-5">
-              <p className="font-mono text-xs text-background/60">
-                {(index + 1).toString().padStart(2, "0")}
-              </p>
-              <h3 className="mt-6 font-serif text-2xl font-bold">
-                {node.label}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-background/70">
-                {node.value}
-              </p>
-            </div>
-            {index < service.visualNodes.length - 1 ? (
-              <div className="hidden xl:block absolute left-full top-1/2 h-px w-4 -translate-y-1/2 bg-background/45" />
-            ) : null}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ProofPoints({ service }: { service: Service }) {
-  return (
-    <div className="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border/70 bg-border/70 md:grid-cols-2 lg:grid-cols-4">
-      {service.proofPoints.map((point, index) => (
-        <div key={point} className="bg-background p-5">
-          <p className="font-mono text-xs text-muted-foreground">
-            Proof 0{index + 1}
-          </p>
-          <p className="mt-5 text-sm font-medium leading-relaxed">{point}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ProcessSection({
-  service,
-  revealRef,
-}: {
-  service: Service;
-  revealRef: (el: HTMLElement | null) => void;
-}) {
-  return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {service.process.map((step, index) => (
-        <div
-          key={step.label}
-          ref={revealRef}
-          className={`reveal reveal-delay-${Math.min(
-            index + 1,
-            5,
-          )} relative min-h-72 rounded-xl border border-border/60 bg-background p-6`}
-        >
-          <p className="font-mono text-sm text-muted-foreground">
-            {step.label}
-          </p>
-          <h3 className="mt-10 font-serif text-2xl font-bold leading-tight">
-            {step.title}
-          </h3>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            {step.description}
-          </p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ServiceCTA({
-  service,
-  ctaRef,
-}: {
-  service: Service;
-  ctaRef: RefObject<HTMLDivElement | null>;
-}) {
-  return (
-    <section className="py-20 sm:py-24 mb-8">
-      <div className="mx-auto max-w-5xl px-6 lg:px-8">
-        <div
-          ref={ctaRef}
-          className="reveal grid grid-cols-1 gap-8 rounded-xl border border-border/60 bg-card p-8 sm:p-10 lg:grid-cols-[auto_1fr] lg:items-center"
-        >
-          <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-border/60 bg-background text-primary">
-            <IconMessage className="h-8 w-8" />
-          </div>
-          <div>
-            <h2 className="font-serif text-3xl font-bold tracking-tight sm:text-4xl">
-              {service.ctaTitle}
-            </h2>
-            <p className="mt-4 max-w-2xl text-muted-foreground">
-              {service.ctaBody}
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          {/* Adjacent services nav */}
+          <nav
+            aria-label="Other services"
+            className="mt-10 grid grid-cols-1 gap-4 border-t border-border/50 pt-8 sm:grid-cols-2"
+          >
+            {previous ? (
               <Link
-                href="/#contact"
-                className="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+                href={`/services/${previous.id}`}
+                className="group flex flex-col gap-1.5 rounded-2xl border border-border/60 bg-card/35 p-5 transition-colors hover:border-primary/40"
               >
-                {service.ctaLabel}
-                <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  <IconArrowLeft
+                    size={13}
+                    className="transition-transform group-hover:-translate-x-0.5"
+                  />
+                  Previous service
+                </span>
+                <span className="font-serif text-xl font-bold text-foreground transition-colors group-hover:text-primary">
+                  {previous.title}
+                </span>
               </Link>
+            ) : (
               <Link
-                href="/#services"
-                className="inline-flex items-center justify-center rounded-xl border border-border px-7 py-4 text-sm font-semibold transition-colors hover:bg-foreground/5"
+                href="/services"
+                className="group flex flex-col gap-1.5 rounded-2xl border border-border/60 bg-card/35 p-5 transition-colors hover:border-primary/40"
               >
-                View Other Services
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  <IconArrowLeft
+                    size={13}
+                    className="transition-transform group-hover:-translate-x-0.5"
+                  />
+                  Overview
+                </span>
+                <span className="font-serif text-xl font-bold text-foreground transition-colors group-hover:text-primary">
+                  All services
+                </span>
               </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+            )}
 
-function SectionKicker({ label }: { label: string }) {
-  return (
-    <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
-      {label}
-    </p>
+            {next ? (
+              <Link
+                href={`/services/${next.id}`}
+                className="group flex flex-col items-start gap-1.5 rounded-2xl border border-border/60 bg-card/35 p-5 text-left transition-colors hover:border-primary/40 sm:items-end sm:text-right"
+              >
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Next service
+                  <IconArrowRight
+                    size={13}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </span>
+                <span className="font-serif text-xl font-bold text-foreground transition-colors group-hover:text-primary">
+                  {next.title}
+                </span>
+              </Link>
+            ) : (
+              <Link
+                href="/services"
+                className="group flex flex-col items-start gap-1.5 rounded-2xl border border-border/60 bg-card/35 p-5 text-left transition-colors hover:border-primary/40 sm:items-end sm:text-right"
+              >
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Browse all
+                  <IconArrowRight
+                    size={13}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </span>
+                <span className="font-serif text-xl font-bold text-foreground transition-colors group-hover:text-primary">
+                  All services
+                </span>
+              </Link>
+            )}
+          </nav>
+        </div>
+      </section>
+    </main>
   );
 }

@@ -18,11 +18,13 @@ import {
 import { useTheme } from "@/lib/theme-provider";
 import { LogoSvg } from "@/components/logo";
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
+import { useResumeModal } from "@/components/resume-modal";
 import { site } from "@/lib/site";
 
 export default function Dock() {
   const { theme, toggleTheme } = useTheme();
   const { handleNav } = useSmoothScroll();
+  const { openResumeModal } = useResumeModal();
   const isDark = theme === "dark";
 
   const handleThemeToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,13 +75,6 @@ export default function Dock() {
       mobile: true,
     },
     {
-      title: "Links",
-      icon: <IconLink className={iconClass} />,
-      href: "/links",
-      mobile: true,
-      desktop: false,
-    },
-    {
       title: "Masons",
       icon: (
         <LogoSvg
@@ -87,6 +82,12 @@ export default function Dock() {
         />
       ),
       href: "https://wearemasons.com",
+      mobile: true,
+    },
+    {
+      title: "Links",
+      icon: <IconLink className={iconClass} />,
+      href: "/links",
       mobile: true,
     },
     {
@@ -110,8 +111,7 @@ export default function Dock() {
     {
       title: "Resume",
       icon: <IconDownload className={iconClass} />,
-      href: site.resume.path,
-      download: site.resume.name,
+      onClick: openResumeModal,
       mobile: true,
     },
     {
@@ -136,7 +136,7 @@ export default function Dock() {
   ];
 
   return (
-    <div className="fixed bottom-8 left-1/2 z-50 -translate-x-1/2">
+    <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-50 -translate-x-1/2 md:bottom-8">
       <FloatingDock items={links} />
     </div>
   );

@@ -70,11 +70,12 @@ export function getSortedPosts(posts = getPosts()) {
 }
 
 export function getAdjacentPosts(slug: string, posts = getPosts()) {
-  const sorted = getSortedPosts(posts);
-  const index = sorted.findIndex((post) => post.slug === slug);
+  const visible = getSortedPosts(posts).filter((post) => !post.hidden);
+  const index = visible.findIndex((post) => post.slug === slug);
   return {
-    previous: index > 0 ? sorted[index - 1] : undefined,
-    next: index >= 0 && index < sorted.length - 1 ? sorted[index + 1] : undefined,
+    previous: index > 0 ? visible[index - 1] : undefined,
+    next:
+      index >= 0 && index < visible.length - 1 ? visible[index + 1] : undefined,
   };
 }
 

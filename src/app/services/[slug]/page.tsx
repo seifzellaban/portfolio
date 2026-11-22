@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
-import { services } from "@/lib/services-data";
+import type { Metadata } from "next";
+import { getOrderedServices, services } from "@/lib/services-data";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/seo";
+import { site } from "@/lib/site";
 import ServiceDetail from "./service-detail";
-import { Metadata } from "next";
 
 export function generateStaticParams() {
   return services.map((service) => ({
@@ -29,9 +32,9 @@ export async function generateMetadata({
     alternates: { canonical: `/services/${service.id}` },
     openGraph: {
       type: "website",
-      title: `${service.title} — Seif Zakaria`,
+      title: `${service.title} — ${site.name}`,
       description: service.metaDescription,
-      url: `https://seifzellaban.com/services/${service.id}`,
+      url: `${site.url}/services/${service.id}`,
     },
   };
 }
@@ -42,11 +45,38 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = services.find((s) => s.id === slug);
+  const ordered = getOrderedServices();
+  const index = ordered.findIndex((s) => s.id === slug);
 
-  if (!service) {
+  if (index === -1) {
     notFound();
   }
 
-  return <ServiceDetail service={service} />;
+  const service = ordered[index];
+  const previous = index > 0 ? ordered[index - 1] : undefined;
+  const next = index < ordered.length - 1 ? ordered[index + 1] : undefined;
+
+  return (
+    <>
+      <JsonLd
+        data={[
+          serviceJsonLd(service),
+          breadcrumbJsonLd([
+            { name: "Home", url: "/" },
+            { name: "Services", url: "/services" },
+            { name: service.title, url: `/services/${service.id}` },
+          ]),
+        ]}
+      />
+      <ServiceDetail
+        service={service}
+        index={index}
+        total={ordered.length}
+        previous={
+          previous ? { id: previous.id, title: previous.title } : undefined
+        }
+        next={next ? { id: next.id, title: next.title } : undefined}
+      />
+    </>
+  );
 }

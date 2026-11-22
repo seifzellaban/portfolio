@@ -16,6 +16,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["192.168.1.139", "*.trycloudflare.com"],
   pageExtensions: ["ts", "tsx"],
   images: {
     formats: ["image/avif", "image/webp"],
@@ -35,6 +36,7 @@ const nextConfig: NextConfig = {
     ];
   },
 };
+
 
 const withMDX = createMDX({
   extension: /\.mdx$/,

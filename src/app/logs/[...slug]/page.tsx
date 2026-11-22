@@ -149,12 +149,12 @@ export default async function LogPage({
               </>
             ) : null}
           </div>
-          <h1 className="font-serif text-3xl font-bold leading-tight lg:text-5xl">
+          <h1 className="font-serif text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
             {frontmatter.title}
           </h1>
         </div>
 
-        <p className="border-l-4 border-primary/20 pl-6 text-lg italic leading-relaxed text-muted-foreground lg:text-xl">
+        <p className="border-l-4 border-primary/20 pl-6 text-base italic leading-relaxed text-muted-foreground sm:text-lg lg:text-xl">
           {frontmatter.summary}
         </p>
 
@@ -276,43 +276,47 @@ export default async function LogPage({
         </section>
       )}
 
-      <nav
-        aria-label="Log navigation"
-        className="grid gap-4 border-t border-border/50 pt-8 sm:grid-cols-2"
-      >
-        {previous ? (
-          <Link
-            href={previous.url}
-            className="group rounded-xl border border-border/50 p-5 transition-colors hover:border-primary/40"
-          >
-            <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              <IconArrowLeft size={12} /> Newer
-            </span>
-            <span className="mt-2 block font-serif text-lg font-semibold group-hover:text-primary">
-              {previous.title}
-            </span>
-          </Link>
-        ) : (
-          <span />
-        )}
-        {next && (
-          <Link
-            href={next.url}
-            className="group rounded-xl border border-border/50 p-5 text-right transition-colors hover:border-primary/40"
-          >
-            <span className="flex items-center justify-end gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              Older <IconArrowRight size={12} />
-            </span>
-            <span className="mt-2 block font-serif text-lg font-semibold group-hover:text-primary">
-              {next.title}
-            </span>
-          </Link>
-        )}
-      </nav>
+      {(previous || next) && (
+        <nav
+          aria-label="Log navigation"
+          className="grid gap-4 border-t border-border/50 pt-8 sm:grid-cols-2"
+        >
+          {previous ? (
+            <Link
+              href={previous.url}
+              className="group rounded-xl border border-border/50 p-5 transition-colors hover:border-primary/40"
+            >
+              <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                <IconArrowLeft size={12} /> Newer
+              </span>
+              <span className="mt-2 block font-serif text-lg font-semibold group-hover:text-primary">
+                {previous.title}
+              </span>
+            </Link>
+          ) : (
+            <span />
+          )}
+          {next && (
+            <Link
+              href={next.url}
+              className="group rounded-xl border border-border/50 p-5 text-right transition-colors hover:border-primary/40"
+            >
+              <span className="flex items-center justify-end gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                Older <IconArrowRight size={12} />
+              </span>
+              <span className="mt-2 block font-serif text-lg font-semibold group-hover:text-primary">
+                {next.title}
+              </span>
+            </Link>
+          )}
+        </nav>
+      )}
 
       <section className="rounded-2xl border border-border/50 bg-card/40 p-8 text-center">
-        <h2 className="font-serif text-2xl font-bold">Working on something?</h2>
-        <p className="mx-auto mt-2 max-w-md text-muted-foreground">
+        <h2 className="font-serif text-2xl font-bold sm:text-3xl">
+          Working on something?
+        </h2>
+        <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground sm:text-base">
           {site.responseTime}. I&apos;m open to freelance projects.
         </p>
         <Link

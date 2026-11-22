@@ -55,20 +55,22 @@ export default async function TagPage({
 
   return (
     <main id="main-content" className="min-h-screen bg-background">
-      <div className="mx-auto max-w-7xl px-6 pt-12 lg:px-8">
+      <div className="mx-auto max-w-7xl px-5 pt-10 sm:px-6 sm:pt-12 lg:px-8">
         <Link
           href="/logs"
-          className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
+          className="inline-flex min-h-[40px] items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
         >
           <IconArrowLeft size={14} /> All logs
         </Link>
       </div>
       <Logs
         heading={`#${found.tag}`}
-        description={`${tagged.length} ${
+        kicker={`Topic archive / ${tagged.length} ${
           tagged.length === 1 ? "entry" : "entries"
-        } tagged ${found.tag}.`}
+        }`}
+        description={`Essays and field notes filed under ${found.tag}.`}
         posts={tagged}
+        bordered={false}
       />
     </main>
   );

@@ -22,7 +22,6 @@ export default async function Page() {
       <About />
       <Services />
       <ExperienceSection />
-      <div className="mt-16" />
       <TechStackMarquee />
       <ProjectsSection projects={projects} contributions={contributions} />
       <TestimonialsSection />

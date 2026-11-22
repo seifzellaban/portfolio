@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
+import { IconMenu2, IconX, IconMail } from "@tabler/icons-react";
 import {
   AnimatePresence,
   MotionValue,
@@ -12,7 +12,7 @@ import {
 } from "motion/react";
 import Link from "next/link";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type DockItem = {
   title: string;
@@ -49,67 +49,159 @@ const FloatingDockMobile = ({
   className?: string;
 }) => {
   const [open, setOpen] = useState(false);
-  const mobileItems = items.filter((item) => item.mobile).reverse();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const mobileItems = items.filter((item) => item.mobile);
+  const contactItem = mobileItems.find((item) => item.title === "Contact");
+  const themeItem = mobileItems.find((item) => item.title === "Toggle theme");
+  const drawerItems = mobileItems.filter(
+    (item) => item.title !== "Toggle theme" && item.title !== "Contact"
+  );
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+    };
+  }, [open]);
 
   return (
-    <div className={cn("relative block md:hidden", className)}>
+    <div ref={containerRef} className={cn("relative block md:hidden", className)}>
       <AnimatePresence>
         {open && (
-          <motion.div
+          <motion.nav
             id="mobile-navigation"
-            role="navigation"
             aria-label="Primary"
-            layoutId="nav"
-            className="absolute inset-x-0 bottom-full mb-2 flex flex-col gap-2"
+            initial={{ opacity: 0, y: 12, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.97 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute bottom-full left-1/2 isolate mb-3 w-[min(calc(100vw-1.5rem),21rem)] -translate-x-1/2 rounded-2xl p-3 shadow-2xl"
           >
-            {mobileItems.map((item, idx) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ delay: (mobileItems.length - 1 - idx) * 0.05 }}
-              >
-                {item.href ? (
+            {/* Visual background layer — matches desktop dock */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -z-10 rounded-2xl border border-border/30 bg-sidebar/20 glassmorphic"
+            />
+
+            <div className="mb-2 flex items-center justify-between px-2 pt-0.5">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                Navigate
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground/70">
+                {drawerItems.length} links
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-1.5">
+              {drawerItems.map((item) => {
+                const isExternal = item.href?.startsWith("http");
+                const sharedClasses =
+                  "flex min-h-[44px] items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm font-medium text-foreground transition-colors icons-glassmorphic active:opacity-80";
+
+                return item.href ? (
                   <Link
+                    key={item.title}
                     href={item.href}
-                    aria-label={item.title}
-                    title={item.title}
                     download={item.download}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noreferrer" : undefined}
                     onClick={() => setOpen(false)}
-                    className="flex h-10 w-10 items-center justify-center rounded-full icons-glassmorphic"
+                    className={sharedClasses}
                   >
-                    <div className="h-6 w-6">{item.icon}</div>
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center">
+                      {item.icon}
+                    </span>
+                    <span className="truncate">{item.title}</span>
                   </Link>
                 ) : (
                   <button
+                    key={item.title}
                     type="button"
-                    aria-label={item.title}
-                    title={item.title}
                     onClick={(event) => {
                       item.onClick?.(event);
                       setOpen(false);
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full icons-glassmorphic"
+                    className={sharedClasses}
                   >
-                    <div className="h-6 w-6">{item.icon}</div>
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center">
+                      {item.icon}
+                    </span>
+                    <span className="truncate">{item.title}</span>
                   </button>
-                )}
-              </motion.div>
-            ))}
-          </motion.div>
+                );
+              })}
+            </div>
+          </motion.nav>
         )}
       </AnimatePresence>
-      <button
-        type="button"
-        aria-label={open ? "Close navigation" : "Open navigation"}
-        aria-expanded={open}
-        aria-controls="mobile-navigation"
-        onClick={() => setOpen(!open)}
-        className="flex h-10 w-10 items-center justify-center rounded-full icons-glassmorphic"
-      >
-        <IconLayoutNavbarCollapse className="h-5 w-5 text-muted-foreground" />
-      </button>
+
+      {/* Floating mobile pill bar */}
+      <div className="relative isolate flex items-center gap-1.5 rounded-full p-1.5 shadow-xl">
+        {/* Visual background layer — matches desktop dock */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 rounded-full border border-border/30 bg-sidebar/20 glassmorphic"
+        />
+
+        <button
+          type="button"
+          aria-label={open ? "Close navigation" : "Open navigation"}
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
+          onClick={() => setOpen((prev) => !prev)}
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground transition-colors icons-glassmorphic active:opacity-80"
+        >
+          {open ? <IconX size={16} /> : <IconMenu2 size={16} />}
+          <span>{open ? "Close" : "Menu"}</span>
+        </button>
+
+        {contactItem ? (
+          <button
+            type="button"
+            onClick={(event) => {
+              contactItem.onClick?.(event);
+              setOpen(false);
+            }}
+            className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-foreground px-4 font-mono text-[11px] uppercase tracking-[0.16em] text-background transition-colors active:bg-foreground/85"
+          >
+            <IconMail size={15} />
+            <span>Contact</span>
+          </button>
+        ) : null}
+
+        {themeItem ? (
+          <button
+            type="button"
+            aria-label={themeItem.title}
+            title={themeItem.title}
+            onClick={(event) => themeItem.onClick?.(event)}
+            className="flex h-11 w-11 items-center justify-center rounded-full text-foreground transition-colors icons-glassmorphic active:opacity-80"
+          >
+            <span className="h-5 w-5">{themeItem.icon}</span>
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 };

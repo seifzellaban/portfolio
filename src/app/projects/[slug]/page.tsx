@@ -119,7 +119,7 @@ export default async function ProjectPage({
           {project.name}
         </h1>
 
-        <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
+        <p className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl">
           {project.description}
         </p>
 
@@ -316,10 +316,10 @@ export default async function ProjectPage({
       </nav>
 
       <section className="rounded-2xl border border-border/50 bg-card/40 p-8 text-center">
-        <h2 className="font-serif text-2xl font-bold">
+        <h2 className="font-serif text-2xl font-bold sm:text-3xl">
           Building something similar?
         </h2>
-        <p className="mx-auto mt-2 max-w-md text-muted-foreground">
+        <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground sm:text-base">
           {site.responseTime}. Tell me about the problem you&apos;re solving.
         </p>
         <Link

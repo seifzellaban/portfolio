@@ -40,14 +40,13 @@ export default function ServicesPage() {
             <IconArrowLeft size={14} /> Back home
           </Link>
 
-          <p className="mt-12 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-            <span aria-hidden className="h-px w-8 bg-primary" />
+          <p className="mt-12 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
             What I do
           </p>
           <h1 className="mt-5 max-w-3xl font-serif text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
             Services
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground lg:text-lg">
             Design, build, and launch support for web products. Each engagement
             is scoped around outcomes, with clear pricing and a defined handoff.
           </p>
@@ -81,7 +80,7 @@ export default function ServicesPage() {
                       />
                     </Link>
                   </h2>
-                  <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                  <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
                     {service.description}
                   </p>
                 </div>
@@ -103,7 +102,7 @@ export default function ServicesPage() {
               <h2 className="font-serif text-2xl font-bold sm:text-3xl">
                 Not sure which one fits?
               </h2>
-              <p className="mt-2 text-muted-foreground">
+              <p className="mt-2 text-sm text-muted-foreground sm:text-base">
                 Tell me what you&apos;re building and I&apos;ll suggest a scope.
               </p>
             </div>

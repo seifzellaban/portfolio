@@ -35,14 +35,14 @@ type TdProps = ComponentPropsWithoutRef<"td">;
 export const components = {
   h1: (props: HeadingProps) => (
     <h1
-      className="scroll-m-20 text-5xl font-medium italic tracking-tight lg:text-6xl mb-6 text-foreground font-serif"
+      className="scroll-m-20 font-serif text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl mb-6 text-foreground"
       {...props}
     />
   ),
   h2: ({ children, ...props }: HeadingProps) => (
     <h2
       id={props.id ?? slugify(childrenToText(children))}
-      className="scroll-m-20 font-serif text-4xl font-bold tracking-tight border-b border-border/50 pb-3 mt-12 mb-5 text-foreground"
+      className="scroll-m-20 font-serif text-2xl sm:text-3xl font-bold tracking-tight border-b border-border/50 pb-3 mt-12 mb-5 text-foreground"
       {...props}
     >
       {children}
@@ -51,7 +51,7 @@ export const components = {
   h3: ({ children, ...props }: HeadingProps) => (
     <h3
       id={props.id ?? slugify(childrenToText(children))}
-      className="scroll-m-20 font-serif text-3xl font-semibold tracking-tight mt-10 mb-3 text-foreground"
+      className="scroll-m-20 font-serif text-xl sm:text-2xl font-semibold tracking-tight mt-10 mb-3 text-foreground"
       {...props}
     >
       {children}
@@ -60,14 +60,17 @@ export const components = {
   h4: ({ children, ...props }: HeadingProps) => (
     <h4
       id={props.id ?? slugify(childrenToText(children))}
-      className="scroll-m-20 font-serif text-2xl font-medium tracking-tight mt-8 mb-2 text-foreground"
+      className="scroll-m-20 font-serif text-lg sm:text-xl font-medium tracking-tight mt-8 mb-2 text-foreground"
       {...props}
     >
       {children}
     </h4>
   ),
   p: (props: ParagraphProps) => (
-    <p className="leading-relaxed text-lg text-foreground/90 mb-4" {...props} />
+    <p
+      className="leading-relaxed text-base sm:text-lg text-foreground/90 mb-4"
+      {...props}
+    />
   ),
   ol: (props: ListProps) => (
     <ol
@@ -83,7 +86,7 @@ export const components = {
   ),
   li: (props: ListItemProps) => (
     <li
-      className="marker:text-primary text-base text-foreground/90"
+      className="marker:text-primary text-base sm:text-lg leading-relaxed text-foreground/90"
       {...props}
     />
   ),

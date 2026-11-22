@@ -23,8 +23,21 @@ export function CustomCursor() {
     return () => query.removeEventListener("change", update);
   }, []);
 
+  const isActive =
+    !isCoarse &&
+    !reduceMotion &&
+    !pathname?.startsWith("/logs") &&
+    !pathname?.startsWith("/projects");
+
   useEffect(() => {
-    if (isCoarse || reduceMotion) return;
+    document.body.classList.toggle("custom-cursor-active", isActive);
+    return () => {
+      document.body.classList.remove("custom-cursor-active");
+    };
+  }, [isActive]);
+
+  useEffect(() => {
+    if (!isActive) return;
 
     const interactiveSelector =
       "a, button, input, textarea, select, [class*='cursor-link'], .highlight";
@@ -66,14 +79,9 @@ export function CustomCursor() {
       document.removeEventListener("mouseover", onMouseOver);
       document.removeEventListener("mouseout", onMouseOut);
     };
-  }, [isCoarse, reduceMotion]);
+  }, [isActive]);
 
-  if (
-    isCoarse ||
-    reduceMotion ||
-    pathname?.startsWith("/logs") ||
-    pathname?.startsWith("/projects")
-  ) {
+  if (!isActive) {
     return null;
   }
 

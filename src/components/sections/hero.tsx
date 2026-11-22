@@ -1,205 +1,214 @@
 "use client";
 
-import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
-import { motion, Variants } from "motion/react";
 import { useEffect, useState } from "react";
-import ShinyText from "../ShinyText";
 import Image from "next/image";
-import { IconDownload } from "@tabler/icons-react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
+import {
+  IconArrowRight,
+  IconArrowUpRight,
+  IconDownload,
+} from "@tabler/icons-react";
+import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
+import { ResumeTrigger } from "@/components/resume-modal";
 import { site } from "@/lib/site";
 
 export default function Hero() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [cairoTime, setCairoTime] = useState("");
+  const prefersReducedMotion = useReducedMotion();
   const { handleNav } = useSmoothScroll();
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 0);
-    return () => clearTimeout(timer);
+    const updateTime = () => {
+      setCairoTime(
+        new Intl.DateTimeFormat("en-GB", {
+          timeZone: site.timeZone,
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }).format(new Date())
+      );
+    };
+    updateTime();
+    const id = window.setInterval(updateTime, 30_000);
+    return () => window.clearInterval(id);
   }, []);
 
   const containerVariants: Variants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: prefersReducedMotion ? 1 : 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.3,
-      },
+      transition: prefersReducedMotion
+        ? { duration: 0 }
+        : {
+            staggerChildren: 0.08,
+            delayChildren: 0.08,
+          },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 1,
-        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
-      },
+      transition: prefersReducedMotion
+        ? { duration: 0 }
+        : {
+            duration: 0.75,
+            ease: [0.22, 1, 0.36, 1],
+          },
     },
   };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full flex items-center overflow-hidden bg-background"
+      className="relative flex w-full items-center overflow-hidden bg-background pt-8 pb-20 sm:pt-14 sm:pb-28 lg:min-h-screen lg:pt-16 lg:pb-32"
     >
-      {/* Background */}
-      <div className="absolute inset-0 w-full h-full">
-        <div
-          className="absolute inset-0 h-full w-full bg-background bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)]"
-          style={{ opacity: 0.25 }}
-        />
-        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] animate-blob" />
-        <div
-          className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] bg-primary/3 rounded-full blur-[100px] animate-blob"
-          style={{ animationDelay: "3s" }}
-        />
-      </div>
+      {/* Subtle architectural dot field */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(ellipse_65%_55%_at_50%_40%,#000_60%,transparent_100%)] opacity-30 dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)]"
+      />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8">
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center"
           variants={containerVariants}
           initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
+          animate="visible"
         >
-          {/* Left: Typography — takes 3 of 5 cols */}
-          <motion.div variants={itemVariants} className="lg:col-span-3">
-            <h1 className="select-none">
-              <motion.span
-                className="block font-serif text-7xl md:text-8xl lg:text-[7rem] xl:text-[8.5rem] font-light tracking-tight text-muted-foreground/50 leading-[0.85]"
-                variants={itemVariants}
-              >
-                Fullstack
-              </motion.span>
-              <motion.span
-                className="block font-serif text-7xl md:text-8xl lg:text-[7rem] xl:text-[8.5rem] font-bold tracking-tighter text-foreground leading-[0.9] mt-1"
-                variants={itemVariants}
-              >
-                Developer
-              </motion.span>
-              <motion.span
-                className="block font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light italic text-primary leading-[1] mt-2"
-                variants={itemVariants}
-              >
-                &amp; Founder
-              </motion.span>
-            </h1>
+          {/* Editorial masthead strip */}
+          <motion.div
+            variants={itemVariants}
+            className="mb-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border/50 pb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:mb-10 sm:tracking-[0.2em] lg:mb-14"
+          >
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+              <span className="text-foreground">{site.name}</span>
+              <span aria-hidden className="text-border">
+                /
+              </span>
+              <span>
+                {site.location}
+                {cairoTime ? (
+                  <span className="ml-1.5 text-foreground">{cairoTime}</span>
+                ) : null}
+              </span>
+            </div>
 
-            <motion.p
-              className="mt-8 font-mono text-sm md:text-base text-muted-foreground/60 tracking-widest uppercase"
-              variants={itemVariants}
-            >
-              Seif Zakaria — Cairo, Egypt
-            </motion.p>
-
-            <motion.p
-              variants={itemVariants}
-              className="mt-3 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-muted-foreground"
-            >
+            <div className="inline-flex items-center gap-2 text-foreground">
               <span
                 aria-hidden
                 className="inline-block h-1.5 w-1.5 rounded-full bg-primary"
               />
-              {site.availability}
-            </motion.p>
-
-            <motion.div
-              variants={itemVariants}
-              className="mt-10 flex flex-wrap items-center gap-3"
-            >
-              <motion.button
-                onClick={() => handleNav("projects")}
-                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-foreground/5 backdrop-blur-sm border border-primary/20 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-500"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <ShinyText
-                  text="EXPLORE MY WORK"
-                  speed={3}
-                  className="font-mono text-xs tracking-[0.2em] uppercase font-medium"
-                />
-                <motion.svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  className="opacity-50 group-hover:opacity-100 transition-opacity duration-500"
-                  initial={{ x: 0 }}
-                  animate={{ x: [0, 3, 0] }}
-                  transition={{
-                    duration: 2.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <path
-                    d="M6 3L11 8L6 13"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </motion.svg>
-              </motion.button>
-
-              <motion.a
-                href={site.resume.path}
-                download={site.resume.name}
-                className="inline-flex items-center gap-2 rounded-full border border-border/60 px-6 py-4 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground transition-all duration-500 hover:border-primary/40 hover:text-foreground"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <IconDownload size={14} />
-                Résumé
-              </motion.a>
-            </motion.div>
-          </motion.div>
-
-          {/* Right: Photo — takes 2 of 5 cols */}
-          <motion.div
-            variants={itemVariants}
-            className="hidden lg:block lg:col-span-2"
-          >
-            <div className="relative w-full aspect-[3/4] max-w-sm ml-auto rounded-lg overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-tr from-background/30 via-transparent to-primary/10 z-10" />
-              <Image
-                src="/seif.webp"
-                alt="Seif Zakaria"
-                fill
-                sizes="(max-width: 1024px) 0vw, 350px"
-                className="object-cover"
-                priority
-              />
+              <span>{site.availability}</span>
             </div>
           </motion.div>
+
+          {/* Main 12-col split */}
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
+            {/* Left: Display typography & actions */}
+            <div className="lg:col-span-7">
+              <h1 className="select-none">
+                <motion.span
+                  variants={itemVariants}
+                  className="block font-serif text-[3.1rem] font-light leading-[0.88] tracking-tight text-muted-foreground/55 sm:text-7xl md:text-8xl xl:text-[8.25rem]"
+                >
+                  Fullstack
+                </motion.span>
+                <motion.span
+                  variants={itemVariants}
+                  className="mt-1 block font-serif text-[3.1rem] font-bold leading-[0.9] tracking-tighter text-foreground sm:text-7xl md:text-8xl xl:text-[8.25rem]"
+                >
+                  Developer
+                </motion.span>
+                <motion.span
+                  variants={itemVariants}
+                  className="mt-1.5 block font-serif text-[2.55rem] font-light italic leading-[0.98] text-primary sm:mt-2 sm:text-6xl md:text-7xl xl:text-[6.25rem]"
+                >
+                  &amp; Founder.
+                </motion.span>
+              </h1>
+
+              <motion.p
+                variants={itemVariants}
+                className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:mt-8 sm:text-lg"
+              >
+                I design and build web products, run{" "}
+                <a
+                  href="https://wearemasons.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary"
+                >
+                  Masons
+                </a>
+                , and work directly with founders and product teams from first
+                draft to launch.
+              </motion.p>
+
+              <motion.div
+                variants={itemVariants}
+                className="mt-7 flex flex-col gap-2.5 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
+              >
+                <button
+                  type="button"
+                  onClick={() => handleNav("projects")}
+                  className="group inline-flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-full bg-foreground px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-background transition-all duration-300 hover:bg-foreground/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
+                >
+                  View selected work
+                  <IconArrowRight
+                    size={14}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </button>
+
+                <div className="grid grid-cols-2 gap-2.5 sm:contents">
+                  <button
+                    type="button"
+                    onClick={() => handleNav("contact")}
+                    className="group inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-border/70 px-5 py-3.5 font-mono text-xs uppercase tracking-[0.14em] text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:px-6 sm:tracking-[0.16em]"
+                  >
+                    Email me
+                    <IconArrowUpRight
+                      size={14}
+                      className="text-primary transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    />
+                  </button>
+
+                  <ResumeTrigger className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-border/50 px-5 py-3.5 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:border-border hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:border-transparent sm:px-3 sm:tracking-[0.16em]">
+                    <IconDownload size={14} />
+                    Résumé
+                  </ResumeTrigger>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right: Editorial portrait frame */}
+            <motion.div variants={itemVariants} className="lg:col-span-5">
+              <figure className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border/60 bg-card/55 lg:ml-auto lg:mr-0">
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted lg:aspect-[4/5]">
+                  <Image
+                    src="/seifmirror.webp"
+                    alt="Seif Zakaria"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 448px"
+                    className="object-cover object-[50%_28%] lg:object-top"
+                    priority
+                  />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent"
+                  />
+                </div>
+                <figcaption className="flex flex-wrap items-center justify-between gap-2 border-t border-border/50 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:px-5 sm:py-3.5 sm:tracking-[0.18em]">
+                  <span className="text-foreground">Founder, Masons</span>
+                  <span>CS &amp; Statistics · ASU</span>
+                </figcaption>
+              </figure>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20"
-      >
-        <motion.div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-primary/50 to-transparent relative overflow-hidden">
-          <motion.div
-            className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-primary/80"
-            animate={{ y: ["-100%", "200%"] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-          />
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ delay: 1, duration: 1.5, ease: "easeOut" }}
-      />
     </section>
   );
 }

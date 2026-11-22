@@ -1,8 +1,6 @@
 import { Logs } from "@/components/sections/logs";
-import { Card, CardContent } from "@/components/ui/card";
-import ShinyText from "@/components/ShinyText";
-import { NewsletterForm } from "@/components/newsletter-form";
 import { getAllTags, getPosts } from "@/lib/posts";
+import { IconRss } from "@tabler/icons-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -22,34 +20,28 @@ export const metadata: Metadata = {
 export default function LogsPage() {
   const posts = getPosts();
   const tags = getAllTags(posts);
+
   return (
-    <div className="relative min-h-screen w-full bg-background selection:bg-primary/10 selection:text-primary overflow-hidden">
-      {/* Ambient Background Effects */}
+    <div className="relative min-h-screen w-full overflow-hidden bg-background selection:bg-primary/10 selection:text-primary">
+      {/* Subtle architectural background */}
       <div className="fixed inset-0 -z-10 h-full w-full bg-background">
-        <div className="absolute h-full w-full bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size[24px_24px]"></div>
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-77.5 w-77.5 rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
+        <div className="absolute h-full w-full bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]" />
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-77.5 w-77.5 rounded-full bg-primary/20 opacity-20 blur-[100px]" />
       </div>
 
-      <main id="main-content" className="mx-auto relative z-10">
-        <div className="relative w-full mx-auto">
-          {/* Decorative element */}
-          <div className="absolute top-20 left-1/2 -translate-x-1/2 -z-10">
-            <ShinyText
-              text="THOUGHTS & STORIES"
-              speed={4}
-              className="text-xs sm:text-sm font-mono tracking-[0.2em] opacity-60 whitespace-nowrap"
-            />
-          </div>
+      <main id="main-content" className="relative z-10 mx-auto">
+        <Logs
+          heading="Logs"
+          kicker="All entries"
+          description="Notes on software, side projects, leadership mistakes, and things I figured out while building."
+          posts={posts}
+          bordered={false}
+        />
 
-          <Logs
-            heading="My Logs"
-            description="A collection of thoughts, deep dives, and stories from my journey—building apps, leading teams, and exploring the craft of modern web development."
-            posts={posts}
-          />
-
+        <div className="mx-auto max-w-7xl px-5 pb-28 sm:px-6 md:pb-32 lg:px-8">
           {tags.length > 0 && (
-            <div className="mx-auto max-w-6xl px-6 pb-8">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+            <div className="border-t border-border/50 pt-10">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 Browse by topic
               </p>
               <ul className="mt-4 flex flex-wrap gap-2">
@@ -57,7 +49,7 @@ export default function LogsPage() {
                   <li key={tag.slug}>
                     <Link
                       href={`/logs/tag/${tag.slug}`}
-                      className="inline-block rounded-full border border-border/60 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+                      className="inline-flex min-h-[34px] items-center rounded-full border border-border/60 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
                     >
                       {tag.tag} ({tag.count})
                     </Link>
@@ -66,27 +58,20 @@ export default function LogsPage() {
               </ul>
             </div>
           )}
-        </div>
 
-        {/* Newsletter / CTA Section */}
-        <section className="pb-32 max-w-7xl mx-auto px-4">
-          <Card className="bg-card/50 border-border/50 overflow-hidden relative backdrop-blur-sm">
-            <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-50" />
-            <CardContent className="p-8 sm:p-12 flex flex-col md:flex-row gap-8 items-center justify-between relative z-10">
-              <div className="space-y-2 text-center md:text-left">
-                <h3 className="font-serif text-4xl font-bold tracking-tight">
-                  Stay in the loop
-                </h3>
-                <div className="h-0.5 w-12 bg-primary mx-auto md:mx-0" />
-                <p className="text-muted-foreground max-w-xs text-base leading-relaxed pt-2">
-                  I write about engineering, leadership, and building products.
-                  No spam, just updates.
-                </p>
-              </div>
-              <NewsletterForm />
-            </CardContent>
-          </Card>
-        </section>
+          <div className="mt-10 flex flex-col items-stretch justify-between gap-4 border-t border-border/50 pt-8 sm:mt-12 sm:flex-row sm:items-center">
+            <p className="text-sm text-muted-foreground">
+              Prefer reading in a feed reader? New notes are published to RSS.
+            </p>
+            <a
+              href="/feed.xml"
+              className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full border border-border/70 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-primary/50 hover:bg-primary/5 sm:w-auto"
+            >
+              <IconRss size={14} className="text-primary" />
+              Follow via RSS
+            </a>
+          </div>
+        </div>
       </main>
     </div>
   );

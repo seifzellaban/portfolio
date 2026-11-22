@@ -41,10 +41,10 @@ const techStack = [
 export function TechStackMarquee() {
   const isMobile = useIsMobile();
   const reduceMotion = useReducedMotion();
-  const speed = isMobile ? 100 : 50;
+  const speed = isMobile ? 40 : 50;
 
   return (
-    <div className="border-y border-border/50 py-12">
+    <div className="border-y border-border/50 py-8 sm:py-12">
       <div aria-hidden="true">
         <Marquee
           speed={speed}
@@ -55,13 +55,15 @@ export function TechStackMarquee() {
           {techStack.map((tech) => (
             <div
               key={tech.name}
-              className="mx-8 flex items-center gap-3 text-muted-foreground transition-colors duration-300 hover:text-primary"
+              className="mx-5 flex items-center gap-2.5 text-muted-foreground transition-colors duration-300 hover:text-primary sm:mx-8 sm:gap-3"
             >
               {tech.icon}
-              <span className="text-lg font-medium tracking-wide">
+              <span className="text-base font-medium tracking-wide sm:text-lg">
                 {tech.name}
               </span>
-              <span className="ml-4 font-serif text-2xl text-primary/20">·</span>
+              <span className="ml-3 font-serif text-2xl text-primary/20 sm:ml-4">
+                ·
+              </span>
             </div>
           ))}
         </Marquee>

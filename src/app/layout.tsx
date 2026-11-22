@@ -7,6 +7,7 @@ import ScrollHandler from "@/components/scroll-handler";
 import { Suspense } from "react";
 import { CustomCursor } from "@/components/custom-cursor";
 import { LenisProvider } from "@/lib/lenis-provider";
+import { ResumeModalProvider } from "@/components/resume-modal";
 import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/toaster";
 import { Analytics } from "@vercel/analytics/next";
@@ -154,14 +155,16 @@ export default function RootLayout({
         </a>
         <ThemeProvider>
           <LenisProvider>
-            <CustomCursor />
-            <Suspense fallback={null}>{children}</Suspense>
-            <Footer />
-            <Dock />
-            <Toaster />
-            <Suspense fallback={null}>
-              <ScrollHandler />
-            </Suspense>
+            <ResumeModalProvider>
+              <CustomCursor />
+              <Suspense fallback={null}>{children}</Suspense>
+              <Footer />
+              <Dock />
+              <Toaster />
+              <Suspense fallback={null}>
+                <ScrollHandler />
+              </Suspense>
+            </ResumeModalProvider>
           </LenisProvider>
         </ThemeProvider>
         <Analytics />
