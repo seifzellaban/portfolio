@@ -40,7 +40,7 @@ const SIDE_QUESTS = [
 ] as const;
 
 const STATS = [
-  { number: "7M+", label: "EGP/mo client volume" },
+  { number: "10M+", label: "EGP/mo client volume" },
   { number: "20+", label: "Happy Clients" },
   { number: "2020", label: "Masons founded" },
   { number: "24h", label: "Direct reply time" },

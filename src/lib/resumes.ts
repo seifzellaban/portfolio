@@ -39,7 +39,7 @@ export const RESUMES: ResumeOption[] = [
   {
     id: "concentrix",
     label: "Concentrix",
-    kicker: "Tech Support · US Voice",
+    kicker: "Tech Support · Consumer Electronics",
     description:
       "Technical support, customer operations, or internal Concentrix referrals.",
     // Drop the PDF in public/files/ and set `path` to enable direct download

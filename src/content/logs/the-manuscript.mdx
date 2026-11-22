@@ -1,6 +1,6 @@
 ---
-title: "I Built a Developmental Editor for Fiction Because AI Couldn't Read My Manuscript"
-summary: "I was deep in Tesseract, building an empathic writing environment, when I hit a wall: every time I asked an AI to preview my fiction draft, it handed me a participation trophy. So I built The Manuscript — a full creative writing suite with seven specialized sub-skills, from continuity tracking to query letter writing."
+title: "I Built a Developmental Editor for Fiction Because AI Could Not Read My Manuscript"
+summary: "While building Tesseract, I asked an AI assistant to critique a 3,000-word draft and got vague praise. I paused for a week and built The Manuscript, a fiction editing skill with seven structured sub-skills."
 label: "Open Source Skill"
 author: "Seif Zakaria"
 published: "2026-04-12"
@@ -9,118 +9,104 @@ tags: ["writing", "ai-tools", "creative-writing", "open-source", "Tesseract"]
 showImage: false
 ---
 
-I was knee-deep in building **Tesseract** — my local-first Markdown editor that adapts to your mental state while you write — when I ran into something that annoyed me.
+Halfway through building **Tesseract**, my local-first Markdown editor, I hit a problem while drafting a short story between coding sessions.
 
-I had been drafting a short story between coding sessions. Nothing serious, just a thing to unwind. At some point I thought, *let me get a quick read on this*. I pasted a chapter into the AI assistant and asked: *does this scene work?*
-
-What I got back:
+I pasted a 3,000-word chapter into an AI assistant and asked whether the scene worked. It replied:
 
 > "The scene has good pacing overall. The dialogue feels natural and the setting is vivid. Consider adding more sensory details and tightening the ending."
 
-This is not feedback. This is a participation trophy.
-
-The scene was 3,000 words. The AI had not read it. It had skimmed it and thrown adjectives at me.
+That response skimmed the chapter and handed out adjectives instead of a real critique.
 
 ---
 
-## The Problem Wasn't the AI. It Was the System.
+## Missing Schemas, Vague Output
 
-The problem isn't that AI can't critique fiction. It's that without schemas, frameworks, and output formats, every response is improvised. And improvised feedback is vague feedback.
+AI models struggle with fiction critique because open-ended prompts force them to improvise. Without explicit schemas and output formats, they default to safe praise.
 
-I was building Tesseract around the idea that writing tools should *understand* the writer — their mood, their intent, their context. But understanding your mood is useless if the feedback you get is worthless.
-
-So I stopped building Tesseract for a week and built something else.
-
-**The Manuscript.** A developmental editing skill for AI agents that actually diagnoses instead of applauding.
+Reading a writer's mood in Tesseract accomplishes little if the editorial feedback stays vague. I paused Tesseract for a week and built **The Manuscript**, a developmental editing skill for AI agents designed to diagnose drafts with structured rules.
 
 ---
 
-## What I Built
+## Seven Sub-Skills
 
-The Manuscript is a suite of seven specialized sub-skills, each covering a specific part of the creative writing workflow — from first draft to agent submission. Each one has explicit schemas, processes, and output formats. The agent doesn't guess what to look for. It follows a system.
+The Manuscript splits the editing workflow into seven reference files covering first drafts through agent submission. Each file defines exact schemas and output formats so the agent follows a repeatable checklist.
 
 ### Continuity Tracker
 
-Builds and maintains a living story bible — characters, locations, objects, timeline, relationships, open threads. Catches contradictions before your readers do. When you add a new chapter, it checks every new claim against everything you've already established.
+Maintains a story bible covering characters, locations, objects, timelines, relationships, and open plot threads. Adding a chapter triggers checks against established canon.
 
-> **Example output:** `⚠️ CONTRADICTION — Dr. Patel: Chapter 2 established age as "not specified." This chapter states she is 42. Which is correct?`
+> **Example output:** `⚠️ CONTRADICTION: Dr. Patel. Chapter 2 left her age unspecified; this chapter states she is 42. Confirm canon.`
 
 ### Character Voice
 
-Fingerprints a character's speech patterns — vocabulary tier, sentence rhythm, verbal tics, emotional register, what they talk about and what they avoid. Then checks new dialogue against that profile with line-level precision.
+Profiles each character's vocabulary tier, sentence rhythm, verbal habits, emotional register, and blind spots, then audits new dialogue at the line level.
 
-It doesn't say "this dialogue feels off." It says:
+Instead of saying "this dialogue feels off," it outputs:
 
-> **⚠️ VOICE DRIFT** — Line: *"My lord Duke, with great respect, I've been analyzing our strategic position in considerable depth..."*
+> **⚠️ VOICE DRIFT:** *"My lord Duke, with great respect, I've been analyzing our strategic position in considerable depth..."*
 > Issue: Kael speaks in short, blunt sentences. This 40-word subordinate clause reads like Lord Ashford.
 
 ### Scene Diagnostics
 
-Analyzes scenes across six dimensions: scene function, pacing, tension, POV consistency, showing vs. telling, and scene entry/exit. Genre-aware — a slow literary scene gets different standards than a slow thriller scene. Every issue cites exact lines. Every scene gets a single priority fix.
+Audits scenes across six dimensions: scene function, pacing, tension, POV consistency, showing vs. telling, and scene entry/exit. Standards adjust by genre so a slow literary scene faces different criteria than a thriller scene. Each finding cites exact lines and picks one priority fix.
 
 ### Plot Structure
 
-Maps your manuscript against structural frameworks — Three-Act, Save the Cat, Hero's Journey, Mystery Structure, Freytag's Pyramid, Dan Harmon's Story Circle. Produces a structural map showing where each beat lands (or doesn't), with prioritized fixes ordered by impact.
+Maps a manuscript against structural models (Three-Act, Save the Cat, Hero's Journey, Mystery Structure, Freytag's Pyramid, and Dan Harmon's Story Circle). The output locates where each beat lands or drops out, ordered by impact.
 
 ### Prose Style Guide
 
-Captures **your** prose voice from samples — sentence architecture, vocabulary register, interiority style, description density, tonal signatures. Then uses that profile to check for stylistic drift or draft placeholder passages in your voice.
+Extracts your prose profile from writing samples: sentence architecture, vocabulary register, interiority, description density, and tonal habits. The agent uses that profile to flag style drift or draft placeholder scenes in your voice.
 
 ### World-Building Codex
 
-For fantasy and sci-fi writers: tracks magic systems, geography, political structures, history, cultures, religion, economy. Once a rule is in the codex, the narrative can't violate it without acknowledgment. Internal consistency made automatic.
+Tracks magic systems, geography, politics, history, culture, religion, and economy for fantasy and sci-fi manuscripts. Once you record a rule in the codex, the agent flags any chapter that breaks it.
 
 ### Query Letter Writer
 
-The most formulaic sub-skill — because agents have rigid expectations. Produces query letters following the exact industry structure: hook (character + want + obstacle + stakes), story summary (third person, present tense), metadata line, bio. No rhetorical questions. No theme statements. No "you'll have to read to find out."
+Follows strict publishing conventions for query letters: hook (character, goal, obstacle, stakes), third-person present-tense story summary, metadata line, and bio. It bans rhetorical questions, theme statements, and cliffhanger teasers.
 
 ---
 
-## How It Works
+## Three-Step Workflow
 
-The skill has a simple three-step flow:
+1. **Route:** Match the writer's request to the right sub-skill.
+2. **Load:** Read that sub-skill's reference file before writing a response.
+3. **Execute:** Fill out the defined schema and output format.
 
-1. **Route** — Identify what the writer needs from their request
-2. **Load** — Read the relevant sub-skill reference file (never improvise)
-3. **Execute** — Follow the sub-skill's schema and output format precisely
-
-> **Key principle:** The agent reads the sub-skill file *before* responding. It doesn't guess at processes or invent output formats. The schemas are baked into the reference files, not the agent's training data.
+> **Core rule:** The agent reads the sub-skill file before replying so schemas come from the reference docs rather than guesswork.
 
 ### Universal Rules
 
-Across all seven sub-skills, five rules are non-negotiable:
+Five rules apply across all seven sub-skills:
 
-- **Never invent facts** about the writer's story
-- **Never silently resolve contradictions** — surface them, let the writer decide canon
-- **One source of truth** — structured outputs live in defined schemas
-- **Distinguish stated from implied** — mark inferences so writers can confirm
-- **You are an editor, not a co-author** — analyze first, rewrite only when asked
-
----
-
-## Who It's For
-
-**Novice writers** get explanations of craft concepts before the analysis is applied. When the skill flags "head-hopping," it explains what head-hopping is and why it matters.
-
-**Experienced writers** get concise, professional-level diagnostics without the craft-lesson preamble. If you know what a midpoint reversal is, the skill won't explain it — it'll tell you yours is missing.
-
-The skill reads the room. If you use craft terminology fluently, it matches your level. If you're learning, it teaches as it goes.
+- **Do not invent facts** about the story.
+- **Surface contradictions without resolving them:** let the writer pick canon.
+- **Keep one source of truth** inside defined schemas.
+- **Separate stated facts from inferences** so writers can verify assumptions.
+- **Act as an editor, not a co-author:** diagnose first, rewrite on request.
 
 ---
 
-## What Makes It Different
+## Adapting to Experience Level
 
-The Manuscript isn't a writing assistant that says "great job, here are some suggestions." It's a **developmental editor that diagnoses**.
+**Newer writers** receive short craft explanations before the critique runs. If the agent flags head-hopping, it explains what head-hopping is and why it breaks POV.
 
-The difference is specificity. Where a generic tool says "the pacing could be tighter," this skill says "paragraphs 4–7 describe the weather and the character making coffee before any stakes appear — start the scene at the argument, not the kettle."
-
-Where a generic tool says "check your world-building consistency," this skill says "Chapter 3 establishes that magic requires physical contact. Chapter 8 has a mage drawing power from across a room. These contradict — which is canon?"
-
-Every piece of feedback cites exact lines. Every scene gets a single priority fix. Every contradiction is surfaced, not resolved. The writer stays in control.
+**Experienced writers** get straight diagnostics without preamble. If you already use craft terms, the agent skips definitions and points straight to the missing midpoint reversal.
 
 ---
 
-## Structure
+## Line-Level Specificity
+
+Generic tools say "the pacing could be tighter." The Manuscript says "paragraphs 4 to 7 describe the weather and making coffee before stakes appear; start the scene at the argument."
+
+Generic tools say "check world-building consistency." The Manuscript says "Chapter 3 states magic requires touch, while Chapter 8 shows a mage drawing power across a room; pick which rule stands."
+
+Each note cites exact lines, gives one priority fix per scene, and leaves final canon decisions to the author.
+
+---
+
+## Repository Structure
 
 ```
 the-manuscript/
@@ -135,28 +121,20 @@ the-manuscript/
     └── worldbuilding-codex.md
 ```
 
-The main `SKILL.md` handles routing and universal rules. Each reference file contains the full schema, workflow, and output format for its sub-skill. The agent reads the reference file before responding — progressive disclosure keeps the skill lean while giving it deep capabilities when needed.
+`SKILL.md` handles routing and universal rules, while each file in `references/` holds the schema, checklist, and output template for one sub-skill. Loading files on demand keeps context lean.
 
 ---
 
-## The Tesseract Connection
+## Connection to Tesseract
 
-This skill was born out of the frustration that sparked **Tesseract** in the first place. Tesseract is my bigger bet: a local-first Markdown editor that uses sentiment analysis to adapt its AI assistant to your mental state, with multi-agent debate and personalized memory recall. The Manuscript was the proof-of-concept that taught me what *good* AI feedback for writers actually looks like.
+Building The Manuscript showed me what useful AI writing feedback requires: explicit schemas, line citations, and strict editorial boundaries. Those same principles now shape **Tesseract**, my local-first Markdown editor with on-device sentiment analysis, multi-agent debate, and local RAG.
 
-I learned that writers don't need more cheerleading. They need diagnosis. Specificity. A system.
-
-That lesson shaped Tesseract's architecture, and it'll shape everything I build for writers after that.
-
-You can read more about Tesseract [here](/logs/tesseract).
+Read more about Tesseract [here](/logs/tesseract).
 
 ---
 
-## Getting Started
+## Setup
 
-Drop `the-manuscript/` into your agent's skills directory. Then just start writing.
+Drop `the-manuscript/` into your agent's skills directory, paste a chapter, and ask for a voice check, continuity audit, scene diagnosis, outline map, codex update, or query letter.
 
-Ask it to check your dialogue consistency. Update your story bible. Diagnose a scene that isn't working. Map your outline against a structural framework. Capture your prose voice. Build a world bible. Draft a query letter.
-
-Or just paste a chapter and say "what do you think?" — the skill will figure out what you need and route accordingly.
-
-The Manuscript is open source under MIT. The code is at [github.com/seifzellaban/the-manuscript](https://github.com/seifzellaban/the-manuscript).
+The Manuscript is open source under MIT at [github.com/seifzellaban/the-manuscript](https://github.com/seifzellaban/the-manuscript).

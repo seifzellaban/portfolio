@@ -1,6 +1,6 @@
 ---
 title: "My First OSS Contribution: Adding Linux AppImage Support to NeverWrite"
-summary: "NeverWrite had macOS and Windows releases but nothing for Linux. Issue #19 had been open for a while. I picked it up, figured out the packaging pipeline, and got it merged into v0.2.5."
+summary: "NeverWrite shipped macOS and Windows builds with no Linux release. I picked up issue #19, wired up cross-compiled Rust sidecars and AppImage CI builds, and got it merged into v0.2.5."
 label: "Open Source"
 author: "Seif Zakaria"
 published: "2026-05-12"
@@ -10,29 +10,29 @@ tags: ["Open Source", "Linux", "Electron", "AppImage", "CI/CD"]
 pinned: false
 ---
 
-[NeverWrite](https://github.com/jsgrrchg/NeverWrite) is an Electron-based AI note-taking app — think Obsidian with an agent layer built in. I first came across it in [a post on r/ZedEditor](https://www.reddit.com/r/ZedEditor/comments/1t3nbgi/agentic_multipane_markdown_editor_inspired_by_zed/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button), someone mentioning it as an alternative worth watching.
+[NeverWrite](https://github.com/jsgrrchg/NeverWrite) is an Electron note-taking app built around an agent layer, similar to Obsidian. I found it in [a thread on r/ZedEditor](https://www.reddit.com/r/ZedEditor/comments/1t3nbgi/agentic_multipane_markdown_editor_inspired_by_zed/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button).
 
-I run Fedora. When I checked the releases page the Linux row was empty. Issue [#19](https://github.com/jsgrrchg/NeverWrite/issues/19) had been sitting open for a while with no one on it, and the CONTRIBUTING guide explicitly mentioned Linux as a wanted target.
+I run Fedora, and the releases page had an empty Linux row. Issue [#19](https://github.com/jsgrrchg/NeverWrite/issues/19) had sat open with no assignee, and the CONTRIBUTING guide listed Linux as a wanted target.
 
-So I took a crack at it. This ended up being my first open source contribution — and it got merged!
-
----
-
-## The problem
-
-NeverWrite isn't a pure JS app. It ships a Rust sidecar — a compiled binary that the Electron main process forks at runtime. That means getting Linux packaging working involved more than flipping a config flag:
-
-- `electron-builder` needed AppImage targets for both `x64` and `arm64`
-- The Rust sidecar staging scripts needed to cross-compile for Linux targets
-- CI needed to run on `ubuntu-22.04` specifically — building on a newer runner produces a binary linked against a newer GLIBC, which then silently refuses to launch on most users' machines
-- `electron-updater` needed a `latest-linux.yml` feed wired up so in-app updates would actually work
-- The native menu bar shows up on Linux because NeverWrite uses a custom frameless titlebar designed for macOS — it needed to be hidden outside macOS and the window chrome needed platform-aware styling
+I picked up the issue, built the packaging pipeline, and landed my first merged open source PR.
 
 ---
 
-## What I changed
+## The Problem
 
-The `electron-builder` config got Linux AppImage targets:
+NeverWrite ships a compiled Rust sidecar that the Electron main process forks at runtime. Adding Linux support took five pieces:
+
+- `electron-builder` needed AppImage targets for `x64` and `arm64`
+- Rust sidecar staging scripts needed cross-compilation for both Linux targets
+- CI needed to build on `ubuntu-22.04` so binaries link against GLIBC 2.35 rather than a newer runner version that breaks on older distros
+- `electron-updater` needed a `latest-linux.yml` feed for in-app updates
+- The frameless titlebar built for macOS exposed a native menu bar on Linux and needed platform-aware window chrome
+
+---
+
+## Changes Made
+
+I added Linux AppImage targets to the `electron-builder` config:
 
 ```json
 "linux": {
@@ -44,17 +44,17 @@ The `electron-builder` config got Linux AppImage targets:
 }
 ```
 
-The staging scripts already handled macOS and Windows sidecars. I extended them to cross-compile the Rust binary for both Linux architectures before the Electron build runs, so the bundler can find the right binary for each target.
+The staging scripts handled macOS and Windows sidecars. I extended them to cross-compile the Rust binary for Linux `x64` and `arm64` ahead of the Electron build so the bundler picks up each binary.
 
-For CI, the only meaningful change was the runner:
+In CI, I pinned the Linux job to Ubuntu 22.04:
 
 ```yaml
 runs-on: ubuntu-22.04
 ```
 
-`ubuntu-latest` at the time pointed to 24.04, which produces a GLIBC 2.38 baseline. Pinning to 22.04 drops that to 2.35 and covers the vast majority of current Linux installs without any code changes.
+`ubuntu-latest` pointed to 24.04 with a GLIBC 2.38 baseline. Pinning to 22.04 keeps the baseline at GLIBC 2.35 so the AppImage launches across most current Linux installs.
 
-The titlebar fix was a conditional in the main process:
+For window chrome, I hid the native menu bar outside macOS in the main process:
 
 ```ts
 if (process.platform !== 'darwin') {
@@ -62,30 +62,26 @@ if (process.platform !== 'darwin') {
 }
 ```
 
-Plus a CSS class applied to the drag region to account for the difference in compositing behavior between macOS and GTK.
+I added a CSS class on the drag region to handle compositing differences between macOS and GTK.
 
 ---
 
-## How the review went
+## Review and Merge
 
-The maintainer ([@jsgrrchg](https://github.com/jsgrrchg)) reviewed and jumped in directly — he added the updater feed configuration I'd left partially stubbed and wired the AppImage icon explicitly. We went back and forth over a day, he squashed the commits, and it merged on May 9th.
-
-The PR ended up touching the builder config, staging scripts, CI workflow, main process window setup, and titlebar CSS. Seven commits total between the two of us.
+The maintainer ([@jsgrrchg](https://github.com/jsgrrchg)) reviewed the PR and pushed follow-up fixes to finish the updater feed config and bind the AppImage icon. We went back and forth over a day across seven commits touching the builder config, staging scripts, CI workflow, main process setup, and titlebar CSS. He squashed and merged it on May 9th.
 
 ---
 
-## v0.2.5
+## v0.2.5 Release
 
-The release shipped today. The Linux rows in the installer table are no longer empty:
+Version 0.2.5 shipped with Linux builds in the installer table:
 
 | Platform | Architecture | Asset |
 |----------|--------------|-------|
 | Linux | x64 | `NeverWrite-0.2.5-x64.AppImage` |
 | Linux | ARM64 | `NeverWrite-0.2.5-arm64.AppImage` |
 
-In-app updates work on both. The window chrome looks correct. Cmd+W and its Linux equivalent both pass the shortcut tests.
-
-The codebase was clean, the maintainer was responsive, and the problem was well-scoped. Not a bad way to open the account.
+In-app updates work on both architectures, the window chrome renders clean, and both Cmd+W and its Linux shortcut pass tests.
 
 ---
 
