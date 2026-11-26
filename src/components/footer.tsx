@@ -17,7 +17,7 @@ const nav = [
   { label: "Home", href: "/" },
   { label: "About", href: "/#about" },
   { label: "Services", href: "/services" },
-  { label: "Projects", href: "/#projects" },
+  { label: "Projects", href: "/projects" },
   { label: "Logs", href: "/logs" },
   { label: "Contact", href: "/#contact" },
   { label: "Links", href: "/links" },
@@ -38,7 +38,12 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-5">
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-              Seif Zakaria
+              <Link
+                href="/"
+                className="transition-colors hover:text-foreground"
+              >
+                Seif Zakaria
+              </Link>
             </p>
             <p className="mt-3.5 max-w-sm font-serif text-xl leading-snug text-foreground sm:mt-4 sm:text-2xl sm:leading-tight">
               Building products that ship, solve real problems, and make users

@@ -13,6 +13,9 @@ import { Toaster } from "@/components/toaster";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@/lib/site";
 
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -21,12 +24,11 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: [...site.keywords],
-  authors: [{ name: site.name, url: site.url }],
+  authors: [{ name: site.name, url: `${site.url}/` }],
   creator: site.name,
   publisher: site.name,
   applicationName: site.name,
   alternates: {
-    canonical: "/",
     types: {
       "application/rss+xml": [{ url: "/feed.xml", title: "Seif Zakaria — Logs" }],
     },
@@ -34,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: site.url,
+    url: `${site.url}/`,
     siteName: site.name,
     title: site.title,
     description: site.description,
@@ -54,13 +56,19 @@ export const metadata: Metadata = {
       follow: true,
       "max-image-preview": "large",
       "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
-  icons: {
-    icon: "/logo.svg",
-    shortcut: "/logo.svg",
-    apple: "/logo.svg",
-  },
+  ...(googleVerification || bingVerification
+    ? {
+        verification: {
+          ...(googleVerification ? { google: googleVerification } : {}),
+          ...(bingVerification
+            ? { other: { "msvalidate.01": bingVerification } }
+            : {}),
+        },
+      }
+    : {}),
   manifest: "/manifest.webmanifest",
   formatDetection: {
     email: false,
@@ -157,7 +165,7 @@ export default function RootLayout({
           <LenisProvider>
             <ResumeModalProvider>
               <CustomCursor />
-              <Suspense fallback={null}>{children}</Suspense>
+              {children}
               <Footer />
               <Dock />
               <Toaster />

@@ -471,7 +471,7 @@ export function ProjectsSection({
                 <a
                   href="https://github.com/seifzellaban"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="me noopener noreferrer"
                   className="inline-flex min-h-[36px] items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <IconBrandGithub size={14} />

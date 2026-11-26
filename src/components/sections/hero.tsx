@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, type Variants } from "motion/react";
 import {
   IconArrowRight,
   IconArrowUpRight,
@@ -14,7 +13,6 @@ import { site } from "@/lib/site";
 
 export default function Hero() {
   const [cairoTime, setCairoTime] = useState("");
-  const prefersReducedMotion = useReducedMotion();
   const { handleNav } = useSmoothScroll();
 
   useEffect(() => {
@@ -33,31 +31,21 @@ export default function Hero() {
     return () => window.clearInterval(id);
   }, []);
 
-  const containerVariants: Variants = {
-    hidden: { opacity: prefersReducedMotion ? 1 : 0 },
-    visible: {
-      opacity: 1,
-      transition: prefersReducedMotion
-        ? { duration: 0 }
-        : {
-            staggerChildren: 0.08,
-            delayChildren: 0.08,
-          },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: prefersReducedMotion
-        ? { duration: 0 }
-        : {
-            duration: 0.75,
-            ease: [0.22, 1, 0.36, 1],
-          },
-    },
+  const handleAnchorNav = (
+    event: MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
+    if (
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    ) {
+      return;
+    }
+    event.preventDefault();
+    handleNav(sectionId);
   };
 
   return (
@@ -72,18 +60,11 @@ export default function Hero() {
       />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <div>
           {/* Editorial masthead strip */}
-          <motion.div
-            variants={itemVariants}
-            className="mb-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border/50 pb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:mb-10 sm:tracking-[0.2em] lg:mb-14"
-          >
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border/50 pb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:mb-10 sm:tracking-[0.2em] lg:mb-14">
             <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-              <span className="text-foreground">{site.name}</span>
+              <span className="text-foreground">@{site.handle}</span>
               <span aria-hidden className="text-border">
                 /
               </span>
@@ -102,38 +83,27 @@ export default function Hero() {
               />
               <span>{site.availability}</span>
             </div>
-          </motion.div>
+          </div>
 
           {/* Main 12-col split */}
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Left: Display typography & actions */}
             <div className="lg:col-span-7">
               <h1 className="select-none">
-                <motion.span
-                  variants={itemVariants}
-                  className="block font-serif text-[3.1rem] font-light leading-[0.88] tracking-tight text-muted-foreground/55 sm:text-7xl md:text-8xl xl:text-[8.25rem]"
-                >
-                  Fullstack
-                </motion.span>
-                <motion.span
-                  variants={itemVariants}
-                  className="mt-1 block font-serif text-[3.1rem] font-bold leading-[0.9] tracking-tighter text-foreground sm:text-7xl md:text-8xl xl:text-[8.25rem]"
-                >
-                  Developer
-                </motion.span>
-                <motion.span
-                  variants={itemVariants}
-                  className="mt-1.5 block font-serif text-[2.55rem] font-light italic leading-[0.98] text-primary sm:mt-2 sm:text-6xl md:text-7xl xl:text-[6.25rem]"
-                >
-                  &amp; Founder.
-                </motion.span>
+                <span className="block font-serif text-[3.1rem] font-light leading-[0.88] tracking-tight text-muted-foreground/55 sm:text-7xl md:text-8xl xl:text-[8.25rem]">
+                  Seif{" "}
+                </span>
+                <span className="mt-1 block font-serif text-[3.1rem] font-bold leading-[0.9] tracking-tighter text-foreground sm:text-7xl md:text-8xl xl:text-[8.25rem]">
+                  Zakaria{" "}
+                </span>
+                <span className="mt-3 block font-serif text-2xl font-light italic leading-[1.08] text-primary sm:mt-4 sm:text-4xl md:text-5xl xl:text-[3.35rem]">
+                  Fullstack Developer &amp; Founder.
+                </span>
               </h1>
 
-              <motion.p
-                variants={itemVariants}
-                className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:mt-8 sm:text-lg"
-              >
-                I design and build web products, run{" "}
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:mt-8 sm:text-lg">
+                Full-stack software engineer in Cairo, Egypt. I design and build
+                web products, run{" "}
                 <a
                   href="https://wearemasons.com"
                   target="_blank"
@@ -144,15 +114,12 @@ export default function Hero() {
                 </a>
                 , and work directly with founders and product teams from first
                 draft to launch.
-              </motion.p>
+              </p>
 
-              <motion.div
-                variants={itemVariants}
-                className="mt-7 flex flex-col gap-2.5 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
-              >
-                <button
-                  type="button"
-                  onClick={() => handleNav("projects")}
+              <div className="mt-7 flex flex-col gap-2.5 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+                <a
+                  href="#projects"
+                  onClick={(event) => handleAnchorNav(event, "projects")}
                   className="group inline-flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-full bg-foreground px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-background transition-all duration-300 hover:bg-foreground/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
                 >
                   View selected work
@@ -160,12 +127,12 @@ export default function Hero() {
                     size={14}
                     className="transition-transform duration-300 group-hover:translate-x-1"
                   />
-                </button>
+                </a>
 
                 <div className="grid grid-cols-2 gap-2.5 sm:contents">
-                  <button
-                    type="button"
-                    onClick={() => handleNav("contact")}
+                  <a
+                    href="#contact"
+                    onClick={(event) => handleAnchorNav(event, "contact")}
                     className="group inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-border/70 px-5 py-3.5 font-mono text-xs uppercase tracking-[0.14em] text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:px-6 sm:tracking-[0.16em]"
                   >
                     Email me
@@ -173,23 +140,23 @@ export default function Hero() {
                       size={14}
                       className="text-primary transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                     />
-                  </button>
+                  </a>
 
                   <ResumeTrigger className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-border/50 px-5 py-3.5 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:border-border hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:border-transparent sm:px-3 sm:tracking-[0.16em]">
                     <IconDownload size={14} />
                     Résumé
                   </ResumeTrigger>
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* Right: Editorial portrait frame */}
-            <motion.div variants={itemVariants} className="lg:col-span-5">
+            <div className="lg:col-span-5">
               <figure className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border/60 bg-card/55 lg:ml-auto lg:mr-0">
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted lg:aspect-[4/5]">
                   <Image
                     src="/seifmirror.webp"
-                    alt="Seif Zakaria"
+                    alt="Seif Zakaria — Full-Stack Software Engineer and Founder of Masons in Cairo, Egypt"
                     fill
                     sizes="(max-width: 1024px) 100vw, 448px"
                     className="object-cover object-[50%_28%] lg:object-top"
@@ -205,9 +172,9 @@ export default function Hero() {
                   <span>CS &amp; Statistics · ASU</span>
                 </figcaption>
               </figure>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

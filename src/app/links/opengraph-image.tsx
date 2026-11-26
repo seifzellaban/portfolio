@@ -1,7 +1,7 @@
 import { ogContentType, ogSize, renderOg } from "@/lib/og";
 import { site } from "@/lib/site";
 
-export const alt = `${site.name} — logo`;
+export const alt = `${site.name} — Links`;
 export const size = ogSize;
 export const contentType = ogContentType;
 

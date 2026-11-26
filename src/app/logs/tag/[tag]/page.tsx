@@ -20,7 +20,8 @@ export async function generateMetadata({
   params: Promise<{ tag: string }>;
 }): Promise<Metadata> {
   const { tag } = await params;
-  const found = findTag(tag);
+  const visiblePosts = getPosts().filter((post) => !post.hidden);
+  const found = findTag(tag, visiblePosts);
 
   if (!found) return { title: "Tag not found" };
 
@@ -28,10 +29,16 @@ export async function generateMetadata({
     title: `#${found.tag}`,
     description: `Logs tagged ${found.tag} by Seif Zakaria.`,
     alternates: { canonical: `/logs/tag/${found.slug}` },
+    robots: {
+      index: false,
+      follow: true,
+    },
     openGraph: {
       title: `#${found.tag} — ${site.name}`,
       description: `Logs tagged ${found.tag}.`,
       type: "website",
+      url: `${site.url}/logs/tag/${found.slug}`,
+      siteName: site.name,
     },
   };
 }
@@ -42,7 +49,7 @@ export default async function TagPage({
   params: Promise<{ tag: string }>;
 }) {
   const { tag } = await params;
-  const posts = getPosts();
+  const posts = getPosts().filter((post) => !post.hidden);
   const found = findTag(tag, posts);
 
   if (!found) notFound();
@@ -65,6 +72,7 @@ export default async function TagPage({
       </div>
       <Logs
         heading={`#${found.tag}`}
+        headingLevel="h1"
         kicker={`Topic archive / ${tagged.length} ${
           tagged.length === 1 ? "entry" : "entries"
         }`}

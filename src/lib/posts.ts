@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { normalizeDate, readingTime, tagSlug } from "@/lib/text";
+import { normalizeDate, plainText, readingTime, tagSlug } from "@/lib/text";
 
 export interface Post {
   id: string;
@@ -17,6 +17,7 @@ export interface Post {
   pinned?: boolean;
   hidden?: boolean;
   readingTime: number;
+  wordCount: number;
 }
 
 function getAllMdxFiles(dir: string, baseDir: string): string[] {
@@ -43,6 +44,7 @@ export function getPosts(): Post[] {
     const fileContent = fs.readFileSync(filePath, "utf8");
     const { data, content } = matter(fileContent);
     const urlPath = file.split(path.sep).join("/");
+    const wordCount = plainText(content).split(/\s+/).filter(Boolean).length;
 
     return {
       id: `post-${urlPath}`,
@@ -58,6 +60,7 @@ export function getPosts(): Post[] {
       pinned: data.pinned || false,
       hidden: data.hidden || false,
       readingTime: readingTime(content),
+      wordCount,
     };
   });
 }
@@ -99,6 +102,7 @@ export function getAllTags(posts = getPosts()) {
   const map = new Map<string, { tag: string; slug: string; count: number }>();
 
   for (const post of posts) {
+    if (post.hidden) continue;
     for (const tag of post.tags ?? []) {
       const slug = tagSlug(tag);
       const existing = map.get(slug);

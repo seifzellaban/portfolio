@@ -4,7 +4,7 @@ import Link from "next/link";
 import { IconArrowUpRight, IconBrandGithub } from "@tabler/icons-react";
 import { getProjects } from "@/lib/projects";
 import { JsonLd } from "@/components/json-ld";
-import { breadcrumbJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, collectionPageJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -12,6 +12,20 @@ export const metadata: Metadata = {
   description:
     "Selected work by Seif Zakaria: NASA Space Apps builds, AI products, 3D interfaces, and startup software.",
   alternates: { canonical: "/projects" },
+  openGraph: {
+    type: "website",
+    url: `${site.url}/projects`,
+    siteName: site.name,
+    title: `Projects — ${site.name}`,
+    description:
+      "Selected work by Seif Zakaria: NASA Space Apps builds, AI products, 3D interfaces, and startup software.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Projects — ${site.name}`,
+    description:
+      "Selected work by Seif Zakaria: NASA Space Apps builds, AI products, 3D interfaces, and startup software.",
+  },
 };
 
 export default function ProjectsPage() {
@@ -20,10 +34,22 @@ export default function ProjectsPage() {
   return (
     <main id="main-content" className="min-h-screen bg-background">
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "Home", url: "/" },
-          { name: "Projects", url: "/projects" },
-        ])}
+        data={[
+          collectionPageJsonLd({
+            name: `Projects — ${site.name}`,
+            description:
+              "Selected work by Seif Zakaria: NASA Space Apps builds, AI products, 3D interfaces, and startup software.",
+            url: "/projects",
+            items: projects.map((project) => ({
+              name: project.name,
+              url: `/projects/${project.slug}`,
+            })),
+          }),
+          breadcrumbJsonLd([
+            { name: "Home", url: "/" },
+            { name: "Projects", url: "/projects" },
+          ]),
+        ]}
       />
 
       <section className="border-b border-border/50 py-20 sm:py-28">

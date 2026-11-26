@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   description:
     "How Seif Zakaria handles email correspondence and aggregate analytics data.",
   alternates: { canonical: "/privacy" },
+  openGraph: {
+    type: "website",
+    url: `${site.url}/privacy`,
+    siteName: site.name,
+    title: `Privacy — ${site.name}`,
+    description:
+      "How Seif Zakaria handles email correspondence and aggregate analytics data.",
+  },
 };
 
 export default function PrivacyPage() {

@@ -18,7 +18,8 @@ export type DockItem = {
   title: string;
   icon: React.ReactNode;
   href?: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  rel?: string;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   mobile?: boolean;
   desktop?: boolean;
   download?: string;
@@ -125,8 +126,11 @@ const FloatingDockMobile = ({
                     href={item.href}
                     download={item.download}
                     target={isExternal ? "_blank" : undefined}
-                    rel={isExternal ? "noreferrer" : undefined}
-                    onClick={() => setOpen(false)}
+                    rel={item.rel ?? (isExternal ? "noopener noreferrer" : undefined)}
+                    onClick={(event) => {
+                      item.onClick?.(event);
+                      setOpen(false);
+                    }}
                     className={sharedClasses}
                   >
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center">
@@ -177,17 +181,31 @@ const FloatingDockMobile = ({
         </button>
 
         {contactItem ? (
-          <button
-            type="button"
-            onClick={(event) => {
-              contactItem.onClick?.(event);
-              setOpen(false);
-            }}
-            className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-foreground px-4 font-mono text-[11px] uppercase tracking-[0.16em] text-background transition-colors active:bg-foreground/85"
-          >
-            <IconMail size={15} />
-            <span>Contact</span>
-          </button>
+          contactItem.href ? (
+            <Link
+              href={contactItem.href}
+              onClick={(event) => {
+                contactItem.onClick?.(event);
+                setOpen(false);
+              }}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-foreground px-4 font-mono text-[11px] uppercase tracking-[0.16em] text-background transition-colors active:bg-foreground/85"
+            >
+              <IconMail size={15} />
+              <span>Contact</span>
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={(event) => {
+                contactItem.onClick?.(event);
+                setOpen(false);
+              }}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-foreground px-4 font-mono text-[11px] uppercase tracking-[0.16em] text-background transition-colors active:bg-foreground/85"
+            >
+              <IconMail size={15} />
+              <span>Contact</span>
+            </button>
+          )
         ) : null}
 
         {themeItem ? (
@@ -244,6 +262,7 @@ function IconContainer({
   title,
   icon,
   href,
+  rel,
   onClick,
   download,
 }: {
@@ -251,7 +270,8 @@ function IconContainer({
   title: string;
   icon: React.ReactNode;
   href?: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  rel?: string;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   download?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -332,17 +352,44 @@ function IconContainer({
     </motion.div>
   );
 
-  return href ? (
-    <Link
-      href={href}
-      aria-label={title}
-      title={title}
-      download={download}
-      className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-    >
-      {content}
-    </Link>
-  ) : (
+  if (href) {
+    const isExternal = href.startsWith("http");
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel={
+            rel === "me noopener noreferrer"
+              ? "me noopener noreferrer"
+              : "noopener noreferrer"
+          }
+          aria-label={title}
+          title={title}
+          download={download}
+          className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+        >
+          {content}
+        </a>
+      );
+    }
+
+    return (
+      <Link
+        href={href}
+        rel={rel}
+        aria-label={title}
+        title={title}
+        download={download}
+        onClick={onClick}
+        className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
     <button
       type="button"
       aria-label={title}

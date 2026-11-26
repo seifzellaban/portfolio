@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getOrderedServices, services } from "@/lib/services-data";
 import { JsonLd } from "@/components/json-ld";
-import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 import ServiceDetail from "./service-detail";
 
@@ -35,6 +35,13 @@ export async function generateMetadata({
       title: `${service.title} — ${site.name}`,
       description: service.metaDescription,
       url: `${site.url}/services/${service.id}`,
+      siteName: site.name,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${service.title} — ${site.name}`,
+      description: service.metaDescription,
+      creator: "@seifzellaban",
     },
   };
 }
@@ -61,6 +68,7 @@ export default async function ServicePage({
       <JsonLd
         data={[
           serviceJsonLd(service),
+          faqJsonLd(service.faqs),
           breadcrumbJsonLd([
             { name: "Home", url: "/" },
             { name: "Services", url: "/services" },

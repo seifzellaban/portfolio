@@ -14,8 +14,22 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Web development, UI/UX design, SEO, and AI automation services for founders and teams. Clear scope, fixed timelines, and launch-ready delivery.",
+    "Web development, UI/UX design, SEO, and AI automation services by Seif Zakaria for founders and teams. Clear scope, fixed timelines, and launch-ready delivery.",
   alternates: { canonical: "/services" },
+  openGraph: {
+    type: "website",
+    url: `${site.url}/services`,
+    siteName: site.name,
+    title: `Services — ${site.name}`,
+    description:
+      "Web development, UI/UX design, SEO, and AI automation services by Seif Zakaria for founders and teams. Clear scope, fixed timelines, and launch-ready delivery.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Services — ${site.name}`,
+    description:
+      "Web development, UI/UX design, SEO, and AI automation services by Seif Zakaria for founders and teams.",
+  },
 };
 
 export default function ServicesPage() {

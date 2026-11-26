@@ -1,13 +1,25 @@
 export const site = {
   name: "Seif Zakaria",
-  title: "Seif Zakaria — Fullstack Developer & Founder",
+  handle: "seifzellaban",
+  alternateNames: ["seifzellaban", "@seifzellaban"],
+  title: "Seif Zakaria — Full-Stack Software Engineer & Founder",
   description:
-    "Seif Zakaria is a full-stack software engineer and founder in Cairo, Egypt. Founder of Masons, building AI-driven products with React, Next.js, TypeScript, and Python.",
-  url: "https://seifzellaban.com",
+    "Seif Zakaria is a full-stack software engineer in Cairo, Egypt and founder of Masons. Portfolio, case studies, and engineering logs.",
+  url: (
+    process.env.NEXT_PUBLIC_SITE_URL || "https://seifzellaban.com"
+  ).replace(/\/$/, ""),
+  portrait: "/seifmirror.webp",
   email: "seifzellaban@gmail.com",
   location: "Cairo, Egypt",
   timeZone: "Africa/Cairo",
   availability: "Available for freelance work",
+  organization: {
+    name: "Masons",
+    alternateName: "Masons Studio",
+    url: "https://wearemasons.com",
+    description:
+      "Cairo software studio building production web applications, internal business systems, and AI products.",
+  },
   /** Optional scheduling link (Cal.com, Calendly, …). Buttons hide when empty. */
   bookingUrl: "",
   /** Optional WhatsApp number in international format, digits only. */
@@ -25,18 +37,23 @@ export const site = {
   ],
   keywords: [
     "Seif Zakaria",
+    "seifzellaban",
+    "Seif Zakaria Cairo",
+    "Seif Zakaria software engineer",
+    "Seif Zakaria Ain Shams",
     "Full-stack Software Engineer",
-    "Cairo Egypt developer",
-    "React developer",
-    "Next.js developer",
-    "TypeScript developer",
-    "AI integration",
     "Masons founder",
-    "Rafiqi",
+    "Next.js developer",
+    "React developer",
+    "TypeScript developer",
+    "Go developer",
+    "Python developer",
+    "Convex",
+    "AI integration",
+    "Organum",
+    "Tesseract",
     "NASA Space Apps Challenge",
-    "hackathon winner",
     "GDG Cairo",
-    "Three.js",
     "freelance developer Egypt",
   ],
 } as const;

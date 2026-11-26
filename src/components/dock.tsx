@@ -27,7 +27,7 @@ export default function Dock() {
   const { openResumeModal } = useResumeModal();
   const isDark = theme === "dark";
 
-  const handleThemeToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleThemeToggle = (event: React.MouseEvent<HTMLElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
@@ -37,17 +37,35 @@ export default function Dock() {
   const iconClass =
     "h-full w-full text-muted-foreground dark:text-foreground/80";
 
+  const handleAnchorClick = (sectionId: string) => (
+    event: React.MouseEvent<HTMLElement>
+  ) => {
+    if (
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    ) {
+      return;
+    }
+    event.preventDefault();
+    handleNav(sectionId);
+  };
+
   const links = [
     {
       title: "Home",
       icon: <IconHome className={iconClass} />,
-      onClick: () => handleNav("home"),
+      href: "/",
+      onClick: handleAnchorClick("home"),
       mobile: true,
     },
     {
       title: "About",
       icon: <IconUser className={iconClass} />,
-      onClick: () => handleNav("about"),
+      href: "/#about",
+      onClick: handleAnchorClick("about"),
       mobile: true,
     },
     {
@@ -59,7 +77,8 @@ export default function Dock() {
     {
       title: "Projects",
       icon: <IconDeviceDesktopCode className={iconClass} />,
-      onClick: () => handleNav("projects"),
+      href: "/#projects",
+      onClick: handleAnchorClick("projects"),
       mobile: true,
     },
     {
@@ -71,7 +90,8 @@ export default function Dock() {
     {
       title: "Contact",
       icon: <IconMail className={iconClass} />,
-      onClick: () => handleNav("contact"),
+      href: "/#contact",
+      onClick: handleAnchorClick("contact"),
       mobile: true,
     },
     {
@@ -94,18 +114,21 @@ export default function Dock() {
       title: "LinkedIn",
       icon: <IconBrandLinkedin className={iconClass} />,
       href: site.socials.find((s) => s.label === "LinkedIn")?.href,
+      rel: "me noopener noreferrer",
       mobile: false,
     },
     {
       title: "X",
       icon: <IconBrandX className={iconClass} />,
       href: site.socials.find((s) => s.label === "X")?.href,
+      rel: "me noopener noreferrer",
       mobile: false,
     },
     {
       title: "GitHub",
       icon: <IconBrandGithub className={iconClass} />,
       href: site.socials.find((s) => s.label === "GitHub")?.href,
+      rel: "me noopener noreferrer",
       mobile: false,
     },
     {

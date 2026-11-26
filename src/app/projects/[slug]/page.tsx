@@ -49,6 +49,13 @@ export async function generateMetadata({
       title: `${project.name} — ${site.name}`,
       description: project.description,
       url: `${site.url}/projects/${project.slug}`,
+      siteName: site.name,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.name} — ${site.name}`,
+      description: project.description,
+      creator: "@seifzellaban",
     },
   };
 }
@@ -92,6 +99,7 @@ export default async function ProjectPage({
             demoUrl: project.demoUrl,
             sourceUrl: project.sourceUrl,
             techStack: project.techStack,
+            year: project.year,
           }),
           breadcrumbJsonLd([
             { name: "Home", url: "/" },
@@ -113,6 +121,17 @@ export default async function ProjectPage({
               <span>{project.status}</span>
             </>
           )}
+          <span aria-hidden className="h-px w-6 bg-border" />
+          <span>
+            By{" "}
+            <Link
+              href="/"
+              rel="author"
+              className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-primary"
+            >
+              {site.name}
+            </Link>
+          </span>
         </div>
 
         <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">

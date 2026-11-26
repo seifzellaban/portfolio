@@ -67,12 +67,21 @@ export async function generateMetadata({
     title: post.title,
     description: post.summary,
     alternates: { canonical: url },
+    ...(post.hidden
+      ? {
+          robots: {
+            index: false,
+            follow: false,
+          },
+        }
+      : {}),
     openGraph: {
       type: "article",
       title: `${post.title} — ${site.name}`,
       description: post.summary,
       url: `${site.url}${url}`,
       publishedTime: post.published || undefined,
+      authors: [post.author || site.name],
       tags: post.tags,
       images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
     },
@@ -80,6 +89,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: post.title,
       description: post.summary,
+      creator: "@seifzellaban",
       images: [ogImage],
     },
   };
@@ -114,23 +124,28 @@ export default async function LogPage({
 
   return (
     <article className="space-y-10">
-      <JsonLd
-        data={[
-          logJsonLd({
-            title: post?.title ?? frontmatter.title,
-            summary: post?.summary ?? frontmatter.summary,
-            url,
-            published: post?.published ?? "",
-            image: post?.image ?? "",
-            author: post?.author ?? "",
-          }),
-          breadcrumbJsonLd([
-            { name: "Home", url: "/" },
-            { name: "Logs", url: "/logs" },
-            { name: post?.title ?? "Log", url },
-          ]),
-        ]}
-      />
+      {!post?.hidden && (
+        <JsonLd
+          data={[
+            logJsonLd({
+              title: post?.title ?? frontmatter.title,
+              summary: post?.summary ?? frontmatter.summary,
+              url,
+              published: post?.published ?? "",
+              image: post?.image ?? "",
+              author: post?.author ?? "",
+              tags: post?.tags ?? frontmatter.tags,
+              wordCount: post?.wordCount,
+              readingTime: post?.readingTime,
+            }),
+            breadcrumbJsonLd([
+              { name: "Home", url: "/" },
+              { name: "Logs", url: "/logs" },
+              { name: post?.title ?? "Log", url },
+            ]),
+          ]}
+        />
+      )}
 
       <header className="space-y-6">
         <div className="space-y-4">
@@ -230,15 +245,19 @@ export default async function LogPage({
         <div className="flex items-center gap-3">
           <Image
             src="/seifalt.jpg"
-            alt=""
+            alt={frontmatter.author || site.name}
             width={40}
             height={40}
             className="h-10 w-10 rounded-full border border-border/60 object-cover"
           />
           <div>
-            <p className="text-sm font-medium text-foreground">
-              {frontmatter.author || "Seif Zakaria"}
-            </p>
+            <Link
+              href="/"
+              rel="author"
+              className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+            >
+              {frontmatter.author || site.name}
+            </Link>
             <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
               Fullstack developer & founder
             </p>

@@ -6,6 +6,7 @@ import { useReveal } from "@/hooks/use-reveal";
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
 
 const PROFILE_ROWS = [
+  { label: "Name", value: "Seif Zakaria · @seifzellaban" },
   { label: "Based in", value: "Cairo, Egypt" },
   {
     label: "Studio",
@@ -70,7 +71,9 @@ export function About() {
               </p>
               <h2 className="mt-4 font-serif text-4xl font-bold leading-[0.98] tracking-tight text-foreground sm:mt-5 sm:text-5xl lg:text-6xl">
                 Hi, I&apos;m{" "}
-                <span className="font-light italic text-primary">Seif.</span>
+                <span className="font-light italic text-primary">
+                  Seif Zakaria.
+                </span>
               </h2>
             </div>
 

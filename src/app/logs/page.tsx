@@ -1,5 +1,8 @@
 import { Logs } from "@/components/sections/logs";
-import { getAllTags, getPosts } from "@/lib/posts";
+import { getAllTags, getPosts, getSortedPosts } from "@/lib/posts";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd, collectionPageJsonLd } from "@/lib/seo";
+import { site } from "@/lib/site";
 import { IconRss } from "@tabler/icons-react";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -11,18 +14,45 @@ export const metadata: Metadata = {
   alternates: { canonical: "/logs" },
   openGraph: {
     type: "website",
+    url: `${site.url}/logs`,
+    siteName: site.name,
     title: "Logs — Seif Zakaria",
     description:
-      "Notes on engineering, products, leadership, and the craft of building software.",
+      "Notes on engineering, products, leadership, and the craft of building software, by Seif Zakaria.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Logs — Seif Zakaria",
+    description:
+      "Notes on engineering, products, leadership, and the craft of building software, by Seif Zakaria.",
   },
 };
 
 export default function LogsPage() {
   const posts = getPosts();
+  const visiblePosts = getSortedPosts(posts).filter((post) => !post.hidden);
   const tags = getAllTags(posts);
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-background selection:bg-primary/10 selection:text-primary">
+      <JsonLd
+        data={[
+          collectionPageJsonLd({
+            name: `Logs — ${site.name}`,
+            description:
+              "Notes on engineering, products, leadership, and the craft of building software, by Seif Zakaria.",
+            url: "/logs",
+            items: visiblePosts.map((post) => ({
+              name: post.title,
+              url: post.url,
+            })),
+          }),
+          breadcrumbJsonLd([
+            { name: "Home", url: "/" },
+            { name: "Logs", url: "/logs" },
+          ]),
+        ]}
+      />
       {/* Subtle architectural background */}
       <div className="fixed inset-0 -z-10 h-full w-full bg-background">
         <div className="absolute h-full w-full bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]" />
@@ -32,6 +62,7 @@ export default function LogsPage() {
       <main id="main-content" className="relative z-10 mx-auto">
         <Logs
           heading="Logs"
+          headingLevel="h1"
           kicker="All entries"
           description="Notes on software, side projects, leadership mistakes, and things I figured out while building."
           posts={posts}

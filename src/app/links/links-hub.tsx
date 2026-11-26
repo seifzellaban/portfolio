@@ -309,7 +309,7 @@ export function LinksHub() {
                 key={social.name}
                 href={social.href}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="me noopener noreferrer"
                 className="group flex flex-col justify-between rounded-2xl border border-border/60 bg-card/45 p-4 transition-all duration-200 hover:border-primary/40 hover:bg-card/80 sm:p-5"
               >
                 <div className="flex items-center justify-between gap-2 text-foreground">

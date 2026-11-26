@@ -7,8 +7,8 @@ export const contentType = ogContentType;
 
 export default function Image() {
   return renderOg({
-    kicker: "Portfolio",
-    title: "Fullstack developer & founder.",
-    subtitle: `Selected work, writing, and services from ${site.location}.`,
+    kicker: "seifzellaban.com",
+    title: site.name,
+    subtitle: "Full-stack software engineer & founder of Masons in Cairo, Egypt.",
   });
 }

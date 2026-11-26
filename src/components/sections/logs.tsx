@@ -8,6 +8,7 @@ import type { Post } from "@/lib/posts";
 
 interface LogsProps {
   heading?: string;
+  headingLevel?: "h1" | "h2";
   kicker?: string;
   description?: string;
   posts: Post[];
@@ -22,12 +23,14 @@ const metaClasses =
 
 const Logs = ({
   heading = "Logs",
+  headingLevel = "h2",
   kicker,
   description = "Notes on software, side projects, leadership mistakes, and things I learned the hard way.",
   posts,
   count,
   bordered = true,
 }: LogsProps) => {
+  const Heading = headingLevel;
   const visiblePosts = posts.filter((post) => !post.hidden);
   const sortedPosts = [...visiblePosts].sort((a, b) => {
     if (a.pinned && !b.pinned) return -1;
@@ -61,7 +64,7 @@ const Logs = ({
           <header className="grid grid-cols-1 gap-5 md:grid-cols-12 md:items-end md:gap-8">
             <div className="md:col-span-7">
               <p className={metaClasses}>{resolvedKicker}</p>
-              <h2 className="mt-4 font-serif text-4xl font-bold leading-[0.98] tracking-tight text-foreground sm:mt-5 sm:text-5xl lg:text-6xl">
+              <Heading className="mt-4 font-serif text-4xl font-bold leading-[0.98] tracking-tight text-foreground sm:mt-5 sm:text-5xl lg:text-6xl">
                 {heading === "Logs" ? (
                   <>
                     Logs &amp;{" "}
@@ -72,7 +75,7 @@ const Logs = ({
                 ) : (
                   heading
                 )}
-              </h2>
+              </Heading>
             </div>
 
             <p className="max-w-md text-base leading-relaxed text-muted-foreground md:col-span-5 md:justify-self-end md:text-right lg:text-lg">
